@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Lopez — Resume</title>
+    <meta name="description" content="UX/UI and Immersive Reality designer based in Seville. Former professional tennis player, padel coach, and end-to-end product designer.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --alabaster: #E5E4E2;
+            --onyx: #0A0A0A;
+            --blue-slate: #536878;
+
+            --text-color: var(--alabaster);
+            --muted-color: rgba(229, 228, 226, 0.75);
+            --glass-bg: rgba(229, 228, 226, 0.05);
+            --glass-border: rgba(229, 228, 226, 0.12);
+
+            --font-display: 'Playfair Display', serif;
+            --font-ui: 'Space Grotesk', sans-serif;
+            --font-body: 'Archivo', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--onyx);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ---------- Header (identical language to the landing) ---------- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 4%;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 200;
+        }
+
+        .logo {
+            font-family: var(--font-ui);
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: -0.02em;
+            color: var(--alabaster);
+            text-decoration: none;
+        }
+
+        .glass {
+            position: relative;
+            background: rgba(229, 228, 226, 0.06);
+            border: 1px solid rgba(229, 228, 226, 0.16);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(229, 228, 226, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .header-center { display: flex; align-items: center; gap: 0.75rem; }
+
+        .nav { display: flex; gap: 0.5rem; padding: 0.4rem; border-radius: 100px; }
+
+        .nav-item {
+            font-family: var(--font-ui);
+            color: var(--muted-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover, .nav-item.active { background: var(--alabaster); color: var(--onyx); }
+
+        .resume-pill {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--muted-color);
+            text-decoration: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .resume-pill svg { width: 15px; height: 15px; }
+        .resume-pill.active, .resume-pill:hover { background: var(--alabaster); color: var(--onyx); }
+
+        .contact-btn {
+            font-family: var(--font-ui);
+            background: rgba(10, 10, 10, 0.55);
+            color: var(--alabaster);
+            border: 1px solid var(--glass-border);
+            padding: 0.9rem 2rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover { background: var(--alabaster); color: var(--onyx); transform: translateY(-2px); }
+
+        /* ---------- Intro ---------- */
+        .intro {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 3rem;
+            padding: 9rem 4% 5rem;
+            position: relative;
+            background: radial-gradient(ellipse 60% 70% at 68% 45%, rgba(83, 104, 120, 0.34) 0%, rgba(83, 104, 120, 0.08) 45%, transparent 72%), var(--onyx);
+        }
+
+        .eyebrow {
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted-color);
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro h1 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: clamp(3rem, 6.5vw, 6.5rem);
+            line-height: 0.92;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro h1 .light { font-weight: 400; font-style: italic; }
+
+        .intro-lead {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            font-weight: 300;
+            color: var(--muted-color);
+            max-width: 46ch;
+            margin-bottom: 2.25rem;
+        }
+
+        .intro-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .btn {
+            font-family: var(--font-ui);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.95rem 1.7rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid var(--glass-border);
+            color: var(--alabaster);
+            background: rgba(229, 228, 226, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover { transform: translateY(-3px); border-color: rgba(229, 228, 226, 0.4); }
+        .btn.primary { background: var(--alabaster); color: var(--onyx); border-color: transparent; }
+
+        /* Photo, tilting toward the cursor like the devices on the landing */
+        .portrait-stage { perspective: 1400px; display: flex; justify-content: center; }
+
+        .portrait {
+            position: relative;
+            width: min(100%, 520px);
+            will-change: transform;
+            transition: transform 0.1s linear;
+        }
+
+        .portrait::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            width: 92%;
+            aspect-ratio: 1;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(83, 104, 120, 0.55) 0%, transparent 68%);
+            filter: blur(10px);
+        }
+
+        /* The source PNG's cutout is unfinished: below roughly 68% height the original white
+           backdrop is still opaque, and it cannot be keyed out by colour because the shirt
+           reads at the same value. Fading the lower edge hides it and reads as intentional. */
+        .portrait img {
+            position: relative;
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 40px 70px rgba(0, 0, 0, 0.7));
+            -webkit-mask-image: linear-gradient(to bottom, #000 58%, rgba(0, 0, 0, 0.55) 74%, transparent 88%);
+            mask-image: linear-gradient(to bottom, #000 58%, rgba(0, 0, 0, 0.55) 74%, transparent 88%);
+        }
+
+        /* ---------- Sections ---------- */
+        .section { padding: 7rem 4%; border-top: 1px solid rgba(229, 228, 226, 0.08); scroll-margin-top: 6rem; }
+
+        .section-head { margin-bottom: 3.5rem; }
+
+        .section-label {
+            font-family: var(--font-ui);
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--blue-slate);
+            display: block;
+            margin-bottom: 0.7rem;
+        }
+
+        .section h2 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        /* ---------- Timeline ---------- */
+        .timeline { position: relative; max-width: 900px; padding-left: 2rem; }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: linear-gradient(180deg, var(--blue-slate), rgba(83, 104, 120, 0.1));
+        }
+
+        .tl-item { position: relative; padding-bottom: 3rem; }
+        .tl-item:last-child { padding-bottom: 0; }
+
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 7px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--onyx);
+            border: 2px solid var(--blue-slate);
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .tl-item:hover::before { background: var(--alabaster); transform: scale(1.25); }
+
+        .tl-when {
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue-slate);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tl-item h3 { font-family: var(--font-ui); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.35rem; }
+        .tl-where { font-family: var(--font-ui); font-size: 0.82rem; color: var(--muted-color); margin-bottom: 0.7rem; }
+        .tl-item p { color: var(--muted-color); font-weight: 300; line-height: 1.7; max-width: 58ch; font-size: 0.95rem; }
+
+        /* ---------- Skills ---------- */
+        .skills { display: flex; flex-wrap: wrap; gap: 0.7rem; max-width: 900px; }
+
+        .skill {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.7rem 1.3rem;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            color: var(--muted-color);
+            cursor: default;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .skill:hover {
+            background: var(--alabaster);
+            color: var(--onyx);
+            border-color: transparent;
+            transform: translateY(-4px);
+        }
+
+        /* ---------- Stats ---------- */
+        .stats { display: flex; gap: 4rem; flex-wrap: wrap; margin-top: 3.5rem; }
+        .stat b { font-family: var(--font-display); font-weight: 900; font-size: 3rem; display: block; line-height: 1; }
+        .stat span {
+            font-family: var(--font-ui);
+            font-size: 0.66rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted-color);
+            display: block;
+            margin-top: 0.6rem;
+        }
+
+        /* ---------- Contact ---------- */
+        .contact-grid { display: flex; flex-wrap: wrap; gap: 3rem 5rem; margin-top: 2.5rem; }
+        .contact-item span {
+            font-family: var(--font-ui);
+            font-size: 0.66rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--blue-slate);
+            display: block;
+            margin-bottom: 0.6rem;
+        }
+        .contact-item a, .contact-item p {
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            color: var(--alabaster);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        .contact-item a:hover { border-bottom-color: var(--alabaster); }
+
+        /* ---------- Scroll reveal ---------- */
+        .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.in { opacity: 1; transform: none; }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 1000px) {
+            .intro { grid-template-columns: 1fr; padding-top: 8rem; text-align: left; }
+            .portrait-stage { order: -1; }
+            .portrait { width: min(100%, 340px); }
+            .header-center { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a class="logo" href="/">David Lopez</a>
+        <div class="header-center">
+            <a class="glass resume-pill active" href="resume.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+                Resume
+            </a>
+            <nav class="nav glass">
+                <a href="/#hero" class="nav-item">Projects</a>
+                <a href="/#case-mada" class="nav-item">Case Studies</a>
+                <a href="#contact" class="nav-item">Contact</a>
+            </nav>
+        </div>
+        <a class="contact-btn" href="mailto:davidlopezcruzxr@gmail.com">Get in touch</a>
+    </header>
+
+    <main class="intro">
+        <div>
+            <span class="eyebrow">UX/UI · Immersive Reality · Seville, Spain</span>
+            <h1><span class="light">David</span><br>Lopez</h1>
+            <p class="intro-lead">
+                I turn complex user pain points into intuitive, high-fidelity digital
+                experiences — research, information architecture, prototyping and testing,
+                end to end. Trained between Seville and Savannah, and shaped as much by
+                fifteen years of competitive sport as by design school.
+            </p>
+            <div class="intro-actions">
+                <a class="btn primary" href="David-Lopez-CV.pdf" target="_blank" rel="noopener">Download the PDF</a>
+                <a class="btn" href="/#hero">See the work</a>
+            </div>
+        </div>
+        <div class="portrait-stage">
+            <div class="portrait" id="portrait">
+                <img src="images/david-lopez.png" alt="David Lopez">
+            </div>
+        </div>
+    </main>
+
+    <section class="section">
+        <div class="section-head reveal">
+            <span class="section-label">What I do</span>
+            <h2>The toolkit</h2>
+        </div>
+        <div class="skills reveal">
+            <span class="skill">UX Design</span>
+            <span class="skill">UI Design</span>
+            <span class="skill">Interaction Design</span>
+            <span class="skill">Product Design</span>
+            <span class="skill">Mobile-First Design</span>
+            <span class="skill">User Research</span>
+            <span class="skill">User Personas</span>
+            <span class="skill">Empathy Mapping</span>
+            <span class="skill">User Flows</span>
+            <span class="skill">Wireframing</span>
+            <span class="skill">Site Mapping</span>
+            <span class="skill">Usability Testing</span>
+            <span class="skill">Figma</span>
+        </div>
+        <div class="stats reveal">
+            <div class="stat"><b>100%</b><span>Task completion in MADA testing</span></div>
+            <div class="stat"><b>3</b><span>End-to-end case studies</span></div>
+            <div class="stat"><b>2</b><span>Languages — Spanish, English</span></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-head reveal">
+            <span class="section-label">Where I learned it</span>
+            <h2>Education</h2>
+        </div>
+        <div class="timeline">
+            <div class="tl-item reveal">
+                <span class="tl-when">Spain</span>
+                <h3>Expert in UX/UI Design</h3>
+                <p class="tl-where">SABAL University · CEI, Centro de Estudios de Innovación</p>
+                <p>Where the end-to-end process became method: research, architecture, prototyping and testing as one continuous loop rather than separate stages.</p>
+            </div>
+            <div class="tl-item reveal">
+                <span class="tl-when">2021 – 2024 · Savannah, Georgia, USA</span>
+                <h3>B.F.A. Immersive Reality</h3>
+                <p class="tl-where">Savannah College of Art and Design · Minor in Interactive Design · GPA 3.7</p>
+                <p>Four years designing for space and depth, not just screens — which is why my interfaces still think in layers, motion and physicality. Dean's List every year, 2021–24.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-head reveal">
+            <span class="section-label">The other half</span>
+            <h2>Fifteen years <span style="font-family:var(--font-display);font-weight:400;font-style:italic">of court</span></h2>
+        </div>
+        <div class="timeline">
+            <div class="tl-item reveal">
+                <span class="tl-when">Professional</span>
+                <h3>Tennis, world ranking #1840</h3>
+                <p class="tl-where">Former professional player · NAIA #3 ranked student-athlete</p>
+                <p>Competitive sport is user testing with no debrief: you get one signal per point and you adjust immediately. It is where I learned to separate what I intended from what actually worked.</p>
+            </div>
+            <div class="tl-item reveal">
+                <span class="tl-when">Currently</span>
+                <h3>Professional padel player &amp; coach</h3>
+                <p class="tl-where">Tennis and padel coaching · Seville</p>
+                <p>Coaching is onboarding design with a live user in front of you. Explaining a movement to someone who has never done it is the same skill as making an interface obvious on first contact.</p>
+            </div>
+            <div class="tl-item reveal">
+                <span class="tl-when">Recognition</span>
+                <h3>Honours</h3>
+                <p class="tl-where">SUN All-Academic Honors 2023–24 · ITA Scholar-Athlete 2022–23 · Dean's List 2021–24</p>
+                <p>Awarded for holding both at once — the ranking and the GPA.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="section-head reveal">
+            <span class="section-label">Available for work</span>
+            <h2>Let's talk</h2>
+        </div>
+        <div class="contact-grid reveal">
+            <div class="contact-item">
+                <span>Email</span>
+                <a href="mailto:davidlopezcruzxr@gmail.com">davidlopezcruzxr@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <span>Phone</span>
+                <a href="tel:+34635783196">+34 635 783 196</a>
+            </div>
+            <div class="contact-item">
+                <span>Based in</span>
+                <p>Seville, Spain</p>
+            </div>
+            <div class="contact-item">
+                <span>Resume</span>
+                <a href="David-Lopez-CV.pdf" target="_blank" rel="noopener">Download the PDF →</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        /* Scroll reveals */
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        /* Portrait tilts toward the cursor — same interaction language as the landing's devices */
+        const portrait = document.getElementById('portrait');
+        let mouse = { x: 0, y: 0 }, current = { x: 0, y: 0 };
+
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = (e.clientX / window.innerWidth) - 0.5;
+                mouse.y = (e.clientY / window.innerHeight) - 0.5;
+            });
+
+            (function animate() {
+                current.x += (mouse.x - current.x) * 0.06;
+                current.y += (mouse.y - current.y) * 0.06;
+                portrait.style.transform =
+                    `rotateX(${-current.y * 12}deg) rotateY(${current.x * 18}deg) translateZ(0)`;
+                requestAnimationFrame(animate);
+            })();
+        }
+    </script>
+</body>
+
+</html>

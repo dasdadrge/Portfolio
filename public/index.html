@@ -1,0 +1,2425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Lopez — UX/UI &amp; Immersive Reality Designer</title>
+    <meta name="description" content="User-centered product designer. I turn complex user pain points into intuitive, high-fidelity digital experiences.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@300;400;500;600&family=Karla:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            /* Brand palette */
+            --alabaster: #E5E4E2;
+            --onyx: #0A0A0A;
+            --blue-slate: #536878;
+
+            --text-color: var(--alabaster);
+            /* 0.75 not 0.62: over the lighter brand halos (TripMate green, Kebab orange)
+               the old value dropped body copy to a 2.9:1 contrast ratio. */
+            --muted-color: rgba(229, 228, 226, 0.75);
+            --glass-bg: rgba(229, 228, 226, 0.05);
+            --glass-border: rgba(229, 228, 226, 0.12);
+
+            --font-display: 'Playfair Display', serif;
+            --font-ui: 'Space Grotesk', sans-serif;
+            --font-body: 'Archivo', sans-serif;
+
+            /* Dynamic background — each project's own brand colours.
+               The bright stops are held inside 38% of the radius so they form a halo
+               hugging the phone; past that it goes dark, which is where the copy lives. */
+            --bg-core: #2E5BFF;
+            --bg-inner: #16277A;
+            --bg-mid: #0D1226;
+            --bg-outer: #231F20;
+            --accent: #2E5BFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--onyx);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            min-height: 100vh;
+        }
+
+        /* ---------- Ambient particles ---------- */
+        #particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, rgba(229, 228, 226, 0.55), rgba(229, 228, 226, 0.05) 70%);
+            pointer-events: none;
+        }
+
+        @keyframes floatUpParticle {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% { opacity: 0.35; }
+            90% { opacity: 0.35; }
+            100% {
+                transform: translateY(-110vh) translateX(30px);
+                opacity: 0;
+            }
+        }
+
+        /* ---------- Header ---------- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 4%;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 200;
+        }
+
+        .logo {
+            font-family: var(--font-ui);
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: -0.02em;
+        }
+
+        .nav {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.4rem;
+            border-radius: 100px;
+        }
+
+        /* Shared so the Resume pill is visually identical to the nav, not a lookalike. */
+        .glass {
+            position: relative;
+            background: rgba(229, 228, 226, 0.06);
+            border: 1px solid rgba(229, 228, 226, 0.16);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(229, 228, 226, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .header-center { display: flex; align-items: center; gap: 0.75rem; }
+
+        .resume-pill {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--muted-color);
+            text-decoration: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .resume-pill svg { width: 15px; height: 15px; }
+        .resume-pill:hover { background: var(--alabaster); color: var(--onyx); }
+
+        .nav-item {
+            font-family: var(--font-ui);
+            color: var(--muted-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--alabaster);
+            color: var(--onyx);
+        }
+
+        .contact-wrap { position: relative; }
+
+        /* Carries the active project's brand colour so the CTA is the loudest thing in the
+           header. --accent-ink is recomputed per project because white text fails on the
+           lighter accents (TripMate's mint, Kebab's orange). */
+        .contact-btn {
+            font-family: var(--font-ui);
+            background: var(--accent-cta, var(--accent));
+            color: var(--accent-ink, #E5E4E2);
+            border: 1px solid transparent;
+            padding: 0.9rem 2rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: background 1.2s ease, color 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 26px color-mix(in srgb, var(--accent-cta, var(--accent)) 45%, transparent);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 34px color-mix(in srgb, var(--accent) 62%, transparent);
+        }
+
+        .contact-btn .chev { transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .contact-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+
+        /* The pill unfolds into a panel in place — no navigation. */
+        .contact-panel {
+            position: absolute;
+            top: calc(100% + 0.85rem);
+            right: 0;
+            width: min(380px, 86vw);
+            padding: 1.5rem;
+            border-radius: 26px;
+            text-align: left;
+            transform-origin: top right;
+            opacity: 0;
+            transform: translateY(-10px) scale(0.94);
+            pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .contact-panel.open { opacity: 1; transform: none; pointer-events: auto; }
+
+        .contact-panel h3 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.6rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.35rem;
+        }
+
+        .contact-panel .sub {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--muted-color);
+            margin-bottom: 1.2rem;
+        }
+
+        .field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.85rem; }
+
+        .field label {
+            font-family: var(--font-ui);
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted-color);
+        }
+
+        .field input, .field textarea {
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            color: var(--alabaster);
+            background: rgba(229, 228, 226, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.7rem 0.85rem;
+            transition: border-color 0.3s ease, background 0.3s ease;
+            width: 100%;
+        }
+
+        .field textarea { resize: vertical; min-height: 92px; }
+
+        .field input:focus, .field textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(229, 228, 226, 0.08);
+        }
+
+        .send-btn {
+            font-family: var(--font-ui);
+            width: 100%;
+            margin-top: 0.35rem;
+            padding: 0.85rem;
+            border-radius: 100px;
+            border: none;
+            background: var(--accent-cta, var(--accent));
+            color: var(--accent-ink, #E5E4E2);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .send-btn:hover:not(:disabled) { transform: translateY(-2px); }
+        .send-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+        .contact-direct {
+            font-family: var(--font-ui);
+            font-size: 0.72rem;
+            color: var(--muted-color);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(229, 228, 226, 0.08);
+        }
+
+        .contact-direct a { color: var(--alabaster); text-decoration: none; border-bottom: 1px solid transparent; }
+        .contact-direct a:hover { border-bottom-color: var(--alabaster); }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4%;
+            padding-top: 5rem;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at center, var(--bg-core) 0%, var(--bg-inner) 14%, var(--bg-mid) 38%, var(--bg-outer) 100%);
+            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Typography */
+        .main-title,
+        .side-title {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: clamp(3.25rem, 7vw, 8rem);
+            line-height: 0.85;
+            letter-spacing: -0.03em;
+            white-space: nowrap;
+            color: var(--alabaster);
+        }
+
+        .main-title .light,
+        .side-title .light {
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* ---------- Left column ---------- */
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 6rem 0;
+            gap: 2rem;
+            z-index: 100;
+        }
+
+        .eyebrow {
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted-color);
+        }
+
+        .description {
+            color: var(--muted-color);
+            font-size: 1.05rem;
+            line-height: 1.65;
+            max-width: 420px;
+            font-weight: 300;
+        }
+
+        .primary-btn {
+            font-family: var(--font-ui);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: rgba(10, 10, 10, 0.55);
+            color: var(--alabaster);
+            border: 1px solid var(--glass-border);
+            padding: 0.4rem 0.4rem 0.4rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            cursor: pointer;
+            width: fit-content;
+            transition: all 0.3s ease;
+        }
+
+        .primary-btn:hover { transform: translateY(-3px); }
+
+        .plus-icon {
+            background: var(--alabaster);
+            color: var(--onyx);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .award-badge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .award-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .award-text { display: flex; flex-direction: column; font-family: var(--font-ui); }
+        .award-title { font-size: 0.68rem; letter-spacing: 0.14em; color: var(--muted-color); text-transform: uppercase; }
+        .award-subtitle { font-size: 0.85rem; font-weight: 600; }
+
+        /* ---------- Center: phone ---------- */
+        .hero-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.3s forwards, float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Interim centerpiece — CSS 3D phone. Swap this block for <model-viewer> once the GLB exists. */
+        /* Geometry is derived from the screenshot aspect (393x852 = 0.4613) so that
+           the media area matches it exactly and object-fit: cover crops nothing:
+           inner 276x640, minus the 42px status bar = 276x598 -> 276/598 = 0.4615. */
+        /* Holds both devices. The phone keeps its own perspective because a transformed
+           .phone-stage would otherwise cut the 3D chain to .phone. */
+        .device-stage {
+            position: relative;
+            width: 560px;
+            height: 660px;
+        }
+
+        .phone-stage {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            margin-left: -148px;
+            perspective: 1400px;
+            width: 296px;
+            height: 660px;
+            --statusbar-h: 42px;
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Kebab shipped on both platforms: laptop steps in front, phone slips behind. */
+        /* 126px not 152px: further right and the phone's corner slides under the project
+           cards, which sit at 938px and render above it. */
+        .device-stage.has-laptop .phone-stage { transform: translate(126px, -58px) scale(0.6); }
+
+        .laptop-stage {
+            position: absolute;
+            left: -16px;
+            bottom: 72px;
+            width: 432px;
+            z-index: 3;
+            perspective: 1500px;
+            opacity: 0;
+            transform: translateY(34px) scale(0.94);
+            transition: opacity 0.55s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .device-stage.has-laptop .laptop-stage { opacity: 1; transform: none; }
+
+        .hero-laptop { transform-style: preserve-3d; will-change: transform; }
+
+        .hero-laptop-screen {
+            aspect-ratio: 1520 / 780;
+            background: #0D0F11;
+            border: 8px solid #23262B;
+            border-bottom-width: 5px;
+            border-radius: 12px 12px 3px 3px;
+            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(229, 228, 226, 0.06);
+        }
+
+        .hero-laptop-screen video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .phone {
+            width: 100%;
+            height: 100%;
+            border-radius: 46px;
+            position: relative;
+            transform-style: preserve-3d;
+            background: linear-gradient(150deg, #3a3f45 0%, #15181b 40%, #0c0e10 70%, #2a2e33 100%);
+            padding: 10px;
+            box-shadow:
+                0 60px 120px rgba(0, 0, 0, 0.65),
+                0 0 0 1px rgba(229, 228, 226, 0.10),
+                inset 0 0 0 1px rgba(229, 228, 226, 0.06);
+            will-change: transform;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 36px;
+            overflow: hidden;
+            /* Deliberately NOT --screen-bg: a light backdrop bleeds through the rounded
+               corners as white wedges behind the screenshot's dark bottom bar. */
+            background: #0a0a0a;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Dedicated status-bar strip painted in the screenshot's own background
+           colour — the notch lives here, so it can never sit on top of content. */
+        .screen-statusbar {
+            flex: 0 0 var(--statusbar-h, 42px);
+            position: relative;
+            background: var(--screen-bg, #0a0a0a);
+        }
+
+        .screen-media {
+            flex: 1 1 auto;
+            position: relative;
+            overflow: hidden;
+            /* Overlap the status bar by 1px. While the phone is mid-spin the 3D transform
+               rasterises at sub-pixel offsets, and any hairline gap between these two flex
+               children exposes .phone-screen's black backdrop as a dark line. */
+            margin-top: -1px;
+            /* Its own rounded clip + a backdrop matching the screenshot's bottom edge,
+               so any sub-pixel seam at the curve is invisible instead of white. */
+            border-radius: 0 0 30px 30px;
+            background: var(--screen-bg-bottom, var(--screen-bg, #0a0a0a));
+        }
+
+        .screen-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+        }
+
+        .screen-fallback {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-family: var(--font-ui);
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(160deg, var(--accent) 0%, #16191c 100%);
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 88px;
+            height: 24px;
+            border-radius: 100px;
+            background: #060708;
+            z-index: 3;
+        }
+
+        .phone-glare {
+            position: absolute;
+            inset: 0;
+            border-radius: 46px;
+            pointer-events: none;
+            background: linear-gradient(115deg, rgba(229, 228, 226, 0.14) 0%, rgba(229, 228, 226, 0) 30%, rgba(229, 228, 226, 0) 72%, rgba(229, 228, 226, 0.02) 100%);
+            z-index: 4;
+        }
+
+        /* ---------- Floating interface fragments ---------- */
+        .frags-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 110;
+            transition: transform 0.1s ease-out;
+        }
+
+        .frags-container-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            transition: transform 0.1s ease-out;
+        }
+
+        .frag {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 22px;
+            background: rgba(229, 228, 226, 0.06);
+            border: 1px solid rgba(229, 228, 226, 0.14);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+            color: var(--frag-accent, #536878);
+            will-change: transform;
+            transition: color 1.2s ease;
+        }
+
+        .frag svg { width: 44%; height: 44%; }
+
+        /* Real UI elements sit INSIDE the glass tile, fitted to its box. Their aspect ratios
+           vary wildly (the price slider is 4.8:1), so contain them rather than stretch. */
+        /* Kebab Gourmet widgets. That site ships zero images — it is all CSS, emoji and
+           inline SVG — so these are rebuilt from its own computed styles (Karla / Bebas Neue,
+           #F97316 orange, #16A34A / #15803D / #14532D greens, its radii and shadows). */
+        .kb { font-family: 'Karla', sans-serif; line-height: 1.15; }
+
+        .kb-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35em;
+            border-radius: 50px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .kb-order  { background: #F97316; color: #fff; padding: 10px 18px; font-size: 13px; }
+        .kb-menu   { background: #16A34A; color: #fff; padding: 9px 16px;  font-size: 12px; }
+        .kb-wa     { background: #25D366; color: #0A2E17; padding: 9px 14px; font-size: 11px; }
+        .kb-cart   { background: #15803D; color: #fff; padding: 7px 13px;  font-size: 12px; }
+
+        .kb-status {
+            background: #fff;
+            color: #14532D;
+            border: 1px solid rgba(20, 83, 45, 0.15);
+            box-shadow: 0 4px 20px rgba(20, 83, 45, 0.12);
+            border-radius: 16px;
+            padding: 8px 13px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .kb-status i { width: 7px; height: 7px; border-radius: 50%; background: #16A34A; }
+
+        .kb-toggle {
+            background: #F0FDF4;
+            color: #14532D;
+            border-radius: 10px;
+            padding: 9px 13px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .kb-promo {
+            background: #fff;
+            border-radius: 14px;
+            padding: 11px 14px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(20, 83, 45, 0.12);
+            color: #1A1A1A;
+        }
+
+        .kb-promo b {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 30px;
+            color: #15803D;
+            display: block;
+            line-height: 1;
+        }
+
+        .kb-promo span { font-size: 10px; font-weight: 600; display: block; margin-top: 3px; }
+
+        .kb-choose {
+            background: #16A34A;
+            color: #fff;
+            padding: 11px 18px;
+            font-size: 12px;
+            box-shadow: 0 4px 20px rgba(21, 128, 61, 0.3); /* the site's own button shadow */
+        }
+
+        .kb-dish {
+            background: #fff;
+            border: 1px solid #E8EDE9;
+            border-radius: 14px;
+            padding: 9px 10px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 4px 16px rgba(20, 83, 45, 0.10);
+            color: #1A1A1A;
+        }
+
+        .kb-dish-emoji { font-size: 17px; }
+        .kb-dish-txt { display: flex; flex-direction: column; gap: 3px; }
+        .kb-dish-txt b { font-size: 10.5px; font-weight: 700; white-space: nowrap; }
+        .kb-dish-txt em { font-size: 8px; font-style: normal; color: #6B7280; white-space: nowrap; }
+        .kb-dish-chips { display: flex; gap: 4px; }
+
+        .kb-dish-chips span {
+            background: #F0FDF4;
+            color: #15803D;
+            border-radius: 50px;
+            padding: 2px 6px;
+            font-size: 8px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .kb-dish-add {
+            width: 19px;
+            height: 19px;
+            flex: 0 0 auto;
+            border-radius: 50%;
+            border: 1.5px solid #16A34A;
+            color: #16A34A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .kb-extras {
+            background: #FDF1E7;
+            border-radius: 12px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            color: #1A1A1A;
+        }
+
+        .kb-extras-h { font-size: 8px; font-weight: 700; letter-spacing: 0.08em; color: #7C3AED; }
+        .kb-extras-chips { display: flex; gap: 5px; }
+
+        .kb-extras-chips span {
+            background: #fff;
+            border: 1px dashed #C9CFC9;
+            border-radius: 8px;
+            padding: 4px 7px;
+            font-size: 8px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .frag.is-media img {
+            max-width: 76%;
+            max-height: 76%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
+        }
+
+        /* Kept clear of the 40%–60% horizontal band, where the phone sits —
+           the case-study screen must never be covered. */
+        /* Scattered through the gaps only: the phone occupies 40%-60%, the headlines
+           4%-33% left / 45%-96% bottom-right, and the project cards 75%-96% top-right. */
+        .f1 { top: 14%; left: 30%; width: 150px; height: 150px; }
+        .f2 { top: 70%; left: 33%; width: 90px; height: 90px; }
+        .f3 { top: 30%; left: 63%; width: 170px; height: 170px; }
+        .f4 { top: 52%; left: 62%; width: 110px; height: 110px; }
+        .f5 { top: 72%; left: 20%; width: 100px; height: 100px; }
+        /* f6 removed: it sat over the project cards in the top-right corner. */
+        .f7 { top: 15%; left: 40%; width: 70px; height: 70px; opacity: 0.6; }
+        .f8 { top: 50%; left: 55%; width: 64px; height: 64px; opacity: 0.5; }
+        .f9 { top: 80%; left: 35%; width: 68px; height: 68px; opacity: 0.6; }
+
+        /* ---------- Right column ---------- */
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            text-align: right;
+            height: 100%;
+            padding: 6rem 0;
+            z-index: 100;
+            width: 450px;
+            pointer-events: none;
+        }
+
+        .project-carousel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: flex-end;
+            pointer-events: auto;
+        }
+
+        /* Cards are absolutely positioned slots around a centre line: the selected one sits
+           in the middle, the rest flank it. No arrows needed — every card is a direct target. */
+        .carousel-stage {
+            position: relative;
+            width: 430px;
+            height: 168px;
+            margin-top: 4rem; /* room for the logo that overhangs the card's top edge */
+        }
+
+        .card {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 152px;
+            margin-left: -76px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            padding-top: 4.5rem;
+            border-radius: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            cursor: pointer;
+            transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        opacity 0.5s ease,
+                        border-color 0.4s ease,
+                        background 0.4s ease;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .card.is-active { cursor: default; border-color: var(--alabaster); }
+
+        /* Sits above the overhanging logo so it still reads on an inactive, dimmed card. */
+        .card-flag {
+            position: absolute;
+            top: -3.1rem;
+            right: -6px;
+            z-index: 4;
+            font-family: var(--font-ui);
+            font-size: 0.56rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.6rem;
+            border-radius: 100px;
+            background: var(--alabaster);
+            color: var(--onyx);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Opacity comes through a variable rather than an inline style, so the hover
+           state can override it without needing !important. */
+        .card { opacity: var(--card-opacity, 1); }
+
+        .card:hover {
+            background: rgba(229, 228, 226, 0.12);
+            border-color: rgba(229, 228, 226, 0.4);
+        }
+
+        .card:not(.is-active):hover { opacity: 0.85; }
+
+        .card:focus-visible {
+            outline: 2px solid var(--alabaster);
+            outline-offset: 3px;
+        }
+
+        .card-thumb {
+            width: 112px;
+            height: 112px;
+            margin-top: -6.5rem;
+            border-radius: 26px;
+            overflow: hidden;
+            /* App logos are square and carry their own rounded corners and background —
+               no tile behind them, just the lift shadow. */
+            background: transparent;
+            box-shadow: 0 18px 32px rgba(0, 0, 0, 0.55);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: transform;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-ui);
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            color: var(--muted-color);
+            text-transform: uppercase;
+        }
+
+        .card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .card:hover .card-thumb {
+            transform: translateY(-24px) rotate(-8deg) scale(1.12);
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            width: 100%;
+        }
+
+        .card-info span:first-child { font-weight: 600; }
+        .card-info span:last-child { color: var(--muted-color); font-size: 0.62rem; letter-spacing: 0.06em; }
+
+        .carousel-nav { display: flex; gap: 1rem; align-items: center; }
+
+        .carousel-count {
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            color: var(--muted-color);
+            letter-spacing: 0.08em;
+        }
+
+
+        .side-title { align-self: flex-end; text-align: right; }
+
+        /* ---------- Sections below the hero (scaffold) ---------- */
+        .section {
+            padding: 10rem 4%;
+            border-top: 1px solid rgba(229, 228, 226, 0.08);
+            position: relative;
+            z-index: 10;
+            background: var(--onyx);
+        }
+
+        .section h2 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .section p {
+            color: var(--muted-color);
+            max-width: 560px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .section-stub {
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--blue-slate);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ---------- Case study sections ---------- */
+        .case {
+            padding: 8rem 4%;
+            border-top: 1px solid rgba(229, 228, 226, 0.08);
+            background: var(--onyx);
+            position: relative;
+            z-index: 10;
+            scroll-margin-top: 6rem;
+        }
+
+        .case-head { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 3rem; }
+
+        .case-logo {
+            width: 68px;
+            height: 68px;
+            border-radius: 18px;
+            overflow: hidden;
+            flex: 0 0 auto;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+        }
+
+        .case-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+        .case-index {
+            font-family: var(--font-ui);
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--case-accent, var(--blue-slate));
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .case h2 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 0.35rem;
+        }
+
+        .case-meta { font-family: var(--font-ui); font-size: 0.78rem; color: var(--muted-color); }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2.75rem 3rem;
+            max-width: 1180px;
+        }
+
+        .case-block h3 {
+            font-family: var(--font-ui);
+            font-size: 0.68rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--case-accent, var(--blue-slate));
+            margin-bottom: 0.9rem;
+        }
+
+        .case-block p {
+            color: var(--muted-color);
+            line-height: 1.75;
+            font-weight: 300;
+            font-size: 0.95rem;
+            max-width: 46ch;
+        }
+
+        .case-block ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+        .case-block li {
+            color: var(--muted-color);
+            font-size: 0.9rem;
+            line-height: 1.55;
+            font-weight: 300;
+            padding-left: 1.1rem;
+            position: relative;
+        }
+
+        .case-block li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.62em;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--case-accent, var(--blue-slate));
+        }
+
+        .case-stats { display: flex; gap: 3rem; flex-wrap: wrap; margin: 3.5rem 0; }
+
+        .case-stat b {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 2.6rem;
+            display: block;
+            line-height: 1;
+            color: var(--alabaster);
+        }
+
+        .case-stat span {
+            font-family: var(--font-ui);
+            font-size: 0.66rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted-color);
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        .case-link {
+            font-family: var(--font-ui);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 2.5rem;
+            padding: 0.85rem 1.6rem;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            color: var(--alabaster);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .case-link:hover {
+            background: var(--case-accent, var(--blue-slate));
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .swatches { display: flex; flex-direction: column; gap: 0.6rem; }
+
+        .swatch-item {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-family: var(--font-ui);
+            font-size: 0.72rem;
+            color: var(--muted-color);
+        }
+
+        .swatch {
+            width: 28px;
+            height: 28px;
+            flex: 0 0 auto;
+            border-radius: 8px;
+            border: 1px solid rgba(229, 228, 226, 0.18);
+        }
+
+        .swatch-item code {
+            font-family: var(--font-ui);
+            color: var(--alabaster);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .case-embed { margin-top: 3.5rem; max-width: 920px; }
+
+        .case-embed h3 {
+            font-family: var(--font-ui);
+            font-size: 0.68rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--case-accent, var(--blue-slate));
+            margin-bottom: 0.9rem;
+        }
+
+        /* aspect-ratio + absolute fill instead of the fixed 800x450 the embed ships with,
+           so the prototype scales down on narrow screens instead of overflowing. */
+        .embed-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            background: #14161A;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .embed-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        /* Click-to-load facade. A Figma embed grabs focus the moment it initialises, and the
+           browser then scrolls that focused element into view — so an idle visitor at the top
+           of the page gets yanked down to the prototype. Injecting the iframe only on click
+           means focus moves only as a direct result of a user action, which is expected. */
+        /* While it is still a facade there is no player to frame, so dissolve the border
+           and let the panel melt into the page. */
+        .embed-frame:has(.embed-facade) {
+            border-color: transparent;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .embed-facade {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            padding: 0;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-family: var(--font-ui);
+            color: var(--alabaster);
+            overflow: hidden;
+            /* Glow built from the project's own brand colour, resolving to Onyx so it
+               reads as part of the page rather than a pasted-on panel. */
+            background:
+                radial-gradient(ellipse 62% 82% at 50% 42%,
+                    color-mix(in srgb, var(--case-accent) 40%, transparent) 0%,
+                    color-mix(in srgb, var(--case-accent) 11%, transparent) 46%,
+                    transparent 74%),
+                linear-gradient(180deg, rgba(10, 10, 10, 0) 28%, #0A0A0A 100%),
+                #0A0A0A;
+        }
+
+        /* The app icon as texture behind the call to action. */
+        .embed-facade::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--logo) center 38% / auto 46% no-repeat;
+            opacity: 0.20;
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+
+        .embed-facade:hover::before { opacity: 0.30; transform: scale(1.05); }
+
+        /* Vignette that fades the edges to the page colour. */
+        .embed-facade::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: radial-gradient(ellipse 78% 72% at 50% 50%, transparent 52%, #0A0A0A 100%);
+        }
+
+        .embed-facade > * { position: relative; z-index: 1; }
+
+        .embed-play {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: var(--alabaster);
+            color: var(--onyx);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            padding-left: 4px;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .embed-facade:hover .embed-play { transform: scale(1.1); }
+
+        .embed-cta { font-size: 0.95rem; font-weight: 600; }
+        .embed-sub { font-size: 0.72rem; color: var(--muted-color); }
+
+        .embed-facade:focus-visible { outline: 2px solid var(--alabaster); outline-offset: -4px; }
+
+        /* ---------- Device pair: the same product on desktop and mobile ---------- */
+        .device-duo {
+            display: flex;
+            align-items: flex-end;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .duo-laptop { flex: 1 1 460px; max-width: 640px; min-width: 300px; }
+
+        .laptop-screen {
+            /* matches the video's own 1520x780 so nothing gets cropped */
+            aspect-ratio: 1520 / 780;
+            background: #0D0F11;
+            border: 10px solid #23262B;
+            border-bottom-width: 6px;
+            border-radius: 14px 14px 3px 3px;
+            overflow: hidden;
+            box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(229, 228, 226, 0.06);
+        }
+
+        .laptop-screen video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .laptop-base {
+            position: relative;
+            width: 114%;
+            margin-left: -7%;
+            height: 13px;
+            border-radius: 0 0 12px 12px;
+            background: linear-gradient(180deg, #3A3F45 0%, #23262B 45%, #15181B 100%);
+            box-shadow: 0 14px 26px rgba(0, 0, 0, 0.5);
+        }
+
+        /* the thumb notch on the lid edge */
+        .laptop-base::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 84px;
+            height: 5px;
+            border-radius: 0 0 6px 6px;
+            background: #101315;
+        }
+
+        .duo-phone { flex: 0 0 auto; width: 158px; }
+
+        .duo-phone-body {
+            width: 100%;
+            aspect-ratio: 296 / 660;
+            border-radius: 26px;
+            padding: 6px;
+            background: linear-gradient(150deg, #3A3F45 0%, #15181B 40%, #0C0E10 70%, #2A2E33 100%);
+            box-shadow: 0 26px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(229, 228, 226, 0.10);
+            position: relative;
+        }
+
+        .duo-phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 21px;
+            overflow: hidden;
+            background: #7F7F7F;
+        }
+
+        .duo-phone-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+
+        .duo-phone-notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 46px;
+            height: 13px;
+            border-radius: 100px;
+            background: #060708;
+            z-index: 2;
+        }
+
+        .duo-label {
+            font-family: var(--font-ui);
+            font-size: 0.66rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted-color);
+            margin-top: 0.9rem;
+            text-align: center;
+        }
+
+        .embed-note {
+            font-family: var(--font-ui);
+            font-size: 0.72rem;
+            color: var(--muted-color);
+            margin-top: 0.9rem;
+        }
+
+        .case-type {
+            font-family: var(--font-ui);
+            font-size: 0.72rem;
+            color: var(--muted-color);
+            margin-top: 1.1rem;
+            padding-top: 1.1rem;
+            border-top: 1px solid rgba(229, 228, 226, 0.08);
+        }
+
+        .case-type b { color: var(--alabaster); font-weight: 600; }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 1200px) {
+            /* same derivation: inner 200x466, minus 32px status bar = 200x434 -> 0.4608 */
+            .phone-stage { width: 220px; height: 486px; --statusbar-h: 32px; }
+            .main-title, .side-title { font-size: 4rem; }
+            .hero-right { align-items: center; text-align: center; width: auto; }
+            .side-title { align-self: center; text-align: center; }
+            .frag { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">David Lopez</div>
+        <div class="header-center">
+            <a class="glass resume-pill" href="resume.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+                Resume
+            </a>
+            <nav class="nav glass">
+                <a href="#hero" class="nav-item active">Projects</a>
+                <a href="#case-mada" class="nav-item">Case Studies</a>
+                <a href="#contact" class="nav-item">Contact</a>
+            </nav>
+        </div>
+        <div class="contact-wrap">
+            <button class="contact-btn" id="contact-btn" aria-expanded="false" aria-controls="contact-panel">
+                Get in touch
+                <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="contact-panel glass" id="contact-panel" role="dialog" aria-label="Send David a message">
+                <h3>Say hello</h3>
+                <p class="sub">Available for work — usually replies within a day.</p>
+                <form id="contact-form" novalidate>
+                    <div class="field">
+                        <label for="cf-name">Your name</label>
+                        <input id="cf-name" name="name" type="text" autocomplete="name" required>
+                    </div>
+                    <div class="field">
+                        <label for="cf-email">Your email</label>
+                        <input id="cf-email" name="email" type="email" autocomplete="email" required>
+                    </div>
+                    <div class="field">
+                        <label for="cf-message">Message</label>
+                        <textarea id="cf-message" name="message" required></textarea>
+                    </div>
+                    <button class="send-btn" type="submit">Send message</button>
+                </form>
+                <p class="contact-direct">
+                    Or write to <a href="mailto:davidlopezcruzxr@gmail.com">davidlopezcruzxr@gmail.com</a>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main class="hero" id="hero">
+        <div id="particles-container"></div>
+
+        <div class="hero-content">
+
+            <div class="hero-left">
+                <span class="eyebrow" id="hero-eyebrow">Case study 01 · C2C circular fashion · Gulf 2026</span>
+                <h1 class="main-title" id="hero-title">
+                    <span class="light">Trust</span><br>
+                    First
+                </h1>
+                <p class="description" id="hero-desc">
+                    The Gulf had nowhere to resell fashion — fear of scams killed it.
+                    So I designed the trust in: escrow payments, protected chat, and a
+                    boutique that never says "secondhand".
+                </p>
+                <div class="cta-group">
+                    <button class="primary-btn" id="view-case">
+                        <span id="view-case-label">View MADA case study</span>
+                        <span class="plus-icon">→</span>
+                    </button>
+                </div>
+                <div class="award-badge">
+                    <div class="award-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="award-text">
+                        <span class="award-title" id="badge-title">Usability testing</span>
+                        <span class="award-subtitle" id="badge-sub">100% success · 10 of 10 users</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="frags-container-bg">
+                <div class="frag f7" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+                </div>
+                <div class="frag f8" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h10M4 17h13" /></svg>
+                </div>
+                <div class="frag f9" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2" /><rect x="14" y="3" width="7" height="7" rx="2" /><rect x="3" y="14" width="7" height="7" rx="2" /><rect x="14" y="14" width="7" height="7" rx="2" /></svg>
+                </div>
+            </div>
+
+            <div class="hero-center">
+                <div class="device-stage" id="device-stage">
+                    <div class="phone-stage">
+                        <div class="phone" id="phone">
+                            <div class="phone-glare"></div>
+                            <div class="phone-screen" id="phone-screen">
+                                <div class="screen-statusbar"><div class="phone-notch"></div></div>
+                                <div class="screen-media" id="screen-media"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="laptop-stage">
+                        <div class="hero-laptop" id="hero-laptop">
+                            <div class="hero-laptop-screen">
+                                <video id="hero-video" muted loop playsinline preload="auto"
+                                    aria-label="Kebab Gourmet desktop landing page">
+                                    <source src="videos/kebab-landing.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="laptop-base"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="frags-container">
+                <div class="frag f1" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19 5 3z" /></svg>
+                </div>
+                <div class="frag f2" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="4" /><circle cx="16" cy="12" r="2.6" fill="currentColor" stroke="none" /></svg>
+                </div>
+                <div class="frag f3" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="3" /><path d="M3 9h18M8 13h6" /></svg>
+                </div>
+                <div class="frag f4" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z" /><path d="M3 13l9 5 9-5" /></svg>
+                </div>
+                <div class="frag f5" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" /></svg>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="project-carousel">
+                    <div class="carousel-stage" id="carousel-track" role="tablist" aria-label="Case studies"></div>
+                    <div class="carousel-nav">
+                        <span class="carousel-count" id="carousel-count">01 / 03</span>
+                    </div>
+                </div>
+                <h2 class="side-title" id="hero-side">
+                    <span class="light">Premium</span><br>
+                    Resale
+                </h2>
+            </div>
+
+        </div>
+    </main>
+
+    <section class="case" id="case-mada" style="--case-accent:#2E5BFF">
+        <div class="case-head">
+            <div class="case-logo"><img src="images/projects/mada-logo.png" alt="MADA"></div>
+            <div>
+                <span class="case-index">Case study 01</span>
+                <h2>MADA</h2>
+                <p class="case-meta">C2C circular fashion · Gulf region · 2026 · End-to-end UX/UI, Double Diamond</p>
+            </div>
+        </div>
+
+        <div class="case-grid">
+            <div class="case-block">
+                <h3>The problem</h3>
+                <p>The Gulf has no dedicated fashion resale platform — the "Vinted effect" simply never arrived. Up to 90% of textiles end up in landfill for lack of collection and resale systems, while generic classifieds like Dubizzle and Haraj feel cluttered and unsafe for fashion.</p>
+            </div>
+            <div class="case-block">
+                <h3>Research</h3>
+                <ul>
+                    <li>Desk research, netnography across Reddit, X and the App Store, plus a survey</li>
+                    <li>78% of Saudi e-commerce happens on a smartphone</li>
+                    <li>64% try to sell unused clothes — the top barrier is fear of scams</li>
+                    <li>66% rate app aesthetics as "very important"</li>
+                    <li>58% of GCC consumers seek sustainable emotional gratification</li>
+                </ul>
+            </div>
+            <div class="case-block">
+                <h3>Who it's for</h3>
+                <p><strong>Sara, 32</strong> — Bahrain, marketing. Wants to sell fast and safely; fears not getting paid.<br><br>
+                <strong>Zaid, 22</strong> — Saudi Arabia, tech student. Tired of dated classifieds, wants real filters and privacy.</p>
+            </div>
+            <div class="case-block">
+                <h3>Design response</h3>
+                <ul>
+                    <li>Escrow payments — money held until delivery is confirmed</li>
+                    <li>Protected in-app chat, so no phone number is ever shared</li>
+                    <li>Fashion-specific filters: size, brand, condition</li>
+                    <li>Integrated home pickup and delivery logistics</li>
+                    <li>Premium minimalist UI to strip the "cheap secondhand" stigma</li>
+                </ul>
+            </div>
+            <div class="case-block">
+                <h3>Palette &amp; type</h3>
+                <div class="swatches">
+                    <span class="swatch-item"><span class="swatch" style="background:#2E5BFF"></span><span><code>#2E5BFF</code> Electric Blue — CTAs and payment states, reads as technical security</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#F9F8F3"></span><span><code>#F9F8F3</code> Alabaster White — gallery-like backdrop for the product grid</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#231F20"></span><span><code>#231F20</code> Charcoal Black — text and overlays; premium without harsh pure black</span></span>
+                </div>
+                <p class="case-type">The palette does the heavy lifting on the core problem: users confirmed it removes the <b>"used clothing" stigma</b> and reads as a premium boutique.</p>
+            </div>
+        </div>
+
+        <div class="case-stats">
+            <div class="case-stat"><b>100%</b><span>Task completion, 10/10 users</span></div>
+            <div class="case-stat"><b>0</b><span>Users needing guidance</span></div>
+            <div class="case-stat"><b>19</b><span>Pages of documented process</span></div>
+        </div>
+
+        <div class="case-embed">
+            <h3>Interactive prototype</h3>
+            <div class="embed-frame">
+                <!-- node-id MUST equal starting-point-node-id or the embed opens wherever the
+                     link was copied from instead of at the first frame. -->
+                <button class="embed-facade"
+                    style="--logo:url('images/projects/mada-logo.png')"
+                    data-title="MADA interactive prototype"
+                    data-src="https://embed.figma.com/proto/qSphxBJ6dGsOYSyLQ6T1Yc/MADA?node-id=12-817&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=12%3A561&amp;starting-point-node-id=12%3A817&amp;embed-host=share">
+                    <span class="embed-play">▶</span>
+                    <span class="embed-cta">Launch the prototype</span>
+                    <span class="embed-sub">Opens the Figma player in place</span>
+                </button>
+            </div>
+            <p class="embed-note">Click through the buy and sell flows — the same build the ten usability testers used.</p>
+        </div>
+
+        <a class="case-link" href="https://www.figma.com/proto/qSphxBJ6dGsOYSyLQ6T1Yc/MADA?node-id=12-817&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=12%3A561&amp;starting-point-node-id=12%3A817" target="_blank" rel="noopener">Open full screen in Figma →</a>
+    </section>
+
+    <section class="case" id="case-tripmate" style="--case-accent:#6AE8A7">
+        <div class="case-head">
+            <div class="case-logo"><img src="images/projects/tripmate-logo.png" alt="TripMate"></div>
+            <div>
+                <span class="case-index">Case study 02</span>
+                <h2>TripMate</h2>
+                <p class="case-meta">Collaborative travel planning · 2025 · UX research, IA, prototyping</p>
+            </div>
+        </div>
+
+        <div class="case-grid">
+            <div class="case-block">
+                <h3>The problem</h3>
+                <p>Travellers juggle one app for packing, another for bookings, another for activities and notes. Things get forgotten, time gets lost, and what should be exciting turns stressful before the trip even starts.</p>
+            </div>
+            <div class="case-block">
+                <h3>Research</h3>
+                <ul>
+                    <li>Four personas built from the distinct ways people travel</li>
+                    <li>Competitive teardown of PackPoint, TripIt and Tripsy</li>
+                    <li><strong>PackPoint</strong> — great packing generator, weak itineraries, no collaboration</li>
+                    <li><strong>TripIt</strong> — auto-imports bookings, but has no packing checklist at all</li>
+                    <li><strong>Tripsy</strong> — nice UI, but the packing list sits behind the paywall</li>
+                    <li>Mind map and sitemap before wireframes, then high-fidelity Figma</li>
+                </ul>
+            </div>
+            <div class="case-block">
+                <h3>Who it's for</h3>
+                <p><strong>Maria, 27</strong> — busy professional; needs a trip set up in minutes.<br><br>
+                <strong>Daniel, 24</strong> — first-time traveller; doesn't know what to pack and fears losing documents.<br><br>
+                <strong>Carla, 39</strong> — packs for a family of four and shares the trip with her husband.<br><br>
+                <strong>Alex, 28</strong> — adventure seeker; needs it to work with no signal.</p>
+            </div>
+            <div class="case-block">
+                <h3>Design response</h3>
+                <ul>
+                    <li>Step-by-step trip creation: destination, dates, activities</li>
+                    <li>Packing checklist generated from destination, duration and weather</li>
+                    <li>Multi-bag organisation with visual packing progress</li>
+                    <li>Budget tracker with a spending cap</li>
+                    <li>Share a trip by link, and full offline access</li>
+                </ul>
+            </div>
+            <div class="case-block">
+                <h3>Palette &amp; type</h3>
+                <div class="swatches">
+                    <span class="swatch-item"><span class="swatch" style="background:#6AE8A7"></span><span><code>#6AE8A7</code> Mint — primary actions and trip cards, the app's signature</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#5DCB92"></span><span><code>#5DCB92</code> Deep Mint — pressed and secondary states</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#000000"></span><span><code>#000000</code> Black — date pills and labels, maximum contrast on mint</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#B8DAF5"></span><span><code>#B8DAF5</code> Sky — drawn from the destination photography, not a fixed brand colour</span></span>
+                </div>
+                <p class="case-type">Full-bleed destination photography carries the emotion; the mint and black UI sits on top of it without competing.</p>
+            </div>
+        </div>
+
+        <div class="case-stats">
+            <div class="case-stat"><b>4</b><span>Personas driving the features</span></div>
+            <div class="case-stat"><b>3</b><span>Competitors dissected</span></div>
+            <div class="case-stat"><b>93</b><span>Pages of documented process</span></div>
+        </div>
+
+        <div class="case-embed">
+            <h3>Interactive prototype</h3>
+            <div class="embed-frame">
+                <!-- node-id forced to 16-11 to match starting-point-node-id, so it opens on
+                     the first frame rather than node 2012-4 where the link was copied. -->
+                <button class="embed-facade"
+                    style="--logo:url('images/projects/tripmate-logo.png')"
+                    data-title="TripMate interactive prototype"
+                    data-src="https://embed.figma.com/proto/DvU5LLs3QHkfVgq0OELwXd/Untitled?node-id=16-11&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;starting-point-node-id=16%3A11&amp;embed-host=share">
+                    <span class="embed-play">▶</span>
+                    <span class="embed-cta">Launch the prototype</span>
+                    <span class="embed-sub">Opens the Figma player in place</span>
+                </button>
+            </div>
+            <p class="embed-note">Walk the trip-creation flow: destination, dates, then the packing list it builds for you.</p>
+        </div>
+
+        <a class="case-link" href="https://www.figma.com/proto/DvU5LLs3QHkfVgq0OELwXd/Untitled?node-id=16-11&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;starting-point-node-id=16%3A11" target="_blank" rel="noopener">Open full screen in Figma →</a>
+    </section>
+
+    <section class="case" id="case-kebab" style="--case-accent:#FF751F">
+        <div class="case-head">
+            <div class="case-logo"><img src="images/projects/kebab-logo.png" alt="Kebab Gourmet"></div>
+            <div>
+                <span class="case-index">Case study 03</span>
+                <h2>Kebab Gourmet</h2>
+                <p class="case-meta">Ordering website · Espartinas, Sevilla · 2026 · Design through to deployment</p>
+            </div>
+        </div>
+
+        <div class="case-grid">
+            <div class="case-block">
+                <h3>The problem</h3>
+                <p>A neighbourhood kebab shop with no storefront of its own: orders arrived by phone or through Glovo, Just Eat and Uber Eats, each taking a cut and owning the customer relationship. It needed a direct channel that its regulars would actually use.</p>
+            </div>
+            <div class="case-block">
+                <h3>Research</h3>
+                <ul>
+                    <li>Constraints taken from the business itself: its real menu, two phone lines, split opening hours and the platforms it already sold on</li>
+                    <li>WhatsApp identified as the channel the shop already ran orders through, so the design had to meet it there rather than replace it</li>
+                    <li>Unlike MADA and TripMate, this one has no formal discovery deck — the requirements came from the operation, not from a research phase</li>
+                </ul>
+            </div>
+            <div class="case-block">
+                <h3>Who it's for</h3>
+                <p><strong>The customer</strong> — hungry, one-handed on a phone, deciding in under a minute. Not browsing, not comparing.<br><br>
+                <strong>The shop</strong> — needs the order to land somewhere it already watches during service, without new software to learn mid-rush.</p>
+            </div>
+            <div class="case-block">
+                <h3>Design response</h3>
+                <ul>
+                    <li>One thumb-reachable flow: pick, customise, order</li>
+                    <li>Extras and sauces as chips, never dropdowns — no hidden choices</li>
+                    <li>Persistent cart and an order button that never leaves the screen</li>
+                    <li>Delivery or pickup toggle with an address form</li>
+                    <li>WhatsApp as a first-class ordering route, not a fallback afterthought</li>
+                    <li>Honest hand-off to Glovo, Just Eat and Uber Eats for those who prefer them</li>
+                </ul>
+            </div>
+            <div class="case-block">
+                <h3>Palette &amp; type</h3>
+                <div class="swatches">
+                    <span class="swatch-item"><span class="swatch" style="background:#F97316"></span><span><code>#F97316</code> Orange — the brand colour, reserved for "Pedir Ahora"</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#16A34A"></span><span><code>#16A34A</code> Green — confirm and checkout, distinct from the brand CTA</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#F0FDF4"></span><span><code>#F0FDF4</code> Mint Wash — selected states and price chips</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#1A1A1A"></span><span><code>#1A1A1A</code> Near-black — body copy, softer than pure black on white</span></span>
+                </div>
+                <p class="case-type">Type: <b>Karla</b> for the interface, <b>Bebas Neue</b> for the discount figures — condensed so a "50%" lands hard without stealing the CTA's colour.</p>
+            </div>
+        </div>
+
+        <div class="case-stats">
+            <div class="case-stat"><b>5</b><span>Menu categories, live</span></div>
+            <div class="case-stat"><b>3</b><span>Delivery platforms integrated</span></div>
+            <div class="case-stat"><b>100%</b><span>Shipped — design to deployment</span></div>
+        </div>
+
+        <div class="case-embed">
+            <h3>Built for both</h3>
+            <div class="device-duo">
+                <div class="duo-laptop">
+                    <div class="laptop-screen">
+                        <!-- preload="none" + play only while on screen: 6.3 MB should not
+                             download for someone who never scrolls this far. -->
+                        <video id="kebab-video" muted loop playsinline preload="none"
+                            aria-label="Kebab Gourmet landing page walkthrough">
+                            <source src="videos/kebab-landing.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="laptop-base"></div>
+                    <p class="duo-label">Desktop — the landing</p>
+                </div>
+                <div class="duo-phone">
+                    <div class="duo-phone-body">
+                        <div class="duo-phone-notch"></div>
+                        <div class="duo-phone-screen">
+                            <img src="images/projects/kebab-screen.png" alt="Kebab Gourmet ordering flow on mobile">
+                        </div>
+                    </div>
+                    <p class="duo-label">Mobile — the order</p>
+                </div>
+            </div>
+            <p class="embed-note">Same product, two jobs: the desktop landing sells the place, the phone takes the order.</p>
+        </div>
+
+        <a class="case-link" href="https://kebab-gourmet-website.vercel.app/" target="_blank" rel="noopener">Visit the live site →</a>
+    </section>
+
+
+    <section class="section" id="contact">
+        <p class="section-stub">Next up</p>
+        <h2>Contact</h2>
+        <p>davidlopezcruzxr@gmail.com · Seville, Spain. Scaffold section.</p>
+    </section>
+
+    <script>
+        /* ============================================================
+           PROJECT DATA — the "flavors" of the original, now case studies
+           ============================================================ */
+        const PROJECTS = [
+            {
+                key: 'mada',
+                name: 'MADA',
+                meta: 'C2C Circular Fashion · 2026',
+                screen: 'images/projects/mada-screen.png',
+                screenBg: '#F9F8F3',       // sampled from the screenshot's top edge
+                screenBgBottom: '#231F20', // sampled from its bottom nav bar
+                // Hero copy. Title/side lines stay <= 8 chars: at 7vw anything longer
+                // runs into the phone, which sits from 40% to 60% of the viewport.
+                hero: {
+                    eyebrow: 'C2C circular fashion · Gulf 2026',
+                    title: ['Trust', 'First'],
+                    side: ['Premium', 'Resale'],
+                    desc: 'The Gulf had nowhere to resell fashion — fear of scams killed it. So I designed the trust in: escrow payments, protected chat, and a boutique that never says "secondhand".',
+                    badge: ['Usability testing', '100% success · 10 of 10 users']
+                },
+                logo: 'images/projects/mada-logo.png',
+                // Real UI pieces lifted from the app, keyed by slot so DOM order can't shuffle them.
+                // `tile` is the glass tile's own size — the artwork is fitted inside it.
+                frags: {
+                    f1: { src: 'images/frags/mada/cart-card.png',    tile: [170, 170] },
+                    f2: { src: 'images/frags/mada/price-slider.png', tile: [190, 96] },
+                    f3: { src: 'images/frags/mada/save.png',         tile: [76, 76] },
+                    f4: { src: 'images/frags/mada/cart-icon.png',    tile: [72, 72] },
+                    f5: { src: 'images/frags/mada/search.png',       tile: [60, 60] },
+                    f7: { src: 'images/frags/mada/messenger.png',    tile: [52, 52] },
+                    f8: { src: 'images/frags/mada/search.png',       tile: [52, 52] },
+                    f9: { src: 'images/frags/mada/save.png',         tile: [60, 60] }
+                },
+                accent: '#2E5BFF', // the "Comprar" button blue, sampled from the screenshot
+                // Their black as the outer, their blue as the core.
+                bg: { core: '#2E5BFF', inner: '#16277A', mid: '#0D1226', outer: '#231F20' }
+            },
+            {
+                key: 'tripmate',
+                name: 'TripMate',
+                meta: 'Collaborative Travel · 2025',
+                screen: 'images/projects/tripmate-screen.png',
+                // This screenshot's edges are photographic gradients, not flat colour,
+                // so the strips are gradients sampled across the top and bottom rows.
+                screenBg: 'linear-gradient(90deg, #B2D5F1 0%, #AED4F3 50%, #A2CBEE 100%)',
+                screenBgBottom: 'linear-gradient(90deg, #DA9AB5 0%, #C88DAB 50%, #B582A1 100%)',
+                hero: {
+                    eyebrow: 'Collaborative travel · 2025',
+                    title: ['One Trip', 'One App'],
+                    side: ['No More', 'Juggling'],
+                    desc: 'Planning one trip across four apps is three too many. Packing, bookings, budget and activities in a single flow — and it still works with no signal.',
+                    badge: ['Research depth', '4 personas · 93 pages']
+                },
+                logo: 'images/projects/tripmate-logo.png',
+                // Tiles sized so each element is downscaled, never blown up.
+                frags: {
+                    f1: { src: 'images/frags/tripmate/activity-card.png',    tile: [180, 180] },
+                    f2: { src: 'images/frags/tripmate/destination-pill.png', tile: [190, 90] },
+                    f3: { src: 'images/frags/tripmate/trip-card.png',        tile: [120, 120] },
+                    f4: { src: 'images/frags/tripmate/booking-card.png',     tile: [130, 108] },
+                    f5: { src: 'images/frags/tripmate/packing-item.png',     tile: [110, 110] },
+                    f7: { src: 'images/frags/tripmate/bag-icon.png',         tile: [52, 52] },
+                    f8: { src: 'images/frags/tripmate/next-button.png',      tile: [120, 60] },
+                    f9: { src: 'images/frags/tripmate/stats-pill.png',       tile: [110, 56] }
+                },
+                accent: '#6AE8A7', // the "Sierra Nevada" card green
+                // Sky blue core (from the prototype's sky) fading through their green.
+                bg: { core: '#B8DAF5', inner: '#2F8F68', mid: '#12303A', outer: '#0A0A0A' }
+            },
+            {
+                key: 'kebab',
+                name: 'Kebab Gourmet',
+                meta: 'Shipped Ordering Site · 2026',
+                flag: 'New',   // most recent work — called out on the card
+                screen: 'images/projects/kebab-screen.png',
+                screenBg: '#7F7F7F',       // uniform dimmed overlay behind the cart modal
+                screenBgBottom: '#FFFFFF', // white bar under the WhatsApp order button
+                hasDesktop: true,          // shipped on web too — brings the laptop into the hero
+                hero: {
+                    eyebrow: 'Shipped ordering site · 2026',
+                    title: ['Design', 'Shipped'],
+                    side: ['Two Taps', 'To Eat'],
+                    desc: 'A real kebab shop in Espartinas, taking real orders. Designed, built and deployed — proof that the work survives contact with production.',
+                    badge: ['Status', 'Live in production']
+                },
+                logo: 'images/projects/kebab-logo.png',
+                // Rebuilt in markup rather than exported, because the live site has no images.
+                frags: {
+                    f1: { tile: [210, 116], html: '<div class="kb kb-dish"><span class="kb-dish-emoji">🌯</span><div class="kb-dish-txt"><b>Menú Pita Kebab</b><em>Pollo / Ternera / Mixto</em><div class="kb-dish-chips"><span>Solo 4,50€</span><span>Menú 7,00€</span></div></div><span class="kb-dish-add">+</span></div>' },
+                    f2: { tile: [190, 90],  html: '<div class="kb kb-pill kb-choose">Elegir platos →</div>' },
+                    f3: { tile: [170, 82],  html: '<div class="kb kb-status"><i></i>Entrega activa ahora</div>' },
+                    f4: { tile: [84, 72],   html: '<div class="kb kb-pill kb-cart">🛒 0</div>' },
+                    f5: { tile: [192, 88],  html: '<div class="kb kb-extras"><span class="kb-extras-h">✚ EXTRAS</span><div class="kb-extras-chips"><span>Con Huevo +1€</span><span>Con Queso +0,50€</span></div></div>' },
+                    f7: { tile: [124, 58],  html: '<div class="kb kb-pill kb-wa">💬 WhatsApp</div>' },
+                    f8: { tile: [116, 100], html: '<div class="kb kb-promo"><b>50%</b><span>Descuento<br>en Kapsalone</span></div>' },
+                    f9: { tile: [132, 62],  html: '<div class="kb kb-toggle">🛵 A domicilio</div>' }
+                },
+                accent: '#FF751F', // their orange, sampled from the app icon
+                // White core, orange halo. The white is kept inside 14% so the phone covers it.
+                bg: { core: '#FFFFFF', inner: '#C2551A', mid: '#2A1405', outer: '#0A0A0A' }
+            }
+        ];
+
+        // Newest first: MADA and Kebab are 2026, TripMate 2025. Sorting here rather than
+        // reordering the literals keeps every project's config in one readable block, and
+        // the case-study numbering below is derived from this order so they can't drift.
+        const ORDER = ['mada', 'kebab', 'tripmate'];
+        PROJECTS.sort((a, b) => ORDER.indexOf(a.key) - ORDER.indexOf(b.key));
+
+        // Warm the cache up front. Without this the first switch to a project inserts an
+        // <img> that has not downloaded yet, so the screen renders empty for as long as the
+        // file takes to arrive — seconds on a cold load for the larger screenshots.
+        PROJECTS.forEach(p => { if (p.screen) { const pre = new Image(); pre.src = p.screen; } });
+
+        const SLOT_SPACING = 140; // px between card centres; side cards scale to 0.76
+
+        const hero = document.getElementById('hero');
+        const phone = document.getElementById('phone');
+        const phoneScreen = document.getElementById('phone-screen');
+        const screenMedia = document.getElementById('screen-media');
+        const deviceStage = document.getElementById('device-stage');
+        const heroLaptop = document.getElementById('hero-laptop');
+        const heroVideo = document.getElementById('hero-video');
+        const fragsFG = document.querySelector('.frags-container');
+        const fragsBG = document.querySelector('.frags-container-bg');
+        const allFrags = document.querySelectorAll('.frag');
+        // Must run before the first renderFrags(): it captures each slot's id and its generic
+        // glass icon, which is the fallback for projects that have no artwork yet.
+        allFrags.forEach(f => { f.dataset.slot = f.className.split(' ')[1]; f.dataset.fallback = f.innerHTML; });
+        const track = document.getElementById('carousel-track');
+        const countEl = document.getElementById('carousel-count');
+        const viewCaseBtn = document.getElementById('view-case');
+        const viewCaseLabel = document.getElementById('view-case-label');
+
+        let isSwitching = false;
+        let switchSpin = 0;
+        let activeIndex = 0;
+
+        /* ---------- Build the carousel ---------- */
+        PROJECTS.forEach((project, i) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.dataset.index = i;
+            card.innerHTML = `
+                ${project.flag ? `<span class="card-flag">${project.flag}</span>` : ''}
+                <div class="card-thumb">${project.logo
+                    ? `<img src="${project.logo}" alt="${project.name} app icon">`
+                    : project.name}</div>
+                <div class="card-info">
+                    <span>${project.name}</span>
+                    <span>${project.meta}</span>
+                </div>`;
+            card.setAttribute('role', 'tab');
+            card.tabIndex = 0;
+            const select = () => {
+                if (isSwitching || i === activeIndex) return;
+                activeIndex = i;
+                layoutCarousel();
+                switchProject(PROJECTS[i]);
+            };
+            card.addEventListener('click', select);
+            card.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }
+            });
+            track.appendChild(card);
+        });
+
+        // Lay the cards out around a centre slot. The selected project sits at offset 0,
+        // the others wrap to the nearest side, so with three projects there is always
+        // exactly one card left and one right of the active card.
+        function layoutCarousel() {
+            const cards = [...track.children];
+            const n = cards.length;
+            const half = Math.floor(n / 2);
+            cards.forEach((card, i) => {
+                const offset = ((i - activeIndex + n + half) % n) - half;
+                const isActive = offset === 0;
+                card.style.transform = `translateX(${offset * SLOT_SPACING}px) scale(${isActive ? 1 : 0.76})`;
+                card.style.setProperty('--card-opacity', isActive ? 1 : 0.4);
+                card.style.zIndex = isActive ? 3 : 2 - Math.abs(offset);
+                card.classList.toggle('is-active', isActive);
+                card.setAttribute('aria-selected', String(isActive));
+            });
+            countEl.textContent = String(activeIndex + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0');
+            // The hero CTA always points at whichever case study is on screen.
+            viewCaseLabel.textContent = 'View ' + PROJECTS[activeIndex].name + ' case study';
+        }
+
+        viewCaseBtn.addEventListener('click', () => {
+            const target = document.getElementById('case-' + PROJECTS[activeIndex].key);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        layoutCarousel();
+
+        /* ---------- Set the initial screen ---------- */
+        // The CTA must stay readable on every brand colour. White fails on the light accents
+        // (mint 1.5:1, orange 2.7:1) and MADA's blue fails BOTH inks — 4.14 white, 3.80 dark —
+        // so pick the better ink and, if that still misses 4.5, darken the fill until it lands.
+        const lin = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+        const lum = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+        const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+        const toRgb = hex => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
+        const toHex = rgb => '#' + rgb.map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
+
+        function ctaColours(hex) {
+            const INK_LIGHT = [229, 228, 226], INK_DARK = [10, 10, 10];
+            let bg = toRgb(hex);
+            let ink = contrast(bg, INK_LIGHT) >= contrast(bg, INK_DARK) ? INK_LIGHT : INK_DARK;
+            // Darken toward black in small steps until the pair clears AA.
+            for (let i = 0; i < 24 && contrast(bg, ink) < 4.5; i++) {
+                bg = bg.map(v => v * 0.94);
+                ink = INK_LIGHT; // once darkened, light ink is always the winner
+            }
+            return { bg: toHex(bg), ink: toHex(ink), ratio: +contrast(bg, ink).toFixed(2) };
+        }
+
+        function renderScreen(project) {
+            const cta = ctaColours(project.accent);
+            document.documentElement.style.setProperty('--accent-cta', cta.bg);
+            document.documentElement.style.setProperty('--accent-ink', cta.ink);
+            // Only the project that actually shipped on desktop gets the laptop.
+            deviceStage.classList.toggle('has-laptop', !!project.hasDesktop);
+            if (project.hasDesktop) heroVideo.play().catch(() => {}); else heroVideo.pause();
+
+            // The status bar is painted with the screenshot's own background colour so the
+            // notch sits in empty space instead of over the app's header.
+            phoneScreen.style.setProperty('--screen-bg', project.screenBg || '#0a0a0a');
+            phoneScreen.style.setProperty('--screen-bg-bottom', project.screenBgBottom || project.screenBg || '#0a0a0a');
+            if (!project.screen) {
+                screenMedia.innerHTML = `<div class="screen-fallback"><strong>${project.name}</strong><span style="font-size:0.7rem;opacity:0.7">${project.meta}</span></div>`;
+                return;
+            }
+            // Only put the image on screen once it has loaded, so the swap is never visible
+            // as a blank frame. Deliberately NOT img.decode(): that promise can stay pending
+            // forever while the document is hidden (background tab), leaving the screen
+            // permanently empty. onload always fires, and the preload above means it is
+            // usually already cached and resolves on the spot.
+            const img = new Image();
+            img.alt = project.name + ' interface';
+            const show = () => { if (screenMedia.dataset.pending === project.key) screenMedia.replaceChildren(img); };
+            screenMedia.dataset.pending = project.key;
+            img.onload = show;
+            img.onerror = show;
+            img.src = project.screen;
+            if (img.complete && img.naturalWidth) show(); // already in cache
+        }
+        renderScreen(PROJECTS[0]);
+        renderFrags(PROJECTS[0]);
+        document.documentElement.style.setProperty('--accent', PROJECTS[0].accent);
+
+        /* ============================================================
+           PROJECT SWITCH — same choreography as the soda flavor swap
+           ============================================================ */
+        // The explode step throws fragments to a random ±100px offset, which can land them
+        // on top of the phone. Nudge any such landing spot back out to the nearest side so
+        // the case-study screen stays readable after every switch.
+        function pushClearOfPhone(frag, offsetX, width) {
+            const stage = document.querySelector('.phone-stage');
+            if (!stage) return offsetX;
+            // Half-widths of BOTH boxes, or a wide fragment still clips the screen edge
+            // even while its centre sits outside the band.
+            const fragWidth = width || frag.offsetWidth;
+            const halfBand = stage.offsetWidth / 2 + fragWidth / 2 + 16;
+            const phoneCenter = window.innerWidth / 2;
+            const containerLeft = frag.parentElement.getBoundingClientRect().left;
+            const restCenter = containerLeft + frag.offsetLeft + fragWidth / 2;
+            const landedCenter = restCenter + offsetX;
+            const overlap = halfBand - Math.abs(landedCenter - phoneCenter);
+            if (overlap > 0) {
+                const dir = restCenter < phoneCenter ? -1 : 1;
+                return offsetX + dir * overlap;
+            }
+            return offsetX;
+        }
+
+        function switchProject(project) {
+            if (isSwitching) return;
+            isSwitching = true;
+
+            const frags = document.querySelectorAll('.frag');
+            const heroCenter = document.querySelector('.hero-center');
+
+            swapHeroCopy(project);
+
+            // 1. Background halo morph
+            gsap.to(hero, {
+                '--bg-core': project.bg.core,
+                '--bg-inner': project.bg.inner,
+                '--bg-mid': project.bg.mid,
+                '--bg-outer': project.bg.outer,
+                duration: 1.5,
+                ease: 'power2.inOut'
+            });
+            gsap.to(document.documentElement, {
+                '--accent': project.accent,
+                duration: 1.5,
+                ease: 'power2.inOut'
+            });
+
+            // 2. Phone spin + motion blur, screen swaps at the peak
+            const spinObj = { val: 0, blur: 0 };
+            gsap.to(spinObj, {
+                val: 360,
+                blur: 14,
+                duration: 0.6,
+                ease: 'power2.in',
+                onUpdate: () => {
+                    switchSpin = spinObj.val;
+                    phone.style.filter = `blur(${spinObj.blur}px)`;
+                },
+                onComplete: () => {
+                    renderScreen(project);
+                    gsap.to(spinObj, {
+                        val: 720,
+                        blur: 0,
+                        duration: 1.5,
+                        ease: 'back.out(0.7)',
+                        onUpdate: () => {
+                            switchSpin = spinObj.val;
+                            phone.style.filter = `blur(${spinObj.blur}px)`;
+                        },
+                        onComplete: () => {
+                            switchSpin = 0;
+                            phone.style.filter = 'none';
+                        }
+                    });
+                }
+            });
+
+            // 3. Fragments implode → recolour → explode to new random positions
+            let completedFrags = 0;
+            frags.forEach((frag) => {
+                const bW = frag.offsetWidth / 2;
+                const bH = frag.offsetHeight / 2;
+                const centerX = (window.innerWidth / 2 - frag.offsetLeft - bW);
+                const centerY = (window.innerHeight / 2 - frag.offsetTop - bH);
+
+                const startAngle = parseFloat(frag.dataset.angle) || 0;
+                const currentBaseX = parseFloat(frag.dataset.baseX) || 0;
+                const currentBaseY = parseFloat(frag.dataset.baseY) || 0;
+
+                const rawX = (Math.random() - 0.5) * 200;
+                const nextBaseX = frag.parentElement === fragsFG
+                    ? pushClearOfPhone(frag, rawX, fragWidthFor(project, frag))
+                    : rawX;
+                const nextBaseY = (Math.random() - 0.5) * 200;
+
+                // Real UI artwork has to stay readable, so it only ever tilts a few degrees.
+                // Abstract glass tiles can keep tumbling freely.
+                const willBeMedia = !!fragAsset(project, frag);
+                const midAngle = willBeMedia ? startAngle + 14 : startAngle + 45;
+                const endAngle = willBeMedia ? (Math.random() * 24 - 12) : startAngle + 90;
+
+                gsap.set(frag, { rotation: startAngle, x: currentBaseX, y: currentBaseY });
+
+                gsap.timeline()
+                    .to(frag, {
+                        x: centerX,
+                        y: centerY,
+                        rotation: midAngle,
+                        scale: 0.1,
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: 'power2.in',
+                        onComplete: () => {
+                            // Swap this fragment's artwork at the point where it is fully
+                            // collapsed and invisible — same trick as the phone's texture swap.
+                            renderFrag(project, frag);
+                            heroCenter.style.zIndex = 50;
+                        }
+                    })
+                    .to(frag, { duration: 0.3 })
+                    .to(frag, {
+                        onStart: () => { heroCenter.style.zIndex = 1; },
+                        x: nextBaseX,
+                        y: nextBaseY,
+                        rotation: endAngle,
+                        scale: 1,
+                        opacity: 1,
+                        duration: 0.9,
+                        ease: 'back.out(1.5)',
+                        onComplete: () => {
+                            frag.dataset.angle = endAngle;
+                            frag.dataset.baseX = nextBaseX;
+                            frag.dataset.baseY = nextBaseY;
+                            frag.dataset.rx = 0;
+                            frag.dataset.ry = 0;
+
+                            completedFrags++;
+                            if (completedFrags === frags.length) isSwitching = false;
+                        }
+                    });
+            });
+        }
+
+        /* ============================================================
+           POINTER PHYSICS — tilt, parallax, repulsion, float
+           ============================================================ */
+        function fragAsset(project, frag) {
+            return project.frags && project.frags[frag.dataset.slot];
+        }
+
+        function renderFrag(project, frag) {
+            const asset = fragAsset(project, frag);
+            if (asset) {
+                frag.classList.add('is-media');
+                frag.style.width = asset.tile[0] + 'px';
+                frag.style.height = asset.tile[1] + 'px';
+                // `html` for widgets rebuilt in markup, `src` for exported artwork.
+                frag.innerHTML = asset.html || `<img src="${asset.src}" alt="">`;
+            } else {
+                frag.classList.remove('is-media');
+                frag.style.width = '';
+                frag.style.height = '';
+                frag.innerHTML = frag.dataset.fallback;
+            }
+            frag.style.setProperty('--frag-accent', project.accent);
+        }
+
+        function renderFrags(project) {
+            allFrags.forEach(frag => renderFrag(project, frag));
+        }
+
+        const heroEls = {
+            eyebrow: document.getElementById('hero-eyebrow'),
+            title: document.getElementById('hero-title'),
+            desc: document.getElementById('hero-desc'),
+            side: document.getElementById('hero-side'),
+            badgeTitle: document.getElementById('badge-title'),
+            badgeSub: document.getElementById('badge-sub')
+        };
+
+        function renderHeroCopy(project) {
+            const h = project.hero;
+            if (!h) return;
+            const n = String(PROJECTS.indexOf(project) + 1).padStart(2, '0');
+            heroEls.eyebrow.textContent = 'Case study ' + n + ' · ' + h.eyebrow;
+            heroEls.title.innerHTML = `<span class="light">${h.title[0]}</span><br>${h.title[1]}`;
+            heroEls.side.innerHTML = `<span class="light">${h.side[0]}</span><br>${h.side[1]}`;
+            heroEls.desc.textContent = h.desc;
+            heroEls.badgeTitle.textContent = h.badge[0];
+            heroEls.badgeSub.textContent = h.badge[1];
+        }
+
+        // Cross-fade rather than hard-swap, so the copy changes with the same
+        // choreography as the phone and the background rather than snapping.
+        function swapHeroCopy(project) {
+            if (!project.hero) return;
+            const targets = [document.querySelector('.hero-left'), heroEls.side];
+            gsap.to(targets, {
+                opacity: 0,
+                y: 12,
+                duration: 0.3,
+                ease: 'power2.in',
+                onComplete: () => {
+                    renderHeroCopy(project);
+                    gsap.to(targets, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' });
+                }
+            });
+        }
+
+        // What this fragment will measure AFTER the swap — the explode target has to be
+        // computed against the incoming artwork's width, not the outgoing one.
+        function fragWidthFor(project, frag) {
+            const asset = fragAsset(project, frag);
+            return asset ? asset.tile[0] : (parseFloat(getComputedStyle(frag).width) || frag.offsetWidth);
+        }
+
+        // Put the case-study sections in the same order as the carousel, and number them
+        // from that order so the two can never disagree.
+        (function syncCaseSections() {
+            const contact = document.getElementById('contact');
+            PROJECTS.forEach((p, i) => {
+                const section = document.getElementById('case-' + p.key);
+                if (!section) return;
+                if (contact) contact.parentNode.insertBefore(section, contact);
+                const label = section.querySelector('.case-index');
+                if (label) label.textContent = 'Case study ' + String(i + 1).padStart(2, '0');
+            });
+        })();
+
+        // Warm the cache for every project's fragment artwork too.
+        PROJECTS.forEach(p => Object.values(p.frags || {}).forEach(a => {
+            if (a.src) { const i = new Image(); i.src = a.src; }
+        }));
+
+        allFrags.forEach(f => {
+            f.dataset.rx = 0; f.dataset.ry = 0;
+            // Media tiles start at a slight tilt; abstract ones can start anywhere.
+            f.dataset.angle = f.classList.contains('is-media') ? (Math.random() * 24 - 12) : Math.random() * 360;
+            // Foreground fragments get nudged off the phone from the very first frame too —
+            // the CSS percentages alone don't account for each fragment's own width.
+            f.dataset.baseX = f.parentElement === fragsFG ? pushClearOfPhone(f, 0, f.offsetWidth) : 0;
+            f.dataset.baseY = 0;
+        });
+
+        let mouse = { x: 0, y: 0, px: 0, py: 0 };
+        let currentMouse = { x: 0, y: 0 };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = (e.clientX / window.innerWidth) - 0.5;
+            mouse.y = (e.clientY / window.innerHeight) - 0.5;
+            mouse.px = e.clientX;
+            mouse.py = e.clientY;
+        });
+
+        function animate() {
+            const time = Date.now() * 0.001;
+
+            currentMouse.x += (mouse.x - currentMouse.x) * 0.05;
+            currentMouse.y += (mouse.y - currentMouse.y) * 0.05;
+
+            // Phone tilts toward the cursor (+ the 720° switch spin)
+            const rotY = (currentMouse.x * 40) + switchSpin;
+            const rotX = -(currentMouse.y * 20);
+            phone.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(-4deg)`;
+            // Same tilt and same 720° switch spin, dialled back so the two devices read as
+            // sitting at different depths instead of moving as one rigid block.
+            if (heroLaptop) {
+                heroLaptop.style.transform =
+                    `rotateX(${rotX * 0.75}deg) rotateY(${(currentMouse.x * 28) + switchSpin}deg) rotateZ(1.5deg)`;
+            }
+
+            // Parallax layers
+            fragsFG.style.transform = `translate(${currentMouse.x * 60}px, ${currentMouse.y * 60}px)`;
+            fragsBG.style.transform = `translate(${currentMouse.x * -30}px, ${currentMouse.y * -30}px)`;
+
+            if (!isSwitching) {
+                allFrags.forEach((frag, i) => {
+                    const rect = frag.getBoundingClientRect();
+                    const fragX = rect.left + rect.width / 2;
+                    const fragY = rect.top + rect.height / 2;
+
+                    const diffX = mouse.px - fragX;
+                    const diffY = mouse.py - fragY;
+                    const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+
+                    let targetRx = 0, targetRy = 0, speedMult = 1;
+
+                    if (distance < 400 && distance > 0) {
+                        const force = (400 - distance) / 400;
+                        targetRx = (diffX / distance) * force * -80;
+                        targetRy = (diffY / distance) * force * -80;
+                        speedMult = 1 + force * 5;
+                    }
+
+                    let rx = parseFloat(frag.dataset.rx) || 0;
+                    let ry = parseFloat(frag.dataset.ry) || 0;
+                    let angle = parseFloat(frag.dataset.angle) || 0;
+                    let baseX = parseFloat(frag.dataset.baseX) || 0;
+                    let baseY = parseFloat(frag.dataset.baseY) || 0;
+
+                    rx += (targetRx - rx) * 0.1;
+                    ry += (targetRy - ry) * 0.1;
+                    // Tiles holding real UI keep their tilt — spinning them would turn the
+                    // cart card and the price slider upside down and make them unreadable.
+                    if (!frag.classList.contains('is-media')) angle += 0.06 * speedMult;
+
+                    frag.dataset.rx = rx;
+                    frag.dataset.ry = ry;
+                    frag.dataset.angle = angle;
+
+                    const dur = [5, 7, 6, 8, 5.5, 6.5, 9, 11, 10][i % 9];
+                    const phase = (time + i * 0.7) * (Math.PI * 2 / dur);
+                    const floatY = Math.sin(phase) * 15;
+                    const floatAngle = Math.cos(phase) * 6;
+
+                    frag.style.transform = `translate(${rx + baseX}px, calc(${ry + baseY}px + ${floatY}px)) rotate(${angle + floatAngle}deg)`;
+                });
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        /* ---------- Get in touch: unfolds in place, never navigates ---------- */
+        const contactBtn = document.getElementById('contact-btn');
+        const contactPanel = document.getElementById('contact-panel');
+
+        function setContactOpen(open) {
+            contactPanel.classList.toggle('open', open);
+            contactBtn.setAttribute('aria-expanded', String(open));
+            if (open) document.getElementById('cf-name').focus();
+        }
+
+        contactBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setContactOpen(!contactPanel.classList.contains('open'));
+        });
+
+        contactPanel.addEventListener('click', e => e.stopPropagation());
+        document.addEventListener('click', () => setContactOpen(false));
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && contactPanel.classList.contains('open')) {
+                setContactOpen(false);
+                contactBtn.focus();
+            }
+        });
+
+        /* ---------- Prototype embeds: load only on demand ---------- */
+        document.querySelectorAll('.embed-facade').forEach(facade => {
+            facade.addEventListener('click', () => {
+                const iframe = document.createElement('iframe');
+                iframe.src = facade.dataset.src;
+                iframe.title = facade.dataset.title;
+                iframe.allowFullscreen = true;
+                facade.replaceWith(iframe);
+            });
+        });
+
+        /* ---------- Case study video: only runs while it is on screen ---------- */
+        const kebabVideo = document.getElementById('kebab-video');
+        if (kebabVideo && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        kebabVideo.play().catch(() => {}); // autoplay can still be refused
+                    } else {
+                        kebabVideo.pause();
+                    }
+                });
+            }, { threshold: 0.35 }).observe(kebabVideo);
+        } else if (kebabVideo) {
+            kebabVideo.controls = true; // reduced motion: let the visitor start it
+        }
+
+        /* ---------- Ambient particles ---------- */
+        const particlesContainer = document.getElementById('particles-container');
+        function createParticle() {
+            if (!particlesContainer) return;
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 8 + 3;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.bottom = '-50px';
+
+            const duration = Math.random() * 8 + 6;
+            p.style.animation = `floatUpParticle ${duration}s linear forwards`;
+
+            particlesContainer.appendChild(p);
+            setTimeout(() => p.remove(), duration * 1000);
+        }
+        setInterval(createParticle, 500);
+    </script>
+</body>
+
+</html>

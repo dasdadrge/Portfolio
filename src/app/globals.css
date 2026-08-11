@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+:root {
+  --color-alabaster: #e5e4e2;
+  --color-onyx: #0a0a0a;
+  --color-blue-slate: #536878;
+}
+
+@theme inline {
+  --color-alabaster: var(--color-alabaster);
+  --color-onyx: var(--color-onyx);
+  --color-blue-slate: var(--color-blue-slate);
+
+  --color-background: var(--color-alabaster);
+  --color-foreground: var(--color-onyx);
+
+  --font-heading: var(--font-space-grotesk);
+  --font-body: var(--font-archivo);
+  --font-sans: var(--font-archivo);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-body), sans-serif;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
