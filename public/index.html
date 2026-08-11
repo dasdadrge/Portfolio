@@ -1022,10 +1022,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2.5rem;
-            background: rgba(10, 10, 10, 0.94);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            gap: 3rem;
+            /* Fully opaque. At 0.94 the hero showed through and read as the name sitting on
+               top of the buttons. Scrollable and padded so a short window never collapses it. */
+            background: #0A0A0A;
+            padding: 3rem 1.5rem;
+            overflow-y: auto;
             opacity: 1;
             transition: opacity 0.5s ease;
         }
@@ -1069,6 +1071,8 @@
             cursor: pointer;
             transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
+        .lang-choice .flag { font-size: 1.9rem; line-height: 1; margin-bottom: 0.15rem; }
 
         .lang-choice small {
             font-size: 0.64rem;
@@ -1617,8 +1621,14 @@
             <p class="lang-gate-sub">UX/UI &amp; Immersive Reality Designer</p>
         </div>
         <div class="lang-choices">
-            <button class="lang-choice" data-set-lang="en">English<small>Continue in English</small></button>
-            <button class="lang-choice" data-set-lang="es">Español<small>Seguir en español</small></button>
+            <button class="lang-choice" data-set-lang="en">
+                <span class="flag" aria-hidden="true">🇬🇧</span>
+                English<small>Continue in English</small>
+            </button>
+            <button class="lang-choice" data-set-lang="es">
+                <span class="flag" aria-hidden="true">🇪🇸</span>
+                Español<small>Seguir en español</small>
+            </button>
         </div>
     </div>
 
@@ -1627,7 +1637,7 @@
         <div class="header-center">
             <a class="glass resume-pill" href="resume.html">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
-                Resume
+                <span data-lang="en">Resume</span><span data-lang="es">Currículum</span>
             </a>
             <nav class="nav glass">
                 <a href="#hero" class="nav-item active"><span data-lang="en">Projects</span><span data-lang="es">Proyectos</span></a>
@@ -1643,7 +1653,7 @@
             </button>
             <div class="contact-panel glass" id="contact-panel" role="dialog" aria-label="Send David a message">
                 <h3><span data-lang="en">Say hello</span><span data-lang="es">Escríbeme</span></h3>
-                <p class="sub"><span data-lang="en">Available for work — usually replies within a day.</span><span data-lang="es">Disponible para trabajar — suelo contestar el mismo día.</span></p>
+                <p class="sub"><span data-lang="en">Available for work, and I usually reply the same day.</span><span data-lang="es">Disponible para trabajar — suelo contestar el mismo día.</span></p>
                 <form id="contact-form" novalidate>
                     <div class="field">
                         <label for="cf-name"><span data-lang="en">Your name</span><span data-lang="es">Tu nombre</span></label>
@@ -1712,9 +1722,9 @@
                     First
                 </h1>
                 <p class="description" id="hero-desc">
-                    The Gulf had nowhere to resell fashion — fear of scams killed it.
-                    So I designed the trust in: escrow payments, protected chat, and a
-                    boutique that never says "secondhand".
+                    A secondhand fashion marketplace that never looks secondhand.
+                    Built for the Gulf, where nobody had made resale feel like a
+                    boutique instead of a bargain bin.
                 </p>
                 <div class="cta-group">
                     <button class="primary-btn" id="view-case">
@@ -1819,27 +1829,27 @@
         <div class="case-grid">
             <div class="case-block">
                 <h3><span data-lang="en">The problem</span><span data-lang="es">El problema</span></h3>
-                <p><span data-lang="en">The Gulf has no dedicated fashion resale platform — the "Vinted effect" simply never arrived. Up to 90% of textiles end up in landfill for lack of collection and resale systems, while generic classifieds like Dubizzle and Haraj feel cluttered and unsafe for fashion.</span><span data-lang="es">En el Golfo no existe ninguna plataforma dedicada a revender moda — el "efecto Vinted" nunca llegó. Hasta el 90% del textil acaba en vertederos por falta de sistemas de recogida y reventa, mientras los portales generalistas como Dubizzle o Haraj se sienten desordenados y poco fiables para comprar ropa.</span></p>
+                <p><span data-lang="en">The Gulf has no dedicated fashion resale platform. The "Vinted effect" simply never arrived. Up to 90% of textiles end up in landfill for lack of collection and resale systems, while generic classifieds like Dubizzle and Haraj feel cluttered and unsafe for fashion.</span><span data-lang="es">En el Golfo no existe ninguna plataforma dedicada a revender moda. El "efecto Vinted" nunca llegó hasta allí. Hasta el 90% del textil acaba en vertederos por falta de sistemas de recogida y reventa, mientras los portales generalistas como Dubizzle o Haraj se sienten desordenados y poco fiables para comprar ropa.</span></p>
             </div>
             <div class="case-block">
                 <h3><span data-lang="en">Research</span><span data-lang="es">Investigación</span></h3>
                 <ul>
                     <li><span data-lang="en">Desk research, netnography across Reddit, X and the App Store, plus a survey</span><span data-lang="es">Investigación documental, netnografía en Reddit, X y la App Store, más una encuesta</span></li>
                     <li><span data-lang="en">78% of Saudi e-commerce happens on a smartphone</span><span data-lang="es">El 78% del comercio electrónico saudí ocurre desde el móvil</span></li>
-                    <li><span data-lang="en">64% try to sell unused clothes — the top barrier is fear of scams</span><span data-lang="es">El 64% intenta vender ropa que no usa — la barrera principal es el miedo a que le estafen</span></li>
+                    <li><span data-lang="en">64% try to sell unused clothes, and the top barrier is fear of scams</span><span data-lang="es">El 64% intenta vender ropa que no usa, y lo que más les frena es el miedo a que les estafen</span></li>
                     <li><span data-lang="en">66% rate app aesthetics as "very important"</span><span data-lang="es">El 66% considera "muy importante" la estética de la app</span></li>
                     <li><span data-lang="en">58% of GCC consumers seek sustainable emotional gratification</span><span data-lang="es">El 58% de los consumidores del Golfo busca una recompensa emocional sostenible</span></li>
                 </ul>
             </div>
             <div class="case-block">
                 <h3><span data-lang="en">Who it's for</span><span data-lang="es">Para quién es</span></h3>
-                <p><span data-lang="en"><strong>Sara, 32</strong> — Bahrain, marketing. Wants to sell fast and safely; fears not getting paid.<br><br>
-                <strong>Zaid, 22</strong> — Saudi Arabia, tech student. Tired of dated classifieds, wants real filters and privacy.</span><span data-lang="es"><strong>Sara, 32</strong> — Baréin, marketing. Quiere vender rápido y sin riesgo; le da miedo no cobrar.<br><br><strong>Zaid, 22</strong> — Arabia Saudí, estudiante de tecnología. Harto de portales anticuados, quiere filtros de verdad y privacidad.</span></p>
+                <p><span data-lang="en"><strong>Sara, 32</strong>, Bahrain, marketing. Wants to sell fast and safely, and worries about not getting paid.<br><br>
+                <strong>Zaid, 22</strong>, Saudi Arabia, tech student. Tired of dated classifieds, wants real filters and privacy.</span><span data-lang="es"><strong>Sara, 32</strong>, de Baréin, trabaja en marketing. Quiere vender rápido y sin sustos, y le da miedo no cobrar.<br><br><strong>Zaid, 22</strong>, de Arabia Saudí, estudia tecnología. Está harto de portales anticuados y quiere filtros de verdad y privacidad.</span></p>
             </div>
             <div class="case-block">
                 <h3><span data-lang="en">Design response</span><span data-lang="es">Respuesta de diseño</span></h3>
                 <ul>
-                    <li><span data-lang="en">Escrow payments — money held until delivery is confirmed</span><span data-lang="es">Pago retenido — el dinero no se libera hasta confirmar la entrega</span></li>
+                    <li><span data-lang="en">Escrow payments that hold the money until delivery is confirmed</span><span data-lang="es">Pago retenido, de forma que el dinero no se libera hasta confirmar la entrega</span></li>
                     <li><span data-lang="en">Protected in-app chat, so no phone number is ever shared</span><span data-lang="es">Chat protegido dentro de la app, sin dar nunca el número de teléfono</span></li>
                     <li><span data-lang="en">Fashion-specific filters: size, brand, condition</span><span data-lang="es">Filtros pensados para moda: talla, marca, estado</span></li>
                     <li><span data-lang="en">Integrated home pickup and delivery logistics</span><span data-lang="es">Recogida a domicilio y logística integradas</span></li>
@@ -1849,11 +1859,11 @@
             <div class="case-block">
                 <h3><span data-lang="en">Palette &amp; type</span><span data-lang="es">Paleta y tipografía</span></h3>
                 <div class="swatches">
-                    <span class="swatch-item"><span class="swatch" style="background:#2E5BFF"></span><span><code>#2E5BFF</code> Electric Blue — CTAs and payment states, reads as technical security</span></span>
-                    <span class="swatch-item"><span class="swatch" style="background:#F9F8F3"></span><span><code>#F9F8F3</code> Alabaster White — gallery-like backdrop for the product grid</span></span>
-                    <span class="swatch-item"><span class="swatch" style="background:#231F20"></span><span><code>#231F20</code> Charcoal Black — text and overlays; premium without harsh pure black</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#2E5BFF"></span><span><code>#2E5BFF</code> <span data-lang="en">Electric Blue for CTAs and payment states, so it reads as technical security</span><span data-lang="es">Electric Blue para botones y estados de pago, porque se lee como seguridad técnica</span></span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#F9F8F3"></span><span><code>#F9F8F3</code> <span data-lang="en">Alabaster White as a gallery-like backdrop for the product grid</span><span data-lang="es">Alabaster White como fondo de galería para la rejilla de producto</span></span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#231F20"></span><span><code>#231F20</code> <span data-lang="en">Charcoal Black for text and overlays, premium without the harshness of pure black</span><span data-lang="es">Charcoal Black para texto y capas, premium sin la dureza del negro puro</span></span></span>
                 </div>
-                <p class="case-type"><span data-lang="en">The palette does the heavy lifting on the core problem: users confirmed it removes the <b>"used clothing" stigma</b> and reads as a premium boutique.</span><span data-lang="es">La paleta carga con el problema de fondo: los usuarios confirmaron que elimina el <b>estigma de la ropa usada</b> y que se lee como una boutíque premium.</span></p>
+                <p class="case-type"><span data-lang="en">The palette does most of the work on the core problem. Users confirmed it removes the <b>"used clothing" stigma</b> and reads as a premium boutique.</span><span data-lang="es">La paleta es la que carga con el problema de fondo. Los usuarios confirmaron que quita el <b>estigma de la ropa usada</b> y que se lee como una boutíque premium.</span></p>
             </div>
         </div>
 
@@ -1877,7 +1887,7 @@
                     <span class="embed-sub"><span data-lang="en">Opens the Figma player in place</span><span data-lang="es">Se abre aquí mismo, sin salir</span></span>
                 </button>
             </div>
-            <p class="embed-note"><span data-lang="en">Click through the buy and sell flows — the same build the ten usability testers used.</span><span data-lang="es">Recorre los flujos de compra y venta — es la misma versión que usaron los diez participantes del test.</span></p>
+            <p class="embed-note"><span data-lang="en">Click through the buy and sell flows. This is the same build the ten usability testers used.</span><span data-lang="es">Recorre los flujos de compra y venta. Es la misma versión que usaron los diez participantes del test.</span></p>
         </div>
 
         <a class="case-link" href="https://www.figma.com/proto/qSphxBJ6dGsOYSyLQ6T1Yc/MADA?node-id=12-817&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=12%3A561&amp;starting-point-node-id=12%3A817" target="_blank" rel="noopener"><span data-lang="en">Open full screen in Figma →</span><span data-lang="es">Abrir a pantalla completa en Figma →</span></a>
@@ -1903,18 +1913,18 @@
                 <ul>
                     <li><span data-lang="en">Four personas built from the distinct ways people travel</span><span data-lang="es">Cuatro perfiles construidos a partir de formas muy distintas de viajar</span></li>
                     <li><span data-lang="en">Competitive teardown of PackPoint, TripIt and Tripsy</span><span data-lang="es">Análisis a fondo de PackPoint, TripIt y Tripsy</span></li>
-                    <li><span data-lang="en"><strong>PackPoint</strong> — great packing generator, weak itineraries, no collaboration</span><span data-lang="es"><strong>PackPoint</strong> — buen generador de equipaje, flojo en itinerarios y sin colaboración</span></li>
-                    <li><span data-lang="en"><strong>TripIt</strong> — auto-imports bookings, but has no packing checklist at all</span><span data-lang="es"><strong>TripIt</strong> — importa reservas solo, pero no tiene lista de equipaje</span></li>
-                    <li><span data-lang="en"><strong>Tripsy</strong> — nice UI, but the packing list sits behind the paywall</span><span data-lang="es"><strong>Tripsy</strong> — interfaz cuidada, pero la lista de equipaje está de pago</span></li>
+                    <li><span data-lang="en"><strong>PackPoint</strong>, great packing generator, weak itineraries, no collaboration</span><span data-lang="es"><strong>PackPoint</strong>, buen generador de equipaje, flojo en itinerarios y sin nada de colaboración</span></li>
+                    <li><span data-lang="en"><strong>TripIt</strong>, auto-imports bookings, but has no packing checklist at all</span><span data-lang="es"><strong>TripIt</strong>, importa las reservas solo, pero no tiene lista de equipaje</span></li>
+                    <li><span data-lang="en"><strong>Tripsy</strong>, nice UI, but the packing list sits behind the paywall</span><span data-lang="es"><strong>Tripsy</strong>, interfaz cuidada, pero la lista de equipaje está de pago</span></li>
                     <li><span data-lang="en">Mind map and sitemap before wireframes, then high-fidelity Figma</span><span data-lang="es">Mapa mental y sitemap antes de los wireframes, y después alta fidelidad en Figma</span></li>
                 </ul>
             </div>
             <div class="case-block">
                 <h3><span data-lang="en">Who it's for</span><span data-lang="es">Para quién es</span></h3>
-                <p><span data-lang="en"><strong>Maria, 27</strong> — busy professional; needs a trip set up in minutes.<br><br>
-                <strong>Daniel, 24</strong> — first-time traveller; doesn't know what to pack and fears losing documents.<br><br>
-                <strong>Carla, 39</strong> — packs for a family of four and shares the trip with her husband.<br><br>
-                <strong>Alex, 28</strong> — adventure seeker; needs it to work with no signal.</span><span data-lang="es"><strong>María, 27</strong> — profesional sin tiempo; necesita montar un viaje en minutos.<br><br><strong>Daniel, 24</strong> — primer viaje; no sabe qué meter en la maleta y teme perder documentos.<br><br><strong>Carla, 39</strong> — prepara el equipaje de cuatro y comparte el viaje con su marido.<br><br><strong>Alex, 28</strong> — aventurero; lo necesita funcionando sin cobertura.</span></p>
+                <p><span data-lang="en"><strong>Maria, 27</strong>, busy professional who needs a trip set up in minutes.<br><br>
+                <strong>Daniel, 24</strong>, first-time traveller who doesn't know what to pack and worries about losing documents.<br><br>
+                <strong>Carla, 39</strong>, packs for a family of four and shares the trip with her husband.<br><br>
+                <strong>Alex, 28</strong>, adventure seeker who needs it working with no signal.</span><span data-lang="es"><strong>María, 27</strong>, profesional sin tiempo, necesita montar un viaje en minutos.<br><br><strong>Daniel, 24</strong>, primer viaje, no sabe qué meter en la maleta y le preocupa perder los documentos.<br><br><strong>Carla, 39</strong>, prepara el equipaje de cuatro y comparte el viaje con su marido.<br><br><strong>Alex, 28</strong>, aventurero, lo necesita funcionando sin cobertura.</span></p>
             </div>
             <div class="case-block">
                 <h3><span data-lang="en">Design response</span><span data-lang="es">Respuesta de diseño</span></h3>
@@ -1929,12 +1939,12 @@
             <div class="case-block">
                 <h3><span data-lang="en">Palette &amp; type</span><span data-lang="es">Paleta y tipografía</span></h3>
                 <div class="swatches">
-                    <span class="swatch-item"><span class="swatch" style="background:#6AE8A7"></span><span><code>#6AE8A7</code> Mint — primary actions and trip cards, the app's signature</span></span>
-                    <span class="swatch-item"><span class="swatch" style="background:#5DCB92"></span><span><code>#5DCB92</code> Deep Mint — pressed and secondary states</span></span>
-                    <span class="swatch-item"><span class="swatch" style="background:#000000"></span><span><code>#000000</code> Black — date pills and labels, maximum contrast on mint</span></span>
-                    <span class="swatch-item"><span class="swatch" style="background:#B8DAF5"></span><span><code>#B8DAF5</code> Sky — drawn from the destination photography, not a fixed brand colour</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#6AE8A7"></span><span><code>#6AE8A7</code> <span data-lang="en">Mint for primary actions and trip cards, the app's signature</span><span data-lang="es">Mint para acciones principales y tarjetas de viaje, el sello de la app</span></span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#5DCB92"></span><span><code>#5DCB92</code> <span data-lang="en">Deep Mint for pressed and secondary states</span><span data-lang="es">Deep Mint para estados pulsados y secundarios</span></span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#000000"></span><span><code>#000000</code> <span data-lang="en">Black for date pills and labels, maximum contrast on mint</span><span data-lang="es">Black para las píldoras de fecha y etiquetas, máximo contraste sobre menta</span></span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#B8DAF5"></span><span><code>#B8DAF5</code> <span data-lang="en">Sky drawn from the destination photography, not a fixed brand colour</span><span data-lang="es">Sky sacado de la fotografía del destino, no es un color de marca fijo</span></span></span>
                 </div>
-                <p class="case-type"><span data-lang="en">Full-bleed destination photography carries the emotion; the mint and black UI sits on top of it without competing.</span><span data-lang="es">La fotografía del destino a sangre completa aporta la emoción; la interfaz en menta y negro se apoya encima sin competir con ella.</span></p>
+                <p class="case-type"><span data-lang="en">Full-bleed destination photography carries the emotion. The mint and black UI sits on top of it without competing.</span><span data-lang="es">La fotografía del destino a sangre completa es la que aporta la emoción. La interfaz en menta y negro se apoya encima sin competir con ella.</span></p>
             </div>
         </div>
 
@@ -1958,7 +1968,7 @@
                     <span class="embed-sub"><span data-lang="en">Opens the Figma player in place</span><span data-lang="es">Se abre aquí mismo, sin salir</span></span>
                 </button>
             </div>
-            <p class="embed-note"><span data-lang="en">Walk the trip-creation flow: destination, dates, then the packing list it builds for you.</span><span data-lang="es">Recorre el alta de un viaje: destino, fechas, y la lista de equipaje que te genera.</span></p>
+            <p class="embed-note"><span data-lang="en">Walk through creating a trip, from destination and dates to the packing list it builds for you.</span><span data-lang="es">Recorre el alta de un viaje, desde el destino y las fechas hasta la lista de equipaje que te genera.</span></p>
         </div>
 
         <a class="case-link" href="https://www.figma.com/proto/DvU5LLs3QHkfVgq0OELwXd/Untitled?node-id=16-11&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;starting-point-node-id=16%3A11" target="_blank" rel="noopener"><span data-lang="en">Open full screen in Figma →</span><span data-lang="es">Abrir a pantalla completa en Figma →</span></a>
@@ -1977,43 +1987,43 @@
         <div class="case-grid">
             <div class="case-block">
                 <h3><span data-lang="en">The problem</span><span data-lang="es">El problema</span></h3>
-                <p><span data-lang="en">A neighbourhood kebab shop with no storefront of its own: orders arrived by phone or through Glovo, Just Eat and Uber Eats, each taking a cut and owning the customer relationship. I built it a direct channel — on my own initiative, as a pitch.</span><span data-lang="es">Un kebab de barrio sin escaparate propio: los pedidos le entraban por teléfono o vía Glovo, Just Eat y Uber Eats, cada uno llevándose su comisión y quedándose con la relación con el cliente. Le construí un canal directo — por iniciativa propia, como propuesta.</span></p>
+                <p><span data-lang="en">A neighbourhood kebab shop with no storefront of its own: orders arrived by phone or through Glovo, Just Eat and Uber Eats, each taking a cut and owning the customer relationship. I built it a direct channel on my own initiative, as a pitch.</span><span data-lang="es">Un kebab de barrio sin escaparate propio: los pedidos le entraban por teléfono o vía Glovo, Just Eat y Uber Eats, cada uno llevándose su comisión y quedándose con la relación con el cliente. Le construí un canal directo por iniciativa propia, a modo de propuesta.</span></p>
             </div>
             <div class="case-block">
                 <h3><span data-lang="en">Where it stands</span><span data-lang="es">En qué punto está</span></h3>
                 <ul>
                     <li><span data-lang="en">Self-initiated: designed and coded speculatively for a real shop, not commissioned</span><span data-lang="es">Iniciativa propia: diseñado y programado por mi cuenta para un local real, sin encargo previo</span></li>
                     <li><span data-lang="en">The handover never closed, so the live site routes orders to my own phone rather than theirs</span><span data-lang="es">La venta nunca llegó a cerrarse, así que la web envía los pedidos a mi móvil y no al suyo</span></li>
-                    <li><span data-lang="en">It is a working build, not a mockup — the flow, the cart and the ordering all run</span><span data-lang="es">Es una versión funcionando, no una maqueta — el flujo, el carrito y el pedido corren de verdad</span></li>
+                    <li><span data-lang="en">It is a working build rather than a mockup. The flow, the cart and the ordering all run</span><span data-lang="es">Es una versión funcionando y no una maqueta. El flujo, el carrito y el pedido corren de verdad</span></li>
                     <li><span data-lang="en">Constraints came from the real business: its menu, split opening hours and the platforms it already sold on</span><span data-lang="es">Las restricciones salieron del negocio real: su carta, su horario partido y las plataformas en las que ya vendía</span></li>
-                    <li><span data-lang="en">No formal discovery deck here, unlike MADA and TripMate — requirements came from the operation itself</span><span data-lang="es">Aquí no hubo fase de descubrimiento formal, a diferencia de MADA y TripMate — los requisitos venían de la propia operativa</span></li>
+                    <li><span data-lang="en">No formal discovery deck here, unlike MADA and TripMate. The requirements came from the operation itself</span><span data-lang="es">Aquí no hubo fase de descubrimiento formal, a diferencia de MADA y TripMate. Los requisitos salían de la propia operativa del local</span></li>
                 </ul>
             </div>
             <div class="case-block">
                 <h3><span data-lang="en">Who it's for</span><span data-lang="es">Para quién es</span></h3>
-                <p><span data-lang="en"><strong>The customer</strong> — hungry, one-handed on a phone, deciding in under a minute. Not browsing, not comparing.<br><br>
-                <strong>The shop</strong> — needs the order to land somewhere it already watches during service, without new software to learn mid-rush.</span><span data-lang="es"><strong>El cliente</strong> — con hambre, con una mano en el móvil, decidiendo en menos de un minuto. Ni navega ni compara.<br><br><strong>El local</strong> — necesita que el pedido caiga donde ya está mirando durante el servicio, sin aprender software nuevo en plena hora punta.</span></p>
+                <p><span data-lang="en"><strong>The customer</strong>, hungry, one hand on a phone, deciding in under a minute. Not browsing, not comparing.<br><br>
+                <strong>The shop</strong>, which needs the order to land somewhere it already watches during service, without new software to learn mid-rush.</span><span data-lang="es"><strong>El cliente</strong>, con hambre y una mano en el móvil, decidiendo en menos de un minuto. Ni navega ni compara.<br><br><strong>El local</strong>, que necesita el pedido donde ya está mirando durante el servicio, sin aprender software nuevo en plena hora punta.</span></p>
             </div>
             <div class="case-block">
                 <h3><span data-lang="en">Design response</span><span data-lang="es">Respuesta de diseño</span></h3>
                 <ul>
-                    <li><span data-lang="en">One thumb-reachable flow: pick, customise, order</span><span data-lang="es">Un flujo entero al alcance del pulgar: elegir, personalizar, pedir</span></li>
-                    <li><span data-lang="en">Extras and sauces as chips, never dropdowns — no hidden choices</span><span data-lang="es">Extras y salsas como fichas, nunca desplegables — ninguna opción escondida</span></li>
+                    <li><span data-lang="en">One flow you can run with a thumb. Pick, customise, order</span><span data-lang="es">Un flujo entero que se hace con el pulgar. Elegir, personalizar, pedir</span></li>
+                    <li><span data-lang="en">Extras and sauces as chips instead of dropdowns, so nothing is hidden</span><span data-lang="es">Extras y salsas como fichas en vez de desplegables, para que no haya nada escondido</span></li>
                     <li><span data-lang="en">Persistent cart and an order button that never leaves the screen</span><span data-lang="es">Carrito persistente y un botón de pedir que nunca se va de pantalla</span></li>
                     <li><span data-lang="en">Delivery or pickup toggle with an address form</span><span data-lang="es">Selector de envío o recogida con formulario de dirección</span></li>
-                    <li><span data-lang="en">WhatsApp as a first-class ordering route, not a fallback afterthought</span><span data-lang="es">WhatsApp como vía de pedido de primera, no como parche de última hora</span></li>
+                    <li><span data-lang="en">WhatsApp as a real ordering route, not a fallback afterthought</span><span data-lang="es">WhatsApp como vía de pedido de verdad, no como parche de última hora</span></li>
                     <li><span data-lang="en">Honest hand-off to Glovo, Just Eat and Uber Eats for those who prefer them</span><span data-lang="es">Derivación honesta a Glovo, Just Eat y Uber Eats para quien los prefiera</span></li>
                 </ul>
             </div>
             <div class="case-block">
                 <h3><span data-lang="en">Palette &amp; type</span><span data-lang="es">Paleta y tipografía</span></h3>
                 <div class="swatches">
-                    <span class="swatch-item"><span class="swatch" style="background:#F97316"></span><span><code>#F97316</code> Orange — the brand colour, reserved for "Pedir Ahora"</span></span>
-                    <span class="swatch-item"><span class="swatch" style="background:#16A34A"></span><span><code>#16A34A</code> Green — confirm and checkout, distinct from the brand CTA</span></span>
-                    <span class="swatch-item"><span class="swatch" style="background:#F0FDF4"></span><span><code>#F0FDF4</code> Mint Wash — selected states and price chips</span></span>
-                    <span class="swatch-item"><span class="swatch" style="background:#1A1A1A"></span><span><code>#1A1A1A</code> Near-black — body copy, softer than pure black on white</span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#F97316"></span><span><code>#F97316</code> <span data-lang="en">Orange the brand colour, reserved for "Pedir Ahora"</span><span data-lang="es">Orange el color de marca, reservado para "Pedir Ahora"</span></span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#16A34A"></span><span><code>#16A34A</code> <span data-lang="en">Green for confirm and checkout, kept distinct from the brand button</span><span data-lang="es">Green para confirmar y pagar, separado a propósito del botón de marca</span></span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#F0FDF4"></span><span><code>#F0FDF4</code> <span data-lang="en">Mint Wash for selected states and price chips</span><span data-lang="es">Mint Wash para estados seleccionados y fichas de precio</span></span></span>
+                    <span class="swatch-item"><span class="swatch" style="background:#1A1A1A"></span><span><code>#1A1A1A</code> <span data-lang="en">Near-black for body copy, softer than pure black on white</span><span data-lang="es">Near-black para el cuerpo de texto, más suave que el negro puro sobre blanco</span></span></span>
                 </div>
-                <p class="case-type"><span data-lang="en">Type: <b>Karla</b> for the interface, <b>Bebas Neue</b> for the discount figures — condensed so a "50%" lands hard without stealing the CTA's colour.</span><span data-lang="es">Tipografía: <b>Karla</b> para la interfaz y <b>Bebas Neue</b> para las cifras de descuento — condensada para que un "50%" golpee sin robarle el color al botón.</span></p>
+                <p class="case-type"><span data-lang="en">Type is <b>Karla</b> for the interface and <b>Bebas Neue</b> for the discount figures, condensed so a "50%" lands hard without stealing the button's colour.</span><span data-lang="es">La tipografía es <b>Karla</b> para la interfaz y <b>Bebas Neue</b> para las cifras de descuento, condensada para que un "50%" golpee sin robarle el color al botón.</span></p>
             </div>
         </div>
 
@@ -2036,7 +2046,7 @@
                         </video>
                     </div>
                     <div class="laptop-base"></div>
-                    <p class="duo-label"><span data-lang="en">Desktop — the landing</span><span data-lang="es">Escritorio — la landing</span></p>
+                    <p class="duo-label"><span data-lang="en">Desktop, the landing</span><span data-lang="es">Escritorio, la landing</span></p>
                 </div>
                 <div class="duo-phone">
                     <div class="duo-phone-body">
@@ -2045,10 +2055,10 @@
                             <img src="images/projects/kebab-screen.png" alt="Kebab Gourmet ordering flow on mobile">
                         </div>
                     </div>
-                    <p class="duo-label"><span data-lang="en">Mobile — the order</span><span data-lang="es">Móvil — el pedido</span></p>
+                    <p class="duo-label"><span data-lang="en">Mobile, the order</span><span data-lang="es">Móvil, el pedido</span></p>
                 </div>
             </div>
-            <p class="embed-note"><span data-lang="en">Same product, two jobs: the desktop landing sells the place, the phone takes the order.</span><span data-lang="es">Mismo producto, dos trabajos: la landing de escritorio vende el sitio, el móvil recoge el pedido.</span></p>
+            <p class="embed-note"><span data-lang="en">Same product doing two jobs. The desktop landing sells the place and the phone takes the order.</span><span data-lang="es">Mismo producto haciendo dos trabajos. La landing de escritorio vende el local y el móvil recoge el pedido.</span></p>
         </div>
 
         <a class="case-link" href="https://kebab-gourmet-website.vercel.app/" target="_blank" rel="noopener">
@@ -2067,7 +2077,7 @@
             </h2>
 
             <p class="contact-lead">
-<span data-lang="en">I'm looking for a product team where research actually reaches the interface. If that's yours, the fastest way to reach me is right here.</span><span data-lang="es">Busco un equipo de producto donde la investigación llegue de verdad hasta la interfaz. Si es el tuyo, aquí abajo tienes la vía más rápida.</span>
+<span data-lang="en">I want to work somewhere research actually reaches the interface. If that sounds like your team, the fastest way to reach me is right here.</span><span data-lang="es">Quiero trabajar donde la investigación llegue de verdad hasta la interfaz. Si eso suena a tu equipo, aquí abajo tienes la forma más rápida de escribirme.</span>
             </p>
 
             <a class="contact-mail" href="mailto:davidlopezcruzxr@gmail.com?subject=Hello%20from%20your%20portfolio">
@@ -2131,7 +2141,7 @@
                 launch: 'Launch the prototype', launchSub: 'Opens the Figma player in place',
                 sending: 'Sending…', send: 'Send message',
                 fillAll: 'Please fill in every field.',
-                sent: 'Sent — I’ll get back to you shortly.',
+                sent: 'Sent. I will get back to you shortly.',
                 failed: 'Could not send. Try emailing me directly.',
                 network: 'Network error. Try emailing me directly.'
             },
@@ -2140,7 +2150,7 @@
                 launch: 'Abrir el prototipo', launchSub: 'Se abre aquí mismo, sin salir',
                 sending: 'Enviando…', send: 'Enviar mensaje',
                 fillAll: 'Rellena todos los campos, por favor.',
-                sent: 'Enviado — te contesto enseguida.',
+                sent: 'Enviado. Te contesto enseguida.',
                 failed: 'No se pudo enviar. Escríbeme directamente.',
                 network: 'Fallo de conexión. Escríbeme directamente.'
             }
@@ -2217,18 +2227,18 @@
                 // runs into the phone, which sits from 40% to 60% of the viewport.
                 hero: {
                     en: {
-                        eyebrow: 'C2C circular fashion · Gulf 2026',
-                        title: ['Trust', 'First'],
-                        side: ['Premium', 'Resale'],
-                        desc: 'The Gulf had nowhere to resell fashion — fear of scams killed it. So I designed the trust in: escrow payments, protected chat, and a boutique that never says "secondhand".',
-                        badge: ['Usability testing', '100% success · 10 of 10 users']
+                        eyebrow: 'Premium resale marketplace · Gulf 2026',
+                        title: ['Luxury', 'Resale'],
+                        side: ['Zero', 'Stigma'],
+                        desc: 'A secondhand fashion marketplace that never looks secondhand. Built for the Gulf, where nobody had made resale feel like a boutique instead of a bargain bin.',
+                        badge: ['Usability testing', '100% success with 10 of 10 users']
                     },
                     es: {
-                        eyebrow: 'Moda circular C2C · Golfo Pérsico 2026',
-                        title: ['Vender', 'Seguro'],
-                        side: ['Reventa', 'Premium'],
-                        desc: 'En el Golfo nadie revende ropa, y no es por falta de ganas: es miedo a que te estafen. Así que diseñé la confianza dentro — pago retenido, chat sin dar el teléfono, y una estética que nunca dice "de segunda mano".',
-                        badge: ['Test de usabilidad', '100% de éxito · 10 de 10 usuarios']
+                        eyebrow: 'Marketplace de moda premium · Golfo Pérsico 2026',
+                        title: ['Segunda', 'Mano'],
+                        side: ['Cero', 'Estigma'],
+                        desc: 'Una tienda de ropa de segunda mano que no parece de segunda mano. Pensada para el Golfo, donde nadie había conseguido que revender ropa se sintiera como entrar en una boutique y no en un mercadillo.',
+                        badge: ['Test de usabilidad', '100% de éxito con 10 de 10 usuarios']
                     }
                 },
                 logo: 'images/projects/mada-logo.png',
@@ -2262,15 +2272,15 @@
                         eyebrow: 'Collaborative travel · 2025',
                         title: ['One Trip', 'One App'],
                         side: ['No More', 'Juggling'],
-                        desc: 'Planning one trip across four apps is three too many. Packing, bookings, budget and activities in a single flow — and it still works with no signal.',
-                        badge: ['Research depth', '4 personas · 93 pages']
+                        desc: 'Planning one trip across four apps is three too many. Packing, bookings, budget and activities in one place, and it still works with no signal.',
+                        badge: ['Research depth', '4 personas over 93 pages']
                     },
                     es: {
                         eyebrow: 'Planificar viajes en grupo · 2025',
                         title: ['Un Viaje', 'Una App'],
                         side: ['Se Acabó', 'El Caos'],
-                        desc: 'Organizar un viaje con cuatro apps distintas son tres de más. Maleta, reservas, presupuesto y planes en un solo sitio — y funcionando aunque te quedes sin cobertura.',
-                        badge: ['Profundidad de research', '4 perfiles · 93 páginas']
+                        desc: 'Organizar un viaje con cuatro apps distintas son tres de más. Maleta, reservas, presupuesto y planes en un solo sitio, y funcionando aunque te quedes sin cobertura.',
+                        badge: ['Profundidad de research', '4 perfiles en 93 páginas']
                     }
                 },
                 logo: 'images/projects/tripmate-logo.png',
@@ -2303,14 +2313,14 @@
                         eyebrow: 'Self-initiated build · coded and deployed · 2026',
                         title: ['Design', 'Shipped'],
                         side: ['Two Taps', 'To Eat'],
-                        desc: 'Built for a kebab shop in Espartinas and deployed for real. The handover never closed, so orders land on my phone instead of theirs — but the thing works end to end.',
+                        desc: 'Built for a kebab shop in Espartinas and deployed for real. The handover never closed, so orders land on my phone instead of theirs. The product still works end to end.',
                         badge: ['Status', 'Deployed and working']
                     },
                     es: {
                         eyebrow: 'Proyecto propio · diseñado y programado · 2026',
                         title: ['Diseño', 'Y Código'],
                         side: ['Pedir', 'Rápido'],
-                        desc: 'Lo hice para un kebab de Espartinas y lo dejé funcionando de verdad. La venta nunca llegó a cerrarse, así que los pedidos me entran a mi móvil y no al suyo — pero el producto está entero y funciona.',
+                        desc: 'Lo hice para un kebab de Espartinas y lo dejé funcionando de verdad. La venta nunca llegó a cerrarse, así que los pedidos me entran a mi móvil y no al suyo. Aun así el producto está entero y funciona.',
                         badge: ['Estado', 'Desplegado y funcionando']
                     }
                 },

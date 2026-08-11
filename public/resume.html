@@ -117,6 +117,25 @@
 
         .contact-btn:hover { background: var(--alabaster); color: var(--onyx); transform: translateY(-2px); }
 
+        html[lang="en"] [data-lang="es"],
+        html[lang="es"] [data-lang="en"] { display: none !important; }
+
+        .lang-toggle {
+            font-family: var(--font-ui);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            padding: 0.55rem 0.85rem;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            background: rgba(229, 228, 226, 0.04);
+            color: var(--muted-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle:hover { background: var(--alabaster); color: var(--onyx); border-color: transparent; }
+
         /* ---------- Intro ---------- */
         .intro {
             min-height: 100vh;
@@ -367,30 +386,28 @@
         <div class="header-center">
             <a class="glass resume-pill active" href="resume.html">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
-                Resume
+                <span data-lang="en">Resume</span><span data-lang="es">Currículum</span>
             </a>
             <nav class="nav glass">
-                <a href="/#hero" class="nav-item">Projects</a>
-                <a href="/#case-mada" class="nav-item">Case Studies</a>
-                <a href="#contact" class="nav-item">Contact</a>
+                <a href="/#hero" class="nav-item"><span data-lang="en">Projects</span><span data-lang="es">Proyectos</span></a>
+                <a href="/#case-mada" class="nav-item"><span data-lang="en">Case Studies</span><span data-lang="es">Casos</span></a>
+                <a href="#contact" class="nav-item"><span data-lang="en">Contact</span><span data-lang="es">Contacto</span></a>
             </nav>
+            <button class="lang-toggle glass" id="lang-toggle" aria-label="Change language"></button>
         </div>
-        <a class="contact-btn" href="mailto:davidlopezcruzxr@gmail.com">Get in touch</a>
+        <a class="contact-btn" href="mailto:davidlopezcruzxr@gmail.com"><span data-lang="en">Get in touch</span><span data-lang="es">Hablemos</span></a>
     </header>
 
     <main class="intro">
         <div>
-            <span class="eyebrow">UX/UI · Immersive Reality · Seville, Spain</span>
+            <span class="eyebrow"><span data-lang="en">UX/UI · Immersive Reality · Seville, Spain</span><span data-lang="es">UX/UI · Realidad Inmersiva · Sevilla, España</span></span>
             <h1><span class="light">David</span><br>Lopez</h1>
             <p class="intro-lead">
-                I turn complex user pain points into intuitive, high-fidelity digital
-                experiences — research, information architecture, prototyping and testing,
-                end to end. Trained between Seville and Savannah, and shaped as much by
-                fifteen years of competitive sport as by design school.
+<span data-lang="en">I turn complicated user problems into digital experiences that feel obvious. Research, information architecture, prototyping and testing, from start to finish. Trained between Seville and Savannah, and shaped as much by fifteen years of competitive sport as by design school.</span><span data-lang="es">Cojo problemas complicados de usuario y los convierto en experiencias que se entienden solas. Research, arquitectura de información, prototipado y testing, de principio a fin. Me formé entre Sevilla y Savannah, y me han hecho tanto quince años compitiendo en deporte como la carrera de diseño.</span>
             </p>
             <div class="intro-actions">
-                <a class="btn primary" href="David-Lopez-CV.pdf" target="_blank" rel="noopener">Download the PDF</a>
-                <a class="btn" href="/#hero">See the work</a>
+                <a class="btn primary" href="David-Lopez-CV.pdf" target="_blank" rel="noopener"><span data-lang="en">Download the PDF</span><span data-lang="es">Descargar el PDF</span></a>
+                <a class="btn" href="/#hero"><span data-lang="en">See the work</span><span data-lang="es">Ver los proyectos</span></a>
             </div>
         </div>
         <div class="portrait-stage">
@@ -402,8 +419,8 @@
 
     <section class="section">
         <div class="section-head reveal">
-            <span class="section-label">What I do</span>
-            <h2>The toolkit</h2>
+            <span class="section-label"><span data-lang="en">What I do</span><span data-lang="es">Lo que hago</span></span>
+            <h2><span data-lang="en">The toolkit</span><span data-lang="es">Mis herramientas</span></h2>
         </div>
         <div class="skills reveal">
             <span class="skill">UX Design</span>
@@ -421,86 +438,99 @@
             <span class="skill">Figma</span>
         </div>
         <div class="stats reveal">
-            <div class="stat"><b>100%</b><span>Task completion in MADA testing</span></div>
-            <div class="stat"><b>3</b><span>End-to-end case studies</span></div>
-            <div class="stat"><b>2</b><span>Languages — Spanish, English</span></div>
+            <div class="stat"><b>100%</b><span><span data-lang="en">Task completion in MADA testing</span><span data-lang="es">De éxito en el test de MADA</span></span></div>
+            <div class="stat"><b>3</b><span><span data-lang="en">End-to-end case studies</span><span data-lang="es">Casos de principio a fin</span></span></div>
+            <div class="stat"><b>2</b><span><span data-lang="en">Languages, Spanish and English</span><span data-lang="es">Idiomas, español e inglés</span></span></div>
         </div>
     </section>
 
     <section class="section">
         <div class="section-head reveal">
-            <span class="section-label">Where I learned it</span>
-            <h2>Education</h2>
+            <span class="section-label"><span data-lang="en">Where I learned it</span><span data-lang="es">Dónde lo aprendí</span></span>
+            <h2><span data-lang="en">Education</span><span data-lang="es">Formación</span></h2>
         </div>
         <div class="timeline">
             <div class="tl-item reveal">
-                <span class="tl-when">Spain</span>
-                <h3>Expert in UX/UI Design</h3>
+                <span class="tl-when"><span data-lang="en">Spain</span><span data-lang="es">España</span></span>
+                <h3><span data-lang="en">Expert in UX/UI Design</span><span data-lang="es">Experto en Diseño UX/UI</span></h3>
                 <p class="tl-where">SABAL University · CEI, Centro de Estudios de Innovación</p>
-                <p>Where the end-to-end process became method: research, architecture, prototyping and testing as one continuous loop rather than separate stages.</p>
+                <p><span data-lang="en">Where the whole process stopped being separate stages and became one loop. Research, architecture, prototyping and testing feeding each other.</span><span data-lang="es">Aquí el proceso dejó de ser fases sueltas y pasó a ser un ciclo. Research, arquitectura, prototipado y testing alimentándose entre sí.</span></p>
             </div>
             <div class="tl-item reveal">
-                <span class="tl-when">2021 – 2024 · Savannah, Georgia, USA</span>
-                <h3>B.F.A. Immersive Reality</h3>
-                <p class="tl-where">Savannah College of Art and Design · Minor in Interactive Design · GPA 3.7</p>
-                <p>Four years designing for space and depth, not just screens — which is why my interfaces still think in layers, motion and physicality. Dean's List every year, 2021–24.</p>
+                <span class="tl-when"><span data-lang="en">2021 – 2024 · Savannah, Georgia, USA</span><span data-lang="es">2021 – 2024 · Savannah, Georgia, EE. UU.</span></span>
+                <h3><span data-lang="en">B.F.A. Immersive Reality</span><span data-lang="es">Grado en Realidad Inmersiva</span></h3>
+                <p class="tl-where"><span data-lang="en">Savannah College of Art and Design · Minor in Interactive Design · GPA 3.7</span><span data-lang="es">Savannah College of Art and Design · Mención en Diseño Interactivo · Nota media 3.7</span></p>
+                <p><span data-lang="en">Four years designing for space and depth instead of just screens. That is why my interfaces still think in layers, movement and weight. Dean's List every year from 2021 to 2024.</span><span data-lang="es">Cuatro años diseñando para el espacio y la profundidad, no solo para pantallas. Por eso mis interfaces siguen pensando en capas, movimiento y peso. Cuadro de honor todos los años, de 2021 a 2024.</span></p>
             </div>
         </div>
     </section>
 
     <section class="section">
         <div class="section-head reveal">
-            <span class="section-label">The other half</span>
-            <h2>Fifteen years <span style="font-family:var(--font-display);font-weight:400;font-style:italic">of court</span></h2>
+            <span class="section-label"><span data-lang="en">The other half</span><span data-lang="es">La otra mitad</span></span>
+            <h2><span data-lang="en">Fifteen years <span style="font-family:var(--font-display);font-weight:400;font-style:italic">of court</span></span><span data-lang="es">Quince años <span style="font-family:var(--font-display);font-weight:400;font-style:italic">de pista</span></span></h2>
         </div>
         <div class="timeline">
             <div class="tl-item reveal">
-                <span class="tl-when">Professional</span>
-                <h3>Tennis, world ranking #1840</h3>
-                <p class="tl-where">Former professional player · NAIA #3 ranked student-athlete</p>
-                <p>Competitive sport is user testing with no debrief: you get one signal per point and you adjust immediately. It is where I learned to separate what I intended from what actually worked.</p>
+                <span class="tl-when"><span data-lang="en">Professional</span><span data-lang="es">Profesional</span></span>
+                <h3><span data-lang="en">Tennis, world ranking #1840</span><span data-lang="es">Tenis, número 1840 del mundo</span></h3>
+                <p class="tl-where"><span data-lang="en">Former professional player · NAIA #3 ranked student-athlete</span><span data-lang="es">Ex jugador profesional · Número 3 de la NAIA como estudiante-atleta</span></p>
+                <p><span data-lang="en">Competitive sport is user testing without a debrief. You get one signal per point and you adjust on the spot. It is where I learned to tell apart what I meant to do from what actually worked.</span><span data-lang="es">El deporte de competición es testing de usuario sin reunión posterior. Tienes una señal por punto y corriges sobre la marcha. Ahí aprendí a distinguir lo que yo pretendía de lo que de verdad funcionaba.</span></p>
             </div>
             <div class="tl-item reveal">
-                <span class="tl-when">Currently</span>
-                <h3>Professional padel player &amp; coach</h3>
-                <p class="tl-where">Tennis and padel coaching · Seville</p>
-                <p>Coaching is onboarding design with a live user in front of you. Explaining a movement to someone who has never done it is the same skill as making an interface obvious on first contact.</p>
+                <span class="tl-when"><span data-lang="en">Currently</span><span data-lang="es">Ahora mismo</span></span>
+                <h3><span data-lang="en">Professional padel player and coach</span><span data-lang="es">Jugador profesional de pádel y entrenador</span></h3>
+                <p class="tl-where"><span data-lang="en">Tennis and padel coaching · Seville</span><span data-lang="es">Entreno tenis y pádel · Sevilla</span></p>
+                <p><span data-lang="en">Coaching is onboarding design with a live user in front of you. Explaining a movement to someone who has never done it uses the same muscle as making an interface obvious on first contact.</span><span data-lang="es">Entrenar es diseño de onboarding con el usuario delante. Explicarle un gesto a alguien que no lo ha hecho nunca usa el mismo músculo que hacer que una interfaz se entienda a la primera.</span></p>
             </div>
             <div class="tl-item reveal">
-                <span class="tl-when">Recognition</span>
-                <h3>Honours</h3>
-                <p class="tl-where">SUN All-Academic Honors 2023–24 · ITA Scholar-Athlete 2022–23 · Dean's List 2021–24</p>
-                <p>Awarded for holding both at once — the ranking and the GPA.</p>
+                <span class="tl-when"><span data-lang="en">Recognition</span><span data-lang="es">Reconocimientos</span></span>
+                <h3><span data-lang="en">Honours</span><span data-lang="es">Distinciones</span></h3>
+                <p class="tl-where"><span data-lang="en">SUN All-Academic Honors 2023–24 · ITA Scholar-Athlete 2022–23 · Dean's List 2021–24</span><span data-lang="es">SUN All-Academic Honors 2023–24 · ITA Scholar-Athlete 2022–23 · Cuadro de honor 2021–24</span></p>
+                <p><span data-lang="en">Given for holding both at once, the ranking and the grades.</span><span data-lang="es">Se dan por sostener las dos cosas a la vez, el ranking y las notas.</span></p>
             </div>
         </div>
     </section>
 
     <section class="section" id="contact">
         <div class="section-head reveal">
-            <span class="section-label">Available for work</span>
-            <h2>Let's talk</h2>
+            <span class="section-label"><span data-lang="en">Available for work</span><span data-lang="es">Disponible para trabajar</span></span>
+            <h2><span data-lang="en">Let's talk</span><span data-lang="es">Hablemos</span></h2>
         </div>
         <div class="contact-grid reveal">
             <div class="contact-item">
-                <span>Email</span>
+                <span><span data-lang="en">Email</span><span data-lang="es">Correo</span></span>
                 <a href="mailto:davidlopezcruzxr@gmail.com">davidlopezcruzxr@gmail.com</a>
             </div>
             <div class="contact-item">
-                <span>Phone</span>
+                <span><span data-lang="en">Phone</span><span data-lang="es">Teléfono</span></span>
                 <a href="tel:+34635783196">+34 635 783 196</a>
             </div>
             <div class="contact-item">
-                <span>Based in</span>
-                <p>Seville, Spain</p>
+                <span><span data-lang="en">Based in</span><span data-lang="es">Dónde estoy</span></span>
+                <p><span data-lang="en">Seville, Spain</span><span data-lang="es">Sevilla, España</span></p>
             </div>
             <div class="contact-item">
-                <span>Resume</span>
-                <a href="David-Lopez-CV.pdf" target="_blank" rel="noopener">Download the PDF →</a>
+                <span><span data-lang="en">Resume</span><span data-lang="es">Currículum</span></span>
+                <a href="David-Lopez-CV.pdf" target="_blank" rel="noopener"><span data-lang="en">Download the PDF →</span><span data-lang="es">Descargar el PDF →</span></a>
             </div>
         </div>
     </section>
 
     <script>
+        /* Language: inherits whatever was chosen on the landing. */
+        const LANG_KEY = 'dl-lang';
+        let LANG = localStorage.getItem(LANG_KEY) === 'es' ? 'es' : 'en';
+        function applyLang(l) {
+            LANG = l;
+            document.documentElement.lang = l;
+            localStorage.setItem(LANG_KEY, l);
+            document.getElementById('lang-toggle').textContent = l === 'en' ? 'ES' : 'EN';
+            document.title = l === 'es' ? 'David Lopez — Currículum' : 'David Lopez — Resume';
+        }
+        applyLang(LANG);
+        document.getElementById('lang-toggle').addEventListener('click', () => applyLang(LANG === 'en' ? 'es' : 'en'));
+
         /* Scroll reveals */
         const io = new IntersectionObserver((entries) => {
             entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
