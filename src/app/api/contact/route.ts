@@ -23,8 +23,10 @@ function escapeHtml(value: string) {
 }
 
 export async function POST(request: Request) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL;
+  // Trimmed: pasting into a dashboard field easily carries a trailing space or newline,
+  // and Resend rejects the key outright when it does.
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const to = process.env.CONTACT_TO_EMAIL?.trim();
 
   if (!apiKey || !to) {
     console.error("Contact form: RESEND_API_KEY or CONTACT_TO_EMAIL is not set");
