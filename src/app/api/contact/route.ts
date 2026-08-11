@@ -76,7 +76,12 @@ export async function POST(request: Request) {
   if (!response.ok) {
     const detail = await response.text();
     console.error("Resend rejected the message:", response.status, detail);
-    return bad("Could not send the message. Try emailing me directly.", 502);
+    // TEMPORARY: surface Resend's own reason so the failure can be diagnosed without
+    // access to the runtime logs. Remove once the delivery path is confirmed.
+    return Response.json(
+      { ok: false, error: "Could not send the message. Try emailing me directly.", debug: { status: response.status, detail } },
+      { status: 502 },
+    );
   }
 
   return Response.json({ ok: true });
