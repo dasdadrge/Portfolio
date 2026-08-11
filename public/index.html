@@ -1007,6 +1007,103 @@
             margin-bottom: 1.5rem;
         }
 
+        /* ---------- Language ----------
+           Both languages ship in the markup and CSS hides the one not in use. It keeps each
+           text next to its counterpart, which matters when the Spanish is rewritten rather
+           than translated — you can see both voices side by side while editing. */
+        html[lang="en"] [data-lang="es"],
+        html[lang="es"] [data-lang="en"] { display: none !important; }
+
+        .lang-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            background: rgba(10, 10, 10, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .lang-gate.hide { opacity: 0; pointer-events: none; }
+        html.lang-chosen .lang-gate { display: none; }
+
+        .lang-gate-name {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: clamp(2.4rem, 6vw, 4.5rem);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            text-align: center;
+        }
+
+        .lang-gate-sub {
+            font-family: var(--font-ui);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted-color);
+            text-align: center;
+        }
+
+        .lang-choices { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+        .lang-choice {
+            font-family: var(--font-ui);
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 1.2rem 2.4rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            background: rgba(229, 228, 226, 0.05);
+            color: var(--alabaster);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .lang-choice small {
+            font-size: 0.64rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted-color);
+            font-weight: 500;
+        }
+
+        .lang-choice:hover {
+            background: var(--alabaster);
+            color: var(--onyx);
+            border-color: transparent;
+            transform: translateY(-4px);
+        }
+
+        .lang-choice:hover small { color: rgba(10, 10, 10, 0.6); }
+
+        /* Small toggle that lives in the header once a language is picked. */
+        .lang-toggle {
+            font-family: var(--font-ui);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            padding: 0.55rem 0.85rem;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            background: rgba(229, 228, 226, 0.04);
+            color: var(--muted-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle:hover { background: var(--alabaster); color: var(--onyx); border-color: transparent; }
+
         /* ---------- Contact ---------- */
         .contact-section {
             padding: 9rem 4% 7rem;
@@ -1514,6 +1611,17 @@
 </head>
 
 <body>
+    <div class="lang-gate" id="lang-gate">
+        <div>
+            <p class="lang-gate-name">David Lopez</p>
+            <p class="lang-gate-sub">UX/UI &amp; Immersive Reality Designer</p>
+        </div>
+        <div class="lang-choices">
+            <button class="lang-choice" data-set-lang="en">English<small>Continue in English</small></button>
+            <button class="lang-choice" data-set-lang="es">Español<small>Seguir en español</small></button>
+        </div>
+    </div>
+
     <header class="header">
         <div class="logo">David Lopez</div>
         <div class="header-center">
@@ -1522,10 +1630,11 @@
                 Resume
             </a>
             <nav class="nav glass">
-                <a href="#hero" class="nav-item active">Projects</a>
-                <a href="#case-mada" class="nav-item">Case Studies</a>
-                <a href="#contact" class="nav-item">Contact</a>
+                <a href="#hero" class="nav-item active"><span data-lang="en">Projects</span><span data-lang="es">Proyectos</span></a>
+                <a href="#case-mada" class="nav-item"><span data-lang="en">Case Studies</span><span data-lang="es">Casos</span></a>
+                <a href="#contact" class="nav-item"><span data-lang="en">Contact</span><span data-lang="es">Contacto</span></a>
             </nav>
+            <button class="lang-toggle glass" id="lang-toggle" aria-label="Change language"></button>
         </div>
         <div class="contact-wrap">
             <button class="contact-btn" id="contact-btn" aria-expanded="false" aria-controls="contact-panel">
@@ -1533,19 +1642,19 @@
                 <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
             </button>
             <div class="contact-panel glass" id="contact-panel" role="dialog" aria-label="Send David a message">
-                <h3>Say hello</h3>
-                <p class="sub">Available for work — usually replies within a day.</p>
+                <h3><span data-lang="en">Say hello</span><span data-lang="es">Escríbeme</span></h3>
+                <p class="sub"><span data-lang="en">Available for work — usually replies within a day.</span><span data-lang="es">Disponible para trabajar — suelo contestar el mismo día.</span></p>
                 <form id="contact-form" novalidate>
                     <div class="field">
-                        <label for="cf-name">Your name</label>
+                        <label for="cf-name"><span data-lang="en">Your name</span><span data-lang="es">Tu nombre</span></label>
                         <input id="cf-name" name="name" type="text" autocomplete="name" required>
                     </div>
                     <div class="field">
-                        <label for="cf-email">Your email</label>
+                        <label for="cf-email"><span data-lang="en">Your email</span><span data-lang="es">Tu correo</span></label>
                         <input id="cf-email" name="email" type="email" autocomplete="email" required>
                     </div>
                     <div class="field">
-                        <label for="cf-message">Message</label>
+                        <label for="cf-message"><span data-lang="en">Message</span><span data-lang="es">Mensaje</span></label>
                         <textarea id="cf-message" name="message" required></textarea>
                     </div>
                     <div class="hp" aria-hidden="true">
@@ -1556,7 +1665,7 @@
                     <p class="cf-status" id="cf-status" role="status" aria-live="polite"></p>
                 </form>
                 <div class="contact-direct">
-                    <span class="alt-label">Or write from your own inbox</span>
+                    <span class="alt-label"><span data-lang="en">Or write from your own inbox</span><span data-lang="es">O escríbeme desde tu correo</span></span>
                     <div class="alt-links">
                         <a class="mail-btn" target="_blank" rel="noopener" aria-label="Compose in Gmail"
                            href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=davidlopezcruzxr%40gmail.com&amp;su=Hello%20from%20your%20portfolio">
@@ -1703,48 +1812,48 @@
             <div>
                 <span class="case-index">Case study 01</span>
                 <h2>MADA</h2>
-                <p class="case-meta">C2C circular fashion · Gulf region · 2026 · End-to-end UX/UI, Double Diamond</p>
+                <p class="case-meta"><span data-lang="en">C2C circular fashion · Gulf region · 2026 · End-to-end UX/UI, Double Diamond</span><span data-lang="es">Moda circular C2C · Golfo Pérsico · 2026 · UX/UI de principio a fin, Doble Diamante</span></p>
             </div>
         </div>
 
         <div class="case-grid">
             <div class="case-block">
-                <h3>The problem</h3>
-                <p>The Gulf has no dedicated fashion resale platform — the "Vinted effect" simply never arrived. Up to 90% of textiles end up in landfill for lack of collection and resale systems, while generic classifieds like Dubizzle and Haraj feel cluttered and unsafe for fashion.</p>
+                <h3><span data-lang="en">The problem</span><span data-lang="es">El problema</span></h3>
+                <p><span data-lang="en">The Gulf has no dedicated fashion resale platform — the "Vinted effect" simply never arrived. Up to 90% of textiles end up in landfill for lack of collection and resale systems, while generic classifieds like Dubizzle and Haraj feel cluttered and unsafe for fashion.</span><span data-lang="es">En el Golfo no existe ninguna plataforma dedicada a revender moda — el "efecto Vinted" nunca llegó. Hasta el 90% del textil acaba en vertederos por falta de sistemas de recogida y reventa, mientras los portales generalistas como Dubizzle o Haraj se sienten desordenados y poco fiables para comprar ropa.</span></p>
             </div>
             <div class="case-block">
-                <h3>Research</h3>
+                <h3><span data-lang="en">Research</span><span data-lang="es">Investigación</span></h3>
                 <ul>
-                    <li>Desk research, netnography across Reddit, X and the App Store, plus a survey</li>
-                    <li>78% of Saudi e-commerce happens on a smartphone</li>
-                    <li>64% try to sell unused clothes — the top barrier is fear of scams</li>
-                    <li>66% rate app aesthetics as "very important"</li>
-                    <li>58% of GCC consumers seek sustainable emotional gratification</li>
+                    <li><span data-lang="en">Desk research, netnography across Reddit, X and the App Store, plus a survey</span><span data-lang="es">Investigación documental, netnografía en Reddit, X y la App Store, más una encuesta</span></li>
+                    <li><span data-lang="en">78% of Saudi e-commerce happens on a smartphone</span><span data-lang="es">El 78% del comercio electrónico saudí ocurre desde el móvil</span></li>
+                    <li><span data-lang="en">64% try to sell unused clothes — the top barrier is fear of scams</span><span data-lang="es">El 64% intenta vender ropa que no usa — la barrera principal es el miedo a que le estafen</span></li>
+                    <li><span data-lang="en">66% rate app aesthetics as "very important"</span><span data-lang="es">El 66% considera "muy importante" la estética de la app</span></li>
+                    <li><span data-lang="en">58% of GCC consumers seek sustainable emotional gratification</span><span data-lang="es">El 58% de los consumidores del Golfo busca una recompensa emocional sostenible</span></li>
                 </ul>
             </div>
             <div class="case-block">
-                <h3>Who it's for</h3>
-                <p><strong>Sara, 32</strong> — Bahrain, marketing. Wants to sell fast and safely; fears not getting paid.<br><br>
-                <strong>Zaid, 22</strong> — Saudi Arabia, tech student. Tired of dated classifieds, wants real filters and privacy.</p>
+                <h3><span data-lang="en">Who it's for</span><span data-lang="es">Para quién es</span></h3>
+                <p><span data-lang="en"><strong>Sara, 32</strong> — Bahrain, marketing. Wants to sell fast and safely; fears not getting paid.<br><br>
+                <strong>Zaid, 22</strong> — Saudi Arabia, tech student. Tired of dated classifieds, wants real filters and privacy.</span><span data-lang="es"><strong>Sara, 32</strong> — Baréin, marketing. Quiere vender rápido y sin riesgo; le da miedo no cobrar.<br><br><strong>Zaid, 22</strong> — Arabia Saudí, estudiante de tecnología. Harto de portales anticuados, quiere filtros de verdad y privacidad.</span></p>
             </div>
             <div class="case-block">
-                <h3>Design response</h3>
+                <h3><span data-lang="en">Design response</span><span data-lang="es">Respuesta de diseño</span></h3>
                 <ul>
-                    <li>Escrow payments — money held until delivery is confirmed</li>
-                    <li>Protected in-app chat, so no phone number is ever shared</li>
-                    <li>Fashion-specific filters: size, brand, condition</li>
-                    <li>Integrated home pickup and delivery logistics</li>
-                    <li>Premium minimalist UI to strip the "cheap secondhand" stigma</li>
+                    <li><span data-lang="en">Escrow payments — money held until delivery is confirmed</span><span data-lang="es">Pago retenido — el dinero no se libera hasta confirmar la entrega</span></li>
+                    <li><span data-lang="en">Protected in-app chat, so no phone number is ever shared</span><span data-lang="es">Chat protegido dentro de la app, sin dar nunca el número de teléfono</span></li>
+                    <li><span data-lang="en">Fashion-specific filters: size, brand, condition</span><span data-lang="es">Filtros pensados para moda: talla, marca, estado</span></li>
+                    <li><span data-lang="en">Integrated home pickup and delivery logistics</span><span data-lang="es">Recogida a domicilio y logística integradas</span></li>
+                    <li><span data-lang="en">Premium minimalist UI to strip the "cheap secondhand" stigma</span><span data-lang="es">Interfaz minimalista y premium para quitarle el estigma de "ropa usada barata"</span></li>
                 </ul>
             </div>
             <div class="case-block">
-                <h3>Palette &amp; type</h3>
+                <h3><span data-lang="en">Palette &amp; type</span><span data-lang="es">Paleta y tipografía</span></h3>
                 <div class="swatches">
                     <span class="swatch-item"><span class="swatch" style="background:#2E5BFF"></span><span><code>#2E5BFF</code> Electric Blue — CTAs and payment states, reads as technical security</span></span>
                     <span class="swatch-item"><span class="swatch" style="background:#F9F8F3"></span><span><code>#F9F8F3</code> Alabaster White — gallery-like backdrop for the product grid</span></span>
                     <span class="swatch-item"><span class="swatch" style="background:#231F20"></span><span><code>#231F20</code> Charcoal Black — text and overlays; premium without harsh pure black</span></span>
                 </div>
-                <p class="case-type">The palette does the heavy lifting on the core problem: users confirmed it removes the <b>"used clothing" stigma</b> and reads as a premium boutique.</p>
+                <p class="case-type"><span data-lang="en">The palette does the heavy lifting on the core problem: users confirmed it removes the <b>"used clothing" stigma</b> and reads as a premium boutique.</span><span data-lang="es">La paleta carga con el problema de fondo: los usuarios confirmaron que elimina el <b>estigma de la ropa usada</b> y que se lee como una boutíque premium.</span></p>
             </div>
         </div>
 
@@ -1755,7 +1864,7 @@
         </div>
 
         <div class="case-embed">
-            <h3>Interactive prototype</h3>
+            <h3><span data-lang="en">Interactive prototype</span><span data-lang="es">Prototipo interactivo</span></h3>
             <div class="embed-frame">
                 <!-- node-id MUST equal starting-point-node-id or the embed opens wherever the
                      link was copied from instead of at the first frame. -->
@@ -1764,14 +1873,14 @@
                     data-title="MADA interactive prototype"
                     data-src="https://embed.figma.com/proto/qSphxBJ6dGsOYSyLQ6T1Yc/MADA?node-id=12-817&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=12%3A561&amp;starting-point-node-id=12%3A817&amp;embed-host=share">
                     <span class="embed-play">▶</span>
-                    <span class="embed-cta">Launch the prototype</span>
-                    <span class="embed-sub">Opens the Figma player in place</span>
+                    <span class="embed-cta"><span data-lang="en">Launch the prototype</span><span data-lang="es">Abrir el prototipo</span></span>
+                    <span class="embed-sub"><span data-lang="en">Opens the Figma player in place</span><span data-lang="es">Se abre aquí mismo, sin salir</span></span>
                 </button>
             </div>
-            <p class="embed-note">Click through the buy and sell flows — the same build the ten usability testers used.</p>
+            <p class="embed-note"><span data-lang="en">Click through the buy and sell flows — the same build the ten usability testers used.</span><span data-lang="es">Recorre los flujos de compra y venta — es la misma versión que usaron los diez participantes del test.</span></p>
         </div>
 
-        <a class="case-link" href="https://www.figma.com/proto/qSphxBJ6dGsOYSyLQ6T1Yc/MADA?node-id=12-817&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=12%3A561&amp;starting-point-node-id=12%3A817" target="_blank" rel="noopener">Open full screen in Figma →</a>
+        <a class="case-link" href="https://www.figma.com/proto/qSphxBJ6dGsOYSyLQ6T1Yc/MADA?node-id=12-817&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=12%3A561&amp;starting-point-node-id=12%3A817" target="_blank" rel="noopener"><span data-lang="en">Open full screen in Figma →</span><span data-lang="es">Abrir a pantalla completa en Figma →</span></a>
     </section>
 
     <section class="case" id="case-tripmate" style="--case-accent:#6AE8A7">
@@ -1780,52 +1889,52 @@
             <div>
                 <span class="case-index">Case study 02</span>
                 <h2>TripMate</h2>
-                <p class="case-meta">Collaborative travel planning · 2025 · UX research, IA, prototyping</p>
+                <p class="case-meta"><span data-lang="en">Collaborative travel planning · 2025 · UX research, IA, prototyping</span><span data-lang="es">Planificación de viajes en grupo · 2025 · Research UX, arquitectura de información, prototipado</span></p>
             </div>
         </div>
 
         <div class="case-grid">
             <div class="case-block">
-                <h3>The problem</h3>
-                <p>Travellers juggle one app for packing, another for bookings, another for activities and notes. Things get forgotten, time gets lost, and what should be exciting turns stressful before the trip even starts.</p>
+                <h3><span data-lang="en">The problem</span><span data-lang="es">El problema</span></h3>
+                <p><span data-lang="en">Travellers juggle one app for packing, another for bookings, another for activities and notes. Things get forgotten, time gets lost, and what should be exciting turns stressful before the trip even starts.</span><span data-lang="es">Los viajeros usan una app para la maleta, otra para las reservas, otra para los planes y las notas. Se olvidan cosas, se pierde tiempo, y lo que debería ilusionar acaba agobiando antes incluso de salir de casa.</span></p>
             </div>
             <div class="case-block">
-                <h3>Research</h3>
+                <h3><span data-lang="en">Research</span><span data-lang="es">Investigación</span></h3>
                 <ul>
-                    <li>Four personas built from the distinct ways people travel</li>
-                    <li>Competitive teardown of PackPoint, TripIt and Tripsy</li>
-                    <li><strong>PackPoint</strong> — great packing generator, weak itineraries, no collaboration</li>
-                    <li><strong>TripIt</strong> — auto-imports bookings, but has no packing checklist at all</li>
-                    <li><strong>Tripsy</strong> — nice UI, but the packing list sits behind the paywall</li>
-                    <li>Mind map and sitemap before wireframes, then high-fidelity Figma</li>
+                    <li><span data-lang="en">Four personas built from the distinct ways people travel</span><span data-lang="es">Cuatro perfiles construidos a partir de formas muy distintas de viajar</span></li>
+                    <li><span data-lang="en">Competitive teardown of PackPoint, TripIt and Tripsy</span><span data-lang="es">Análisis a fondo de PackPoint, TripIt y Tripsy</span></li>
+                    <li><span data-lang="en"><strong>PackPoint</strong> — great packing generator, weak itineraries, no collaboration</span><span data-lang="es"><strong>PackPoint</strong> — buen generador de equipaje, flojo en itinerarios y sin colaboración</span></li>
+                    <li><span data-lang="en"><strong>TripIt</strong> — auto-imports bookings, but has no packing checklist at all</span><span data-lang="es"><strong>TripIt</strong> — importa reservas solo, pero no tiene lista de equipaje</span></li>
+                    <li><span data-lang="en"><strong>Tripsy</strong> — nice UI, but the packing list sits behind the paywall</span><span data-lang="es"><strong>Tripsy</strong> — interfaz cuidada, pero la lista de equipaje está de pago</span></li>
+                    <li><span data-lang="en">Mind map and sitemap before wireframes, then high-fidelity Figma</span><span data-lang="es">Mapa mental y sitemap antes de los wireframes, y después alta fidelidad en Figma</span></li>
                 </ul>
             </div>
             <div class="case-block">
-                <h3>Who it's for</h3>
-                <p><strong>Maria, 27</strong> — busy professional; needs a trip set up in minutes.<br><br>
+                <h3><span data-lang="en">Who it's for</span><span data-lang="es">Para quién es</span></h3>
+                <p><span data-lang="en"><strong>Maria, 27</strong> — busy professional; needs a trip set up in minutes.<br><br>
                 <strong>Daniel, 24</strong> — first-time traveller; doesn't know what to pack and fears losing documents.<br><br>
                 <strong>Carla, 39</strong> — packs for a family of four and shares the trip with her husband.<br><br>
-                <strong>Alex, 28</strong> — adventure seeker; needs it to work with no signal.</p>
+                <strong>Alex, 28</strong> — adventure seeker; needs it to work with no signal.</span><span data-lang="es"><strong>María, 27</strong> — profesional sin tiempo; necesita montar un viaje en minutos.<br><br><strong>Daniel, 24</strong> — primer viaje; no sabe qué meter en la maleta y teme perder documentos.<br><br><strong>Carla, 39</strong> — prepara el equipaje de cuatro y comparte el viaje con su marido.<br><br><strong>Alex, 28</strong> — aventurero; lo necesita funcionando sin cobertura.</span></p>
             </div>
             <div class="case-block">
-                <h3>Design response</h3>
+                <h3><span data-lang="en">Design response</span><span data-lang="es">Respuesta de diseño</span></h3>
                 <ul>
-                    <li>Step-by-step trip creation: destination, dates, activities</li>
-                    <li>Packing checklist generated from destination, duration and weather</li>
-                    <li>Multi-bag organisation with visual packing progress</li>
-                    <li>Budget tracker with a spending cap</li>
-                    <li>Share a trip by link, and full offline access</li>
+                    <li><span data-lang="en">Step-by-step trip creation: destination, dates, activities</span><span data-lang="es">Creación del viaje paso a paso: destino, fechas, actividades</span></li>
+                    <li><span data-lang="en">Packing checklist generated from destination, duration and weather</span><span data-lang="es">Lista de equipaje generada según destino, duración y clima</span></li>
+                    <li><span data-lang="en">Multi-bag organisation with visual packing progress</span><span data-lang="es">Organización por bultos con progreso visual de la maleta</span></li>
+                    <li><span data-lang="en">Budget tracker with a spending cap</span><span data-lang="es">Control de presupuesto con límite de gasto</span></li>
+                    <li><span data-lang="en">Share a trip by link, and full offline access</span><span data-lang="es">Compartir el viaje por enlace, y acceso completo sin conexión</span></li>
                 </ul>
             </div>
             <div class="case-block">
-                <h3>Palette &amp; type</h3>
+                <h3><span data-lang="en">Palette &amp; type</span><span data-lang="es">Paleta y tipografía</span></h3>
                 <div class="swatches">
                     <span class="swatch-item"><span class="swatch" style="background:#6AE8A7"></span><span><code>#6AE8A7</code> Mint — primary actions and trip cards, the app's signature</span></span>
                     <span class="swatch-item"><span class="swatch" style="background:#5DCB92"></span><span><code>#5DCB92</code> Deep Mint — pressed and secondary states</span></span>
                     <span class="swatch-item"><span class="swatch" style="background:#000000"></span><span><code>#000000</code> Black — date pills and labels, maximum contrast on mint</span></span>
                     <span class="swatch-item"><span class="swatch" style="background:#B8DAF5"></span><span><code>#B8DAF5</code> Sky — drawn from the destination photography, not a fixed brand colour</span></span>
                 </div>
-                <p class="case-type">Full-bleed destination photography carries the emotion; the mint and black UI sits on top of it without competing.</p>
+                <p class="case-type"><span data-lang="en">Full-bleed destination photography carries the emotion; the mint and black UI sits on top of it without competing.</span><span data-lang="es">La fotografía del destino a sangre completa aporta la emoción; la interfaz en menta y negro se apoya encima sin competir con ella.</span></p>
             </div>
         </div>
 
@@ -1836,7 +1945,7 @@
         </div>
 
         <div class="case-embed">
-            <h3>Interactive prototype</h3>
+            <h3><span data-lang="en">Interactive prototype</span><span data-lang="es">Prototipo interactivo</span></h3>
             <div class="embed-frame">
                 <!-- node-id forced to 16-11 to match starting-point-node-id, so it opens on
                      the first frame rather than node 2012-4 where the link was copied. -->
@@ -1845,14 +1954,14 @@
                     data-title="TripMate interactive prototype"
                     data-src="https://embed.figma.com/proto/DvU5LLs3QHkfVgq0OELwXd/Untitled?node-id=16-11&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;starting-point-node-id=16%3A11&amp;embed-host=share">
                     <span class="embed-play">▶</span>
-                    <span class="embed-cta">Launch the prototype</span>
-                    <span class="embed-sub">Opens the Figma player in place</span>
+                    <span class="embed-cta"><span data-lang="en">Launch the prototype</span><span data-lang="es">Abrir el prototipo</span></span>
+                    <span class="embed-sub"><span data-lang="en">Opens the Figma player in place</span><span data-lang="es">Se abre aquí mismo, sin salir</span></span>
                 </button>
             </div>
-            <p class="embed-note">Walk the trip-creation flow: destination, dates, then the packing list it builds for you.</p>
+            <p class="embed-note"><span data-lang="en">Walk the trip-creation flow: destination, dates, then the packing list it builds for you.</span><span data-lang="es">Recorre el alta de un viaje: destino, fechas, y la lista de equipaje que te genera.</span></p>
         </div>
 
-        <a class="case-link" href="https://www.figma.com/proto/DvU5LLs3QHkfVgq0OELwXd/Untitled?node-id=16-11&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;starting-point-node-id=16%3A11" target="_blank" rel="noopener">Open full screen in Figma →</a>
+        <a class="case-link" href="https://www.figma.com/proto/DvU5LLs3QHkfVgq0OELwXd/Untitled?node-id=16-11&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;starting-point-node-id=16%3A11" target="_blank" rel="noopener"><span data-lang="en">Open full screen in Figma →</span><span data-lang="es">Abrir a pantalla completa en Figma →</span></a>
     </section>
 
     <section class="case" id="case-kebab" style="--case-accent:#FF751F">
@@ -1861,59 +1970,61 @@
             <div>
                 <span class="case-index">Case study 03</span>
                 <h2>Kebab Gourmet</h2>
-                <p class="case-meta">Ordering website · Espartinas, Sevilla · 2026 · Design through to deployment</p>
+                <p class="case-meta"><span data-lang="en">Ordering website · Espartinas, Sevilla · 2026 · Self-initiated, designed and coded</span><span data-lang="es">Web de pedidos · Espartinas, Sevilla · 2026 · Proyecto propio, diseñado y programado</span></p>
             </div>
         </div>
 
         <div class="case-grid">
             <div class="case-block">
-                <h3>The problem</h3>
-                <p>A neighbourhood kebab shop with no storefront of its own: orders arrived by phone or through Glovo, Just Eat and Uber Eats, each taking a cut and owning the customer relationship. It needed a direct channel that its regulars would actually use.</p>
+                <h3><span data-lang="en">The problem</span><span data-lang="es">El problema</span></h3>
+                <p><span data-lang="en">A neighbourhood kebab shop with no storefront of its own: orders arrived by phone or through Glovo, Just Eat and Uber Eats, each taking a cut and owning the customer relationship. I built it a direct channel — on my own initiative, as a pitch.</span><span data-lang="es">Un kebab de barrio sin escaparate propio: los pedidos le entraban por teléfono o vía Glovo, Just Eat y Uber Eats, cada uno llevándose su comisión y quedándose con la relación con el cliente. Le construí un canal directo — por iniciativa propia, como propuesta.</span></p>
             </div>
             <div class="case-block">
-                <h3>Research</h3>
+                <h3><span data-lang="en">Where it stands</span><span data-lang="es">En qué punto está</span></h3>
                 <ul>
-                    <li>Constraints taken from the business itself: its real menu, two phone lines, split opening hours and the platforms it already sold on</li>
-                    <li>WhatsApp identified as the channel the shop already ran orders through, so the design had to meet it there rather than replace it</li>
-                    <li>Unlike MADA and TripMate, this one has no formal discovery deck — the requirements came from the operation, not from a research phase</li>
+                    <li><span data-lang="en">Self-initiated: designed and coded speculatively for a real shop, not commissioned</span><span data-lang="es">Iniciativa propia: diseñado y programado por mi cuenta para un local real, sin encargo previo</span></li>
+                    <li><span data-lang="en">The handover never closed, so the live site routes orders to my own phone rather than theirs</span><span data-lang="es">La venta nunca llegó a cerrarse, así que la web envía los pedidos a mi móvil y no al suyo</span></li>
+                    <li><span data-lang="en">It is a working build, not a mockup — the flow, the cart and the ordering all run</span><span data-lang="es">Es una versión funcionando, no una maqueta — el flujo, el carrito y el pedido corren de verdad</span></li>
+                    <li><span data-lang="en">Constraints came from the real business: its menu, split opening hours and the platforms it already sold on</span><span data-lang="es">Las restricciones salieron del negocio real: su carta, su horario partido y las plataformas en las que ya vendía</span></li>
+                    <li><span data-lang="en">No formal discovery deck here, unlike MADA and TripMate — requirements came from the operation itself</span><span data-lang="es">Aquí no hubo fase de descubrimiento formal, a diferencia de MADA y TripMate — los requisitos venían de la propia operativa</span></li>
                 </ul>
             </div>
             <div class="case-block">
-                <h3>Who it's for</h3>
-                <p><strong>The customer</strong> — hungry, one-handed on a phone, deciding in under a minute. Not browsing, not comparing.<br><br>
-                <strong>The shop</strong> — needs the order to land somewhere it already watches during service, without new software to learn mid-rush.</p>
+                <h3><span data-lang="en">Who it's for</span><span data-lang="es">Para quién es</span></h3>
+                <p><span data-lang="en"><strong>The customer</strong> — hungry, one-handed on a phone, deciding in under a minute. Not browsing, not comparing.<br><br>
+                <strong>The shop</strong> — needs the order to land somewhere it already watches during service, without new software to learn mid-rush.</span><span data-lang="es"><strong>El cliente</strong> — con hambre, con una mano en el móvil, decidiendo en menos de un minuto. Ni navega ni compara.<br><br><strong>El local</strong> — necesita que el pedido caiga donde ya está mirando durante el servicio, sin aprender software nuevo en plena hora punta.</span></p>
             </div>
             <div class="case-block">
-                <h3>Design response</h3>
+                <h3><span data-lang="en">Design response</span><span data-lang="es">Respuesta de diseño</span></h3>
                 <ul>
-                    <li>One thumb-reachable flow: pick, customise, order</li>
-                    <li>Extras and sauces as chips, never dropdowns — no hidden choices</li>
-                    <li>Persistent cart and an order button that never leaves the screen</li>
-                    <li>Delivery or pickup toggle with an address form</li>
-                    <li>WhatsApp as a first-class ordering route, not a fallback afterthought</li>
-                    <li>Honest hand-off to Glovo, Just Eat and Uber Eats for those who prefer them</li>
+                    <li><span data-lang="en">One thumb-reachable flow: pick, customise, order</span><span data-lang="es">Un flujo entero al alcance del pulgar: elegir, personalizar, pedir</span></li>
+                    <li><span data-lang="en">Extras and sauces as chips, never dropdowns — no hidden choices</span><span data-lang="es">Extras y salsas como fichas, nunca desplegables — ninguna opción escondida</span></li>
+                    <li><span data-lang="en">Persistent cart and an order button that never leaves the screen</span><span data-lang="es">Carrito persistente y un botón de pedir que nunca se va de pantalla</span></li>
+                    <li><span data-lang="en">Delivery or pickup toggle with an address form</span><span data-lang="es">Selector de envío o recogida con formulario de dirección</span></li>
+                    <li><span data-lang="en">WhatsApp as a first-class ordering route, not a fallback afterthought</span><span data-lang="es">WhatsApp como vía de pedido de primera, no como parche de última hora</span></li>
+                    <li><span data-lang="en">Honest hand-off to Glovo, Just Eat and Uber Eats for those who prefer them</span><span data-lang="es">Derivación honesta a Glovo, Just Eat y Uber Eats para quien los prefiera</span></li>
                 </ul>
             </div>
             <div class="case-block">
-                <h3>Palette &amp; type</h3>
+                <h3><span data-lang="en">Palette &amp; type</span><span data-lang="es">Paleta y tipografía</span></h3>
                 <div class="swatches">
                     <span class="swatch-item"><span class="swatch" style="background:#F97316"></span><span><code>#F97316</code> Orange — the brand colour, reserved for "Pedir Ahora"</span></span>
                     <span class="swatch-item"><span class="swatch" style="background:#16A34A"></span><span><code>#16A34A</code> Green — confirm and checkout, distinct from the brand CTA</span></span>
                     <span class="swatch-item"><span class="swatch" style="background:#F0FDF4"></span><span><code>#F0FDF4</code> Mint Wash — selected states and price chips</span></span>
                     <span class="swatch-item"><span class="swatch" style="background:#1A1A1A"></span><span><code>#1A1A1A</code> Near-black — body copy, softer than pure black on white</span></span>
                 </div>
-                <p class="case-type">Type: <b>Karla</b> for the interface, <b>Bebas Neue</b> for the discount figures — condensed so a "50%" lands hard without stealing the CTA's colour.</p>
+                <p class="case-type"><span data-lang="en">Type: <b>Karla</b> for the interface, <b>Bebas Neue</b> for the discount figures — condensed so a "50%" lands hard without stealing the CTA's colour.</span><span data-lang="es">Tipografía: <b>Karla</b> para la interfaz y <b>Bebas Neue</b> para las cifras de descuento — condensada para que un "50%" golpee sin robarle el color al botón.</span></p>
             </div>
         </div>
 
         <div class="case-stats">
-            <div class="case-stat"><b>5</b><span>Menu categories, live</span></div>
-            <div class="case-stat"><b>3</b><span>Delivery platforms integrated</span></div>
-            <div class="case-stat"><b>100%</b><span>Shipped — design to deployment</span></div>
+            <div class="case-stat"><b>5</b><span>Menu categories built</span></div>
+            <div class="case-stat"><b>3</b><span>Delivery platforms linked</span></div>
+            <div class="case-stat"><b>1</b><span>Of the three taken all the way to code</span></div>
         </div>
 
         <div class="case-embed">
-            <h3>Built for both</h3>
+            <h3><span data-lang="en">Built for both</span><span data-lang="es">Hecho para ambas</span></h3>
             <div class="device-duo">
                 <div class="duo-laptop">
                     <div class="laptop-screen">
@@ -1925,7 +2036,7 @@
                         </video>
                     </div>
                     <div class="laptop-base"></div>
-                    <p class="duo-label">Desktop — the landing</p>
+                    <p class="duo-label"><span data-lang="en">Desktop — the landing</span><span data-lang="es">Escritorio — la landing</span></p>
                 </div>
                 <div class="duo-phone">
                     <div class="duo-phone-body">
@@ -1934,31 +2045,29 @@
                             <img src="images/projects/kebab-screen.png" alt="Kebab Gourmet ordering flow on mobile">
                         </div>
                     </div>
-                    <p class="duo-label">Mobile — the order</p>
+                    <p class="duo-label"><span data-lang="en">Mobile — the order</span><span data-lang="es">Móvil — el pedido</span></p>
                 </div>
             </div>
-            <p class="embed-note">Same product, two jobs: the desktop landing sells the place, the phone takes the order.</p>
+            <p class="embed-note"><span data-lang="en">Same product, two jobs: the desktop landing sells the place, the phone takes the order.</span><span data-lang="es">Mismo producto, dos trabajos: la landing de escritorio vende el sitio, el móvil recoge el pedido.</span></p>
         </div>
 
         <a class="case-link" href="https://kebab-gourmet-website.vercel.app/" target="_blank" rel="noopener">
             <span class="live-dot" aria-hidden="true"></span>
-            Visit the live site — taking real orders →
+            <span data-lang="en">Visit the live site →</span><span data-lang="es">Ver la web en funcionamiento →</span>
         </a>
     </section>
 
 
     <section class="contact-section" id="contact">
         <div class="contact-inner">
-            <span class="avail"><span class="live-dot" aria-hidden="true"></span>Available for work</span>
+            <span class="avail"><span class="live-dot" aria-hidden="true"></span><span data-lang="en">Available for work</span><span data-lang="es">Disponible para trabajar</span></span>
 
             <h2 class="contact-h">
-                <span class="light">Let's build</span><br>
-                something
+<span data-lang="en"><span class="light">Let's build</span><br>something</span><span data-lang="es"><span class="light">Vamos a crear</span><br>algo</span>
             </h2>
 
             <p class="contact-lead">
-                I'm looking for a product team where research actually reaches the interface.
-                If that's yours, the fastest way to reach me is right here.
+<span data-lang="en">I'm looking for a product team where research actually reaches the interface. If that's yours, the fastest way to reach me is right here.</span><span data-lang="es">Busco un equipo de producto donde la investigación llegue de verdad hasta la interfaz. Si es el tuyo, aquí abajo tienes la vía más rápida.</span>
             </p>
 
             <a class="contact-mail" href="mailto:davidlopezcruzxr@gmail.com?subject=Hello%20from%20your%20portfolio">
@@ -1996,16 +2105,16 @@
 
             <div class="contact-meta">
                 <div>
-                    <span>Based in</span>
-                    <p>Seville, Spain · open to relocation</p>
+                    <span><span data-lang="en">Based in</span><span data-lang="es">Dónde estoy</span></span>
+                    <p><span data-lang="en">Seville, Spain · open to relocation</span><span data-lang="es">Sevilla, España · abierto a mudarme</span></p>
                 </div>
                 <div>
-                    <span>Languages</span>
-                    <p>Spanish (native) · English (fluent)</p>
+                    <span><span data-lang="en">Languages</span><span data-lang="es">Idiomas</span></span>
+                    <p><span data-lang="en">Spanish (native) · English (fluent)</span><span data-lang="es">Español (nativo) · Inglés (fluido)</span></p>
                 </div>
                 <div>
-                    <span>More</span>
-                    <p><a href="resume.html">Read the full resume →</a></p>
+                    <span><span data-lang="en">More</span><span data-lang="es">Más</span></span>
+                    <p><a href="resume.html"><span data-lang="en">Read the full resume →</span><span data-lang="es">Ver el currículum completo →</span></a></p>
                 </div>
             </div>
         </div>
@@ -2013,24 +2122,114 @@
 
     <script>
         /* ============================================================
+           LANGUAGE — chosen on arrival, remembered afterwards
+           ============================================================ */
+        // Strings the JS builds at runtime. Markup prose lives inline with data-lang.
+        const UI = {
+            en: {
+                caseStudy: 'Case study', viewCase: n => 'View ' + n + ' case study',
+                launch: 'Launch the prototype', launchSub: 'Opens the Figma player in place',
+                sending: 'Sending…', send: 'Send message',
+                fillAll: 'Please fill in every field.',
+                sent: 'Sent — I’ll get back to you shortly.',
+                failed: 'Could not send. Try emailing me directly.',
+                network: 'Network error. Try emailing me directly.'
+            },
+            es: {
+                caseStudy: 'Caso', viewCase: n => 'Ver el caso de ' + n,
+                launch: 'Abrir el prototipo', launchSub: 'Se abre aquí mismo, sin salir',
+                sending: 'Enviando…', send: 'Enviar mensaje',
+                fillAll: 'Rellena todos los campos, por favor.',
+                sent: 'Enviado — te contesto enseguida.',
+                failed: 'No se pudo enviar. Escríbeme directamente.',
+                network: 'Fallo de conexión. Escríbeme directamente.'
+            }
+        };
+        const t = () => UI[LANG === 'es' ? 'es' : 'en'];
+
+        const LANG_KEY = 'dl-lang';
+        let LANG = localStorage.getItem(LANG_KEY);
+
+        function applyLang(lang) {
+            LANG = lang;
+            document.documentElement.lang = lang;
+            localStorage.setItem(LANG_KEY, lang);
+            document.documentElement.classList.add('lang-chosen');
+            const toggle = document.getElementById('lang-toggle');
+            // The toggle shows the language you'd switch TO, not the one you're in.
+            if (toggle) toggle.textContent = lang === 'en' ? 'ES' : 'EN';
+            if (typeof refreshLangStrings === 'function') refreshLangStrings();
+        }
+
+        document.querySelectorAll('[data-set-lang]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const gate = document.getElementById('lang-gate');
+                gate.classList.add('hide');
+                applyLang(btn.dataset.setLang);
+                setTimeout(() => gate.remove(), 500);
+            });
+        });
+
+        // Re-render everything JS produced, so a mid-visit switch updates the whole page.
+        function refreshLangStrings() {
+            if (typeof PROJECTS === 'undefined') return;
+            document.querySelectorAll('.card').forEach((card, i) => {
+                const m = PROJECTS[i] && PROJECTS[i].meta;
+                const span = card.querySelectorAll('.card-info span')[1];
+                if (m && span) span.textContent = m[LANG === 'es' ? 'es' : 'en'] || m.en;
+            });
+            PROJECTS.forEach((p, i) => {
+                const sec = document.getElementById('case-' + p.key);
+                const label = sec && sec.querySelector('.case-index');
+                if (label) label.textContent = t().caseStudy + ' ' + String(i + 1).padStart(2, '0');
+            });
+            if (typeof renderHeroCopy === 'function') renderHeroCopy(PROJECTS[activeIndex]);
+            if (typeof layoutCarousel === 'function') layoutCarousel();
+            const sb = document.getElementById('cf-send');
+            if (sb && !sb.disabled) sb.textContent = t().send;
+        }
+
+        document.getElementById('lang-toggle').addEventListener('click', () => {
+            applyLang(LANG === 'en' ? 'es' : 'en');
+        });
+
+        // Returning visitor: skip the gate entirely.
+        if (LANG === 'en' || LANG === 'es') {
+            const gate = document.getElementById('lang-gate');
+            if (gate) gate.remove();
+            applyLang(LANG);
+        } else {
+            document.documentElement.lang = 'en'; // sensible default behind the gate
+        }
+
+        /* ============================================================
            PROJECT DATA — the "flavors" of the original, now case studies
            ============================================================ */
         const PROJECTS = [
             {
                 key: 'mada',
                 name: 'MADA',
-                meta: 'C2C Circular Fashion · 2026',
+                meta: { en: 'C2C Circular Fashion · 2026', es: 'Moda circular C2C · 2026' },
                 screen: 'images/projects/mada-screen.png',
                 screenBg: '#F9F8F3',       // sampled from the screenshot's top edge
                 screenBgBottom: '#231F20', // sampled from its bottom nav bar
                 // Hero copy. Title/side lines stay <= 8 chars: at 7vw anything longer
                 // runs into the phone, which sits from 40% to 60% of the viewport.
                 hero: {
-                    eyebrow: 'C2C circular fashion · Gulf 2026',
-                    title: ['Trust', 'First'],
-                    side: ['Premium', 'Resale'],
-                    desc: 'The Gulf had nowhere to resell fashion — fear of scams killed it. So I designed the trust in: escrow payments, protected chat, and a boutique that never says "secondhand".',
-                    badge: ['Usability testing', '100% success · 10 of 10 users']
+                    en: {
+                        eyebrow: 'C2C circular fashion · Gulf 2026',
+                        title: ['Trust', 'First'],
+                        side: ['Premium', 'Resale'],
+                        desc: 'The Gulf had nowhere to resell fashion — fear of scams killed it. So I designed the trust in: escrow payments, protected chat, and a boutique that never says "secondhand".',
+                        badge: ['Usability testing', '100% success · 10 of 10 users']
+                    },
+                    es: {
+                        eyebrow: 'Moda circular C2C · Golfo Pérsico 2026',
+                        title: ['Vender', 'Seguro'],
+                        side: ['Reventa', 'Premium'],
+                        desc: 'En el Golfo nadie revende ropa, y no es por falta de ganas: es miedo a que te estafen. Así que diseñé la confianza dentro — pago retenido, chat sin dar el teléfono, y una estética que nunca dice "de segunda mano".',
+                        badge: ['Test de usabilidad', '100% de éxito · 10 de 10 usuarios']
+                    }
                 },
                 logo: 'images/projects/mada-logo.png',
                 // Real UI pieces lifted from the app, keyed by slot so DOM order can't shuffle them.
@@ -2052,18 +2251,27 @@
             {
                 key: 'tripmate',
                 name: 'TripMate',
-                meta: 'Collaborative Travel · 2025',
+                meta: { en: 'Collaborative Travel · 2025', es: 'Viajes en grupo · 2025' },
                 screen: 'images/projects/tripmate-screen.png',
                 // This screenshot's edges are photographic gradients, not flat colour,
                 // so the strips are gradients sampled across the top and bottom rows.
                 screenBg: 'linear-gradient(90deg, #B2D5F1 0%, #AED4F3 50%, #A2CBEE 100%)',
                 screenBgBottom: 'linear-gradient(90deg, #DA9AB5 0%, #C88DAB 50%, #B582A1 100%)',
                 hero: {
-                    eyebrow: 'Collaborative travel · 2025',
-                    title: ['One Trip', 'One App'],
-                    side: ['No More', 'Juggling'],
-                    desc: 'Planning one trip across four apps is three too many. Packing, bookings, budget and activities in a single flow — and it still works with no signal.',
-                    badge: ['Research depth', '4 personas · 93 pages']
+                    en: {
+                        eyebrow: 'Collaborative travel · 2025',
+                        title: ['One Trip', 'One App'],
+                        side: ['No More', 'Juggling'],
+                        desc: 'Planning one trip across four apps is three too many. Packing, bookings, budget and activities in a single flow — and it still works with no signal.',
+                        badge: ['Research depth', '4 personas · 93 pages']
+                    },
+                    es: {
+                        eyebrow: 'Planificar viajes en grupo · 2025',
+                        title: ['Un Viaje', 'Una App'],
+                        side: ['Se Acabó', 'El Caos'],
+                        desc: 'Organizar un viaje con cuatro apps distintas son tres de más. Maleta, reservas, presupuesto y planes en un solo sitio — y funcionando aunque te quedes sin cobertura.',
+                        badge: ['Profundidad de research', '4 perfiles · 93 páginas']
+                    }
                 },
                 logo: 'images/projects/tripmate-logo.png',
                 // Tiles sized so each element is downscaled, never blown up.
@@ -2084,18 +2292,27 @@
             {
                 key: 'kebab',
                 name: 'Kebab Gourmet',
-                meta: 'Shipped Ordering Site · 2026',
+                meta: { en: 'Ordering Site, Coded · 2026', es: 'Web de pedidos · 2026' },
                 flag: 'New',   // most recent work — called out on the card
                 screen: 'images/projects/kebab-screen.png',
                 screenBg: '#7F7F7F',       // uniform dimmed overlay behind the cart modal
                 screenBgBottom: '#FFFFFF', // white bar under the WhatsApp order button
                 hasDesktop: true,          // shipped on web too — brings the laptop into the hero
                 hero: {
-                    eyebrow: 'Shipped ordering site · 2026',
-                    title: ['Design', 'Shipped'],
-                    side: ['Two Taps', 'To Eat'],
-                    desc: 'A real kebab shop in Espartinas, taking real orders. Designed, built and deployed — proof that the work survives contact with production.',
-                    badge: ['Status', 'Live in production']
+                    en: {
+                        eyebrow: 'Self-initiated build · coded and deployed · 2026',
+                        title: ['Design', 'Shipped'],
+                        side: ['Two Taps', 'To Eat'],
+                        desc: 'Built for a kebab shop in Espartinas and deployed for real. The handover never closed, so orders land on my phone instead of theirs — but the thing works end to end.',
+                        badge: ['Status', 'Deployed and working']
+                    },
+                    es: {
+                        eyebrow: 'Proyecto propio · diseñado y programado · 2026',
+                        title: ['Diseño', 'Y Código'],
+                        side: ['Pedir', 'Rápido'],
+                        desc: 'Lo hice para un kebab de Espartinas y lo dejé funcionando de verdad. La venta nunca llegó a cerrarse, así que los pedidos me entran a mi móvil y no al suyo — pero el producto está entero y funciona.',
+                        badge: ['Estado', 'Desplegado y funcionando']
+                    }
                 },
                 logo: 'images/projects/kebab-logo.png',
                 // Rebuilt in markup rather than exported, because the live site has no images.
@@ -2162,7 +2379,7 @@
                     : project.name}</div>
                 <div class="card-info">
                     <span>${project.name}</span>
-                    <span>${project.meta}</span>
+                    <span>${project.meta[LANG === 'es' ? 'es' : 'en'] || project.meta.en}</span>
                 </div>`;
             card.setAttribute('role', 'tab');
             card.tabIndex = 0;
@@ -2197,7 +2414,7 @@
             });
             countEl.textContent = String(activeIndex + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0');
             // The hero CTA always points at whichever case study is on screen.
-            viewCaseLabel.textContent = 'View ' + PROJECTS[activeIndex].name + ' case study';
+            viewCaseLabel.textContent = t().viewCase(PROJECTS[activeIndex].name);
         }
 
         viewCaseBtn.addEventListener('click', () => {
@@ -2446,10 +2663,10 @@
         };
 
         function renderHeroCopy(project) {
-            const h = project.hero;
+            const h = project.hero && (project.hero[LANG === 'es' ? 'es' : 'en'] || project.hero.en);
             if (!h) return;
             const n = String(PROJECTS.indexOf(project) + 1).padStart(2, '0');
-            heroEls.eyebrow.textContent = 'Case study ' + n + ' · ' + h.eyebrow;
+            heroEls.eyebrow.textContent = t().caseStudy + ' ' + n + ' · ' + h.eyebrow;
             heroEls.title.innerHTML = `<span class="light">${h.title[0]}</span><br>${h.title[1]}`;
             heroEls.side.innerHTML = `<span class="light">${h.side[0]}</span><br>${h.side[1]}`;
             heroEls.desc.textContent = h.desc;
@@ -2490,7 +2707,7 @@
                 if (!section) return;
                 if (contact) contact.parentNode.insertBefore(section, contact);
                 const label = section.querySelector('.case-index');
-                if (label) label.textContent = 'Case study ' + String(i + 1).padStart(2, '0');
+                if (label) label.textContent = t().caseStudy + ' ' + String(i + 1).padStart(2, '0');
             });
         })();
 
@@ -2617,12 +2834,12 @@
 
             if (!data.name || !data.email || !data.message) {
                 status.className = 'cf-status err';
-                status.textContent = 'Please fill in every field.';
+                status.textContent = t().fillAll;
                 return;
             }
 
             sendBtn.disabled = true;
-            sendBtn.textContent = 'Sending…';
+            sendBtn.textContent = t().sending;
             status.className = 'cf-status';
             status.textContent = '';
 
@@ -2637,18 +2854,18 @@
                 if (res.ok && out.ok) {
                     contactForm.reset();
                     status.className = 'cf-status ok';
-                    status.textContent = 'Sent — I’ll get back to you shortly.';
+                    status.textContent = t().sent;
                 } else {
                     status.className = 'cf-status err';
-                    status.textContent = out.error || 'Could not send. Try emailing me directly.';
+                    status.textContent = t().failed;
                 }
             } catch {
                 // Network failure: never leave the visitor without a way to reach him.
                 status.className = 'cf-status err';
-                status.textContent = 'Network error. Try emailing me directly.';
+                status.textContent = t().network;
             } finally {
                 sendBtn.disabled = false;
-                sendBtn.textContent = 'Send message';
+                sendBtn.textContent = t().send;
             }
         });
         document.addEventListener('click', () => setContactOpen(false));
