@@ -269,6 +269,20 @@
         .send-btn:hover:not(:disabled) { transform: translateY(-2px); }
         .send-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
+        /* Honeypot: off-screen rather than display:none, which some bots skip. */
+        .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+        .cf-status {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            margin-top: 0.7rem;
+            min-height: 1.1em;
+            color: var(--muted-color);
+        }
+
+        .cf-status.ok { color: #6AE8A7; }
+        .cf-status.err { color: #FF8B6B; }
+
         .contact-direct {
             font-family: var(--font-ui);
             font-size: 0.72rem;
@@ -1403,7 +1417,12 @@
                         <label for="cf-message">Message</label>
                         <textarea id="cf-message" name="message" required></textarea>
                     </div>
-                    <button class="send-btn" type="submit">Send message</button>
+                    <div class="hp" aria-hidden="true">
+                        <label for="cf-company">Company</label>
+                        <input id="cf-company" name="company" type="text" tabindex="-1" autocomplete="off">
+                    </div>
+                    <button class="send-btn" type="submit" id="cf-send">Send message</button>
+                    <p class="cf-status" id="cf-status" role="status" aria-live="polite"></p>
                 </form>
                 <p class="contact-direct">
                     Or write to <a href="mailto:davidlopezcruzxr@gmail.com">davidlopezcruzxr@gmail.com</a>
@@ -2365,6 +2384,52 @@
         });
 
         contactPanel.addEventListener('click', e => e.stopPropagation());
+
+        // Submit to the server route, which holds the API key. Nothing secret is in this file.
+        const contactForm = document.getElementById('contact-form');
+        const sendBtn = document.getElementById('cf-send');
+        const status = document.getElementById('cf-status');
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(contactForm));
+
+            if (!data.name || !data.email || !data.message) {
+                status.className = 'cf-status err';
+                status.textContent = 'Please fill in every field.';
+                return;
+            }
+
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Sending…';
+            status.className = 'cf-status';
+            status.textContent = '';
+
+            try {
+                const res = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const out = await res.json().catch(() => ({}));
+
+                if (res.ok && out.ok) {
+                    contactForm.reset();
+                    status.className = 'cf-status ok';
+                    status.textContent = 'Sent — I’ll get back to you shortly.';
+                } else {
+                    status.className = 'cf-status err';
+                    status.textContent = out.error || 'Could not send. Try emailing me directly.';
+                }
+            } catch {
+                // Network failure: never leave the visitor without a way to reach him.
+                status.className = 'cf-status err';
+                status.textContent = 'Network error. Try emailing me directly.';
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send message';
+            }
+        });
         document.addEventListener('click', () => setContactOpen(false));
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && contactPanel.classList.contains('open')) {
