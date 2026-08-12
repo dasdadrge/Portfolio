@@ -152,10 +152,31 @@
             transition: all 0.3s ease;
         }
 
-        .nav-item:hover,
-        .nav-item.active {
+        /* One pill that travels between items, instead of each item painting its own
+           background. It stretches to span both the old and new item mid-journey and then
+           contracts, which is what reads as liquid rather than as a box sliding. */
+        .nav-pill {
+            position: absolute;
+            top: 0.4rem;
+            bottom: 0.4rem;
+            left: 0;
+            width: 0;
+            border-radius: 100px;
             background: var(--alabaster);
-            color: var(--onyx);
+            z-index: 0;
+            pointer-events: none;
+            transform: translateX(0);
+            transition: transform 0.62s cubic-bezier(0.34, 1.42, 0.5, 1),
+                        width 0.44s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, width;
+        }
+
+        .nav-item { position: relative; z-index: 1; }
+        .nav-item.active { color: var(--onyx); }
+        .nav-item:not(.active):hover { color: var(--alabaster); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .nav-pill { transition-duration: 0.01ms; }
         }
 
         .contact-wrap { position: relative; }
@@ -1640,6 +1661,7 @@
                 <span data-lang="en">Resume</span><span data-lang="es">Currículum</span>
             </a>
             <nav class="nav glass">
+                <span class="nav-pill" id="nav-pill" aria-hidden="true"></span>
                 <a href="#hero" class="nav-item active"><span data-lang="en">Projects</span><span data-lang="es">Proyectos</span></a>
                 <a href="#case-mada" class="nav-item"><span data-lang="en">Case Studies</span><span data-lang="es">Casos</span></a>
                 <a href="#contact" class="nav-item"><span data-lang="en">Contact</span><span data-lang="es">Contacto</span></a>
@@ -2198,6 +2220,7 @@
             });
             if (typeof renderHeroCopy === 'function') renderHeroCopy(PROJECTS[activeIndex]);
             if (typeof layoutCarousel === 'function') layoutCarousel();
+            if (typeof navItems !== 'undefined' && navItems[navCurrent]) placePill(navItems[navCurrent], false);
             const sb = document.getElementById('cf-send');
             if (sb && !sb.disabled) sb.textContent = t().send;
         }
@@ -2939,6 +2962,82 @@
         // The markup carries English placeholder copy, so render the hero from the data
         // once everything is defined. It must run here: heroEls is a const declared far
         // below the boot calls, and touching it earlier throws.
+        /* ---------- Nav indicator that follows the section you are reading ---------- */
+        const navEl = document.querySelector('.nav');
+        const navPill = document.getElementById('nav-pill');
+        const navItems = [...document.querySelectorAll('.nav-item')];
+        let navCurrent = -1;
+
+        function placePill(item, animate) {
+            const nav = navEl.getBoundingClientRect();
+            const to = item.getBoundingClientRect();
+            const from = navPill.getBoundingClientRect();
+            const target = { x: to.left - nav.left, w: to.width };
+
+            if (!animate || navPill.offsetWidth === 0) {
+                navPill.style.transition = 'none';
+                navPill.style.transform = 'translateX(' + target.x + 'px)';
+                navPill.style.width = target.w + 'px';
+                void navPill.offsetWidth;          // flush, so the next change animates
+                navPill.style.transition = '';
+                return;
+            }
+
+            // Phase one: stretch across both the old and new item.
+            const spanLeft = Math.min(from.left, to.left) - nav.left;
+            const spanRight = Math.max(from.right, to.right) - nav.left;
+            navPill.style.transform = 'translateX(' + spanLeft + 'px)';
+            navPill.style.width = (spanRight - spanLeft) + 'px';
+
+            // Phase two: contract onto the target. The overlap is what looks liquid.
+            clearTimeout(placePill._t);
+            placePill._t = setTimeout(function () {
+                navPill.style.transform = 'translateX(' + target.x + 'px)';
+                navPill.style.width = target.w + 'px';
+            }, 170);
+        }
+
+        function setActiveNav(i, animate) {
+            if (i === navCurrent || !navItems[i]) return;
+            navCurrent = i;
+            navItems.forEach(function (a, n) { a.classList.toggle('active', n === i); });
+            placePill(navItems[i], animate);
+        }
+
+        // Which nav entry owns the part of the page currently on screen.
+        function sectionInView() {
+            const line = window.scrollY + window.innerHeight * 0.35;
+            const contact = document.getElementById('contact');
+            const cases = [...document.querySelectorAll('.case')];
+            if (contact && line >= contact.offsetTop) return 2;
+            if (cases.length && line >= cases[0].offsetTop) return 1;
+            return 0;
+        }
+
+        let navTick = false;
+        window.addEventListener('scroll', function () {
+            if (navTick) return;
+            navTick = true;
+            requestAnimationFrame(function () {
+                setActiveNav(sectionInView(), true);
+                navTick = false;
+            });
+        }, { passive: true });
+
+        window.addEventListener('resize', function () {
+            if (navItems[navCurrent]) placePill(navItems[navCurrent], false);
+        });
+
+        // Fonts land after first paint and change the item widths, so measure again.
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(function () {
+                if (navItems[navCurrent]) placePill(navItems[navCurrent], false);
+            });
+        }
+
+        navCurrent = -1;
+        setActiveNav(sectionInView(), false);
+
         renderHeroCopy(PROJECTS[activeIndex]);
 
         appReady = true;
