@@ -1868,9 +1868,9 @@
         </div>
 
         <div class="case-stats">
-            <div class="case-stat"><b>100%</b><span>Task completion, 10/10 users</span></div>
-            <div class="case-stat"><b>0</b><span>Users needing guidance</span></div>
-            <div class="case-stat"><b>19</b><span>Pages of documented process</span></div>
+            <div class="case-stat"><b>100%</b><span><span data-lang="en">Task completion, 10/10 users</span><span data-lang="es">De éxito en tareas, 10 de 10 usuarios</span></span></div>
+            <div class="case-stat"><b>0</b><span><span data-lang="en">Users needing guidance</span><span data-lang="es">Usuarios que necesitaron ayuda</span></span></div>
+            <div class="case-stat"><b>19</b><span><span data-lang="en">Pages of documented process</span><span data-lang="es">Páginas de proceso documentado</span></span></div>
         </div>
 
         <div class="case-embed">
@@ -1949,9 +1949,9 @@
         </div>
 
         <div class="case-stats">
-            <div class="case-stat"><b>4</b><span>Personas driving the features</span></div>
-            <div class="case-stat"><b>3</b><span>Competitors dissected</span></div>
-            <div class="case-stat"><b>93</b><span>Pages of documented process</span></div>
+            <div class="case-stat"><b>4</b><span><span data-lang="en">Personas driving the features</span><span data-lang="es">Perfiles que guiaron las funciones</span></span></div>
+            <div class="case-stat"><b>3</b><span><span data-lang="en">Competitors dissected</span><span data-lang="es">Competidores analizados</span></span></div>
+            <div class="case-stat"><b>93</b><span><span data-lang="en">Pages of documented process</span><span data-lang="es">Páginas de proceso documentado</span></span></div>
         </div>
 
         <div class="case-embed">
@@ -2028,9 +2028,9 @@
         </div>
 
         <div class="case-stats">
-            <div class="case-stat"><b>5</b><span>Menu categories built</span></div>
-            <div class="case-stat"><b>3</b><span>Delivery platforms linked</span></div>
-            <div class="case-stat"><b>1</b><span>Of the three taken all the way to code</span></div>
+            <div class="case-stat"><b>5</b><span><span data-lang="en">Menu categories built</span><span data-lang="es">Categorías de carta montadas</span></span></div>
+            <div class="case-stat"><b>3</b><span><span data-lang="en">Delivery platforms linked</span><span data-lang="es">Plataformas de reparto enlazadas</span></span></div>
+            <div class="case-stat"><b>1</b><span><span data-lang="en">Of the three taken all the way to code</span><span data-lang="es">De los tres llevado hasta el código</span></span></div>
         </div>
 
         <div class="case-embed">
@@ -2157,6 +2157,10 @@
         };
         const t = () => UI[LANG === 'es' ? 'es' : 'en'];
 
+        // Set true only once the whole script has run. Guards against re-rendering things
+        // that do not exist yet: a returning visitor applies their language immediately,
+        // which used to reach PROJECTS while it was still in the temporal dead zone.
+        let appReady = false;
         const LANG_KEY = 'dl-lang';
         let LANG = localStorage.getItem(LANG_KEY);
 
@@ -2168,7 +2172,7 @@
             const toggle = document.getElementById('lang-toggle');
             // The toggle shows the language you'd switch TO, not the one you're in.
             if (toggle) toggle.textContent = lang === 'en' ? 'ES' : 'EN';
-            if (typeof refreshLangStrings === 'function') refreshLangStrings();
+            if (appReady) refreshLangStrings();
         }
 
         document.querySelectorAll('[data-set-lang]').forEach(btn => {
@@ -2182,7 +2186,6 @@
 
         // Re-render everything JS produced, so a mid-visit switch updates the whole page.
         function refreshLangStrings() {
-            if (typeof PROJECTS === 'undefined') return;
             document.querySelectorAll('.card').forEach((card, i) => {
                 const m = PROJECTS[i] && PROJECTS[i].meta;
                 const span = card.querySelectorAll('.card-info span')[1];
@@ -2932,6 +2935,13 @@
             setTimeout(() => p.remove(), duration * 1000);
         }
         setInterval(createParticle, 500);
+
+        // The markup carries English placeholder copy, so render the hero from the data
+        // once everything is defined. It must run here: heroEls is a const declared far
+        // below the boot calls, and touching it earlier throws.
+        renderHeroCopy(PROJECTS[activeIndex]);
+
+        appReady = true;
     </script>
 </body>
 
