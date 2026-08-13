@@ -299,6 +299,37 @@
 
         .ob-card.in { opacity: 1; transform: none; filter: blur(0); }
 
+        /* A phone screen is small and held at arm's length, so the spotlight has to shout
+           louder than it does on a monitor: darker surround, a solid ring, a glow in the
+           project's colour, and a halo that keeps pulsing out of it. Shadows listed before
+           the 9999px one paint on top of the darkness rather than under it. */
+        @media (max-width: 860px) {
+            .ob-hole {
+                outline: none;
+                box-shadow:
+                    0 0 0 3px rgba(229, 228, 226, 0.95),
+                    0 0 26px 6px color-mix(in srgb, var(--accent) 60%, transparent),
+                    0 0 0 9999px rgba(4, 4, 6, 0.9);
+            }
+
+            .ob-hole::after {
+                content: '';
+                position: absolute;
+                inset: -7px;
+                border-radius: inherit;
+                border: 2px solid var(--accent);
+                opacity: 0;
+                animation: obPulse 2.1s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+                pointer-events: none;
+            }
+        }
+
+        @keyframes obPulse {
+            0% { transform: scale(0.97); opacity: 0.85; }
+            70% { transform: scale(1.07); opacity: 0; }
+            100% { transform: scale(1.07); opacity: 0; }
+        }
+
         .ob-count {
             font-family: var(--font-ui);
             font-size: 0.6rem;
@@ -2674,6 +2705,10 @@
                         title: 'Jump anywhere',
                         body: 'Projects, the written case studies, and how to reach me.'
                     },
+                    resume: {
+                        title: 'Want my résumé?',
+                        body: 'This icon opens it: experience, education, and the tools I actually work in. There is a PDF to download too.'
+                    },
                     contact: {
                         title: 'Say hello',
                         body: 'Opens a short form right here. I usually reply the same day.'
@@ -2701,6 +2736,10 @@
                     nav: {
                         title: 'Ve a donde quieras',
                         body: 'Los proyectos, los casos escritos y cómo localizarme.'
+                    },
+                    resume: {
+                        title: '¿Quieres mi currículum?',
+                        body: 'Este icono lo abre: experiencia, formación y las herramientas con las que trabajo de verdad. También hay un PDF para descargar.'
                     },
                     contact: {
                         title: 'Escríbeme',
@@ -3685,9 +3724,13 @@
         function obBuildSteps() {
             const s = t().obSteps;
             const onPhone = mqSheet.matches;
+            // Bottom of the screen first, then up into the header, so the spotlight
+            // travels in one direction instead of bouncing.
             return [
                 { el: onPhone ? projDock : track, copy: onPhone ? s.switch : s.switchDesk, pad: 12, radius: onPhone ? 40 : 26 },
                 { el: navEl, copy: s.nav, pad: 8, radius: 34 },
+                // Icon-only on a phone, which is exactly why it is worth pointing at.
+                { el: document.querySelector('.resume-pill'), copy: s.resume, pad: 8, radius: 34 },
                 { el: contactBtn, copy: s.contact, pad: 8, radius: 34 }
                 // A target with no box — the dock on desktop, say — has nothing to point at.
             ].filter(step => step.el && step.el.getBoundingClientRect().width > 0);
