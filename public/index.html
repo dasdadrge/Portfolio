@@ -234,6 +234,135 @@
         /* Only ever shown behind the mobile bottom sheet; inert on desktop. */
         .sheet-scrim { display: none; }
 
+        /* ---------- First-visit onboarding ----------
+           Shown once, then remembered. Desktop and mobile run the same machine against
+           different targets, because the switcher is a carousel on one and a dock on the
+           other. Interaction is blocked while it runs: the tour drives, not the page. */
+        .ob {
+            position: fixed;
+            inset: 0;
+            z-index: 460;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            /* The tour drives while it runs: no dragging the page out from under the
+               spotlight, and no rubber-banding on iOS. */
+            touch-action: none;
+            overscroll-behavior: contain;
+        }
+
+        .ob.in { opacity: 1; }
+        .ob[hidden] { display: none; }
+
+        /* The darkness is this element's shadow, so the hole is genuinely transparent and
+           the live control is what you see through it — never a screenshot of one.
+           Animating the box itself is what makes the spotlight glide and stretch. */
+        .ob-hole {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-radius: 20px;
+            box-shadow: 0 0 0 9999px rgba(6, 6, 8, 0.82);
+            outline: 1.5px solid rgba(229, 228, 226, 0.55);
+            outline-offset: 2px;
+            pointer-events: none;
+            transition: top 0.78s cubic-bezier(0.34, 1.24, 0.44, 1),
+                        left 0.78s cubic-bezier(0.34, 1.24, 0.44, 1),
+                        width 0.68s cubic-bezier(0.34, 1.3, 0.44, 1),
+                        height 0.68s cubic-bezier(0.34, 1.3, 0.44, 1),
+                        border-radius 0.6s ease,
+                        outline-color 0.5s ease;
+        }
+
+        /* Same condense-and-focus move as the project dock, so the tour feels like part
+           of the site rather than a plugin dropped on top of it. */
+        .ob-card {
+            position: fixed;
+            width: min(340px, calc(100vw - 2.5rem));
+            padding: 1.4rem 1.5rem 1.2rem;
+            border-radius: 24px;
+            background: rgba(16, 16, 18, 0.92);
+            border: 1px solid rgba(229, 228, 226, 0.16);
+            box-shadow: 0 26px 70px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            opacity: 0;
+            transform: translateY(16px) scale(0.9);
+            filter: blur(10px);
+            transition: opacity 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.72s cubic-bezier(0.34, 1.36, 0.44, 1),
+                        filter 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        top 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        left 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .ob-card.in { opacity: 1; transform: none; filter: blur(0); }
+
+        .ob-count {
+            font-family: var(--font-ui);
+            font-size: 0.6rem;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.6rem;
+        }
+
+        .ob-card h4 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.45rem;
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+            margin-bottom: 0.5rem;
+        }
+
+        .ob-card p {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            font-weight: 300;
+            color: var(--muted-color);
+        }
+
+        .ob-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1.3rem;
+        }
+
+        .ob-skip, .ob-next {
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+        }
+
+        .ob-skip {
+            background: none;
+            border: none;
+            color: var(--muted-color);
+            padding: 0.6rem 0.2rem;
+        }
+
+        .ob-skip:hover { color: var(--alabaster); }
+
+        /* Stays right even on the last step, where Skip is dropped and space-between
+           would otherwise slide it back to the left edge. */
+        .ob-next {
+            background: var(--alabaster);
+            color: var(--onyx);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            margin-left: auto;
+        }
+
+        .ob-next:hover { transform: translateY(-2px); }
+        .ob-skip:focus-visible, .ob-next:focus-visible { outline: 2px solid var(--alabaster); outline-offset: 3px; }
+
         /* ---------- Mobile project dock ----------
            The carousel needs 250px of column and scrolls away with the page. This is the
            same choice in a bar: the three app icons, the active one opening up to name
@@ -2078,6 +2207,21 @@
         </div>
     </header>
 
+    <!-- First-visit tour. The spotlight is a transparent box with an enormous shadow
+         around it, so the real control shows through the hole instead of being cloned. -->
+    <div class="ob" id="ob" hidden>
+        <div class="ob-hole" id="ob-hole" aria-hidden="true"></div>
+        <div class="ob-card" id="ob-card" role="dialog" aria-modal="true" aria-labelledby="ob-title">
+            <span class="ob-count" id="ob-count"></span>
+            <h4 id="ob-title"></h4>
+            <p id="ob-body"></p>
+            <div class="ob-actions">
+                <button type="button" class="ob-skip" id="ob-skip"></button>
+                <button type="button" class="ob-next" id="ob-next"></button>
+            </div>
+        </div>
+    </div>
+
     <!-- Mobile only. Replaces the carousel: a compact switcher that stays within reach
          for as long as the Projects section is on screen. Filled from PROJECTS. -->
     <div class="proj-dock glass" id="proj-dock" role="tablist" aria-label="Switch project"></div>
@@ -2515,7 +2659,26 @@
                 fillAll: 'Please fill in every field.',
                 sent: 'Sent. I will get back to you shortly.',
                 failed: 'Could not send. Try emailing me directly.',
-                network: 'Network error. Try emailing me directly.'
+                network: 'Network error. Try emailing me directly.',
+                obSkip: 'Skip', obNext: 'Next', obDone: 'Got it',
+                obSteps: {
+                    switch: {
+                        title: 'Three projects, one screen',
+                        body: 'Tap an icon to switch case study. The lit one, ringed in its own colour, is the one you are looking at.'
+                    },
+                    switchDesk: {
+                        title: 'Three projects, one screen',
+                        body: 'Click a card to switch case study. Everything around it — the headline, the screen, the colour — changes with it.'
+                    },
+                    nav: {
+                        title: 'Jump anywhere',
+                        body: 'Projects, the written case studies, and how to reach me.'
+                    },
+                    contact: {
+                        title: 'Say hello',
+                        body: 'Opens a short form right here. I usually reply the same day.'
+                    }
+                }
             },
             es: {
                 caseStudy: 'Caso', viewCase: n => 'Ver el caso de ' + n,
@@ -2524,7 +2687,26 @@
                 fillAll: 'Rellena todos los campos, por favor.',
                 sent: 'Enviado. Te contesto enseguida.',
                 failed: 'No se pudo enviar. Escríbeme directamente.',
-                network: 'Fallo de conexión. Escríbeme directamente.'
+                network: 'Fallo de conexión. Escríbeme directamente.',
+                obSkip: 'Saltar', obNext: 'Siguiente', obDone: 'Entendido',
+                obSteps: {
+                    switch: {
+                        title: 'Tres proyectos, una pantalla',
+                        body: 'Toca un icono para cambiar de caso. El que está encendido, con un aro de su color, es el que estás viendo.'
+                    },
+                    switchDesk: {
+                        title: 'Tres proyectos, una pantalla',
+                        body: 'Pulsa una tarjeta para cambiar de caso. Todo lo de alrededor — el titular, la pantalla, el color — cambia con ella.'
+                    },
+                    nav: {
+                        title: 'Ve a donde quieras',
+                        body: 'Los proyectos, los casos escritos y cómo localizarme.'
+                    },
+                    contact: {
+                        title: 'Escríbeme',
+                        body: 'Se abre un formulario corto aquí mismo. Suelo contestar el mismo día.'
+                    }
+                }
             }
         };
         const t = () => UI[LANG === 'es' ? 'es' : 'en'];
@@ -2553,6 +2735,10 @@
                 gate.classList.add('hide');
                 applyLang(btn.dataset.setLang);
                 setTimeout(() => gate.remove(), 500);
+                // First visit: the tour follows the gate. Safe to call from here — by the
+                // time anyone can click, the whole script has run and obStart's own
+                // consts are initialised.
+                obStart();
             });
         });
 
@@ -3475,6 +3661,155 @@
         // so the strings JS owns — the send button among them — are still the English
         // defaults from the markup. Render them once now that everything is defined.
         if (LANG === 'en' || LANG === 'es') refreshLangStrings();
+
+        /* ============================================================
+           FIRST-VISIT ONBOARDING
+           User testing found the project switcher was being missed, so it gets pointed
+           at directly the first time. Same machine on both layouts, different targets:
+           the switcher is a carousel on desktop and the dock on a phone.
+           ============================================================ */
+        const OB_KEY = 'dl-onboarded';
+        const obEl = document.getElementById('ob');
+        const obHole = document.getElementById('ob-hole');
+        const obCard = document.getElementById('ob-card');
+        const obCount = document.getElementById('ob-count');
+        const obTitle = document.getElementById('ob-title');
+        const obBody = document.getElementById('ob-body');
+        const obNextBtn = document.getElementById('ob-next');
+        const obSkipBtn = document.getElementById('ob-skip');
+
+        let obSteps = [];
+        let obIndex = 0;
+        let obActive = false;
+
+        function obBuildSteps() {
+            const s = t().obSteps;
+            const onPhone = mqSheet.matches;
+            return [
+                { el: onPhone ? projDock : track, copy: onPhone ? s.switch : s.switchDesk, pad: 12, radius: onPhone ? 40 : 26 },
+                { el: navEl, copy: s.nav, pad: 8, radius: 34 },
+                { el: contactBtn, copy: s.contact, pad: 8, radius: 34 }
+                // A target with no box — the dock on desktop, say — has nothing to point at.
+            ].filter(step => step.el && step.el.getBoundingClientRect().width > 0);
+        }
+
+        // Positions both the spotlight and the card. Called again on scroll and resize,
+        // because the desktop carousel is in normal flow and moves with the page.
+        function obPlace() {
+            const step = obSteps[obIndex];
+            if (!step) return;
+            const r = step.el.getBoundingClientRect();
+            const p = step.pad;
+            obHole.style.top = (r.top - p) + 'px';
+            obHole.style.left = (r.left - p) + 'px';
+            obHole.style.width = (r.width + p * 2) + 'px';
+            obHole.style.height = (r.height + p * 2) + 'px';
+            obHole.style.borderRadius = step.radius + 'px';
+
+            const cw = obCard.offsetWidth;
+            const ch = obCard.offsetHeight;
+            const m = 16;
+            // Prefer under the target, fall back to over it, then to simply centred.
+            const under = r.bottom + p + m;
+            const over = r.top - p - m - ch;
+            let top;
+            if (under + ch <= window.innerHeight - m) top = under;
+            else if (over >= m) top = over;
+            else top = Math.max(m, (window.innerHeight - ch) / 2);
+
+            let left = r.left + r.width / 2 - cw / 2;
+            left = Math.max(m, Math.min(left, window.innerWidth - cw - m));
+
+            obCard.style.top = Math.round(top) + 'px';
+            obCard.style.left = Math.round(left) + 'px';
+        }
+
+        function obGo(i) {
+            obIndex = i;
+            const step = obSteps[i];
+            if (!step) return obEnd();
+            // The spotlight leaves at once and the card catches up a beat later. That
+            // offset between the two is what reads as liquid rather than as a slideshow.
+            obPlace();
+            obCard.classList.remove('in');
+            setTimeout(() => {
+                obCount.textContent = (i + 1) + ' / ' + obSteps.length;
+                obTitle.textContent = step.copy.title;
+                obBody.textContent = step.copy.body;
+                const last = i === obSteps.length - 1;
+                obNextBtn.textContent = last ? t().obDone : t().obNext;
+                obSkipBtn.textContent = t().obSkip;
+                // On the last step "Skip" and "Got it" do the same thing, so drop one.
+                obSkipBtn.hidden = last;
+                obPlace(); // the new copy changes the card's height, so measure again
+                void obCard.offsetWidth; // same reason as above: no rAF, it may be starved
+                obCard.classList.add('in');
+            }, 260);
+        }
+
+        function obStart() {
+            if (localStorage.getItem(OB_KEY) || obActive) return;
+            // A background tab gets no animation frames and nobody is looking at it.
+            // Starting here would un-hide a full-screen overlay that never paints and
+            // never fills in — invisible, but swallowing every click on the page. Wait
+            // until the tab is actually on screen, and spend the one-time tour then.
+            if (document.hidden) {
+                document.addEventListener('visibilitychange', function onVisible() {
+                    if (document.hidden) return;
+                    document.removeEventListener('visibilitychange', onVisible);
+                    obStart();
+                });
+                return;
+            }
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            // The dock flies in over ~0.8s. Measuring it mid-transform would pin the
+            // spotlight where it started instead of where it lands, so let it settle.
+            setTimeout(() => {
+                obSteps = obBuildSteps();
+                if (!obSteps.length) return;
+                obActive = true;
+                obEl.hidden = false;
+                void obEl.offsetWidth; // flush, so the fade has a start value to run from
+                obEl.classList.add('in');
+                obGo(0);
+            }, 950);
+        }
+
+        function obEnd() {
+            if (!obActive) return;
+            obActive = false;
+            localStorage.setItem(OB_KEY, '1');
+            obEl.classList.remove('in');
+            obCard.classList.remove('in');
+            setTimeout(() => { obEl.hidden = true; }, 520);
+        }
+
+        obNextBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            obIndex + 1 < obSteps.length ? obGo(obIndex + 1) : obEnd();
+        });
+        obSkipBtn.addEventListener('click', e => { e.stopPropagation(); obEnd(); });
+        // Tapping the darkness moves on, which is what people try first.
+        obEl.addEventListener('click', e => {
+            if (e.target === obEl || e.target === obHole) {
+                obIndex + 1 < obSteps.length ? obGo(obIndex + 1) : obEnd();
+            }
+        });
+        document.addEventListener('keydown', e => {
+            if (!obActive) return;
+            if (e.key === 'Escape') obEnd();
+            if (e.key === 'ArrowRight' || e.key === 'Enter') {
+                obIndex + 1 < obSteps.length ? obGo(obIndex + 1) : obEnd();
+            }
+        });
+        window.addEventListener('resize', () => { if (obActive) obPlace(); });
+        window.addEventListener('scroll', () => { if (obActive) obPlace(); }, { passive: true });
+
+        // Kick off here, at the very bottom. obStart is a hoisted declaration, so the
+        // language gate can call it from a click handler, but its own consts above are
+        // in the temporal dead zone until this line — calling it any earlier throws.
+        // A returning visitor never sees the gate, so this is their entry point.
+        if (LANG === 'en' || LANG === 'es') obStart();
 </script>
 </body>
 
