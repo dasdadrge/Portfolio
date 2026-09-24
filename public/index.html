@@ -2180,6 +2180,14 @@
         html[data-surface="paper"] .nav-item.active { color: var(--ink); }
         html[data-surface="paper"] .nav-pill { background: rgba(22, 21, 15, 0.09); }
         html[data-surface="paper"] .resume-pill:hover { background: var(--ink); color: var(--paper); }
+        /* The base rule hovers these to --alabaster, which is near-white and vanishes
+           against paper. It outranks the plain .nav-item override, so it needs its own. */
+        html[data-surface="paper"] .nav-item:not(.active):hover { color: var(--ink); }
+        html[data-surface="paper"] .lang-toggle:hover {
+            background: var(--ink);
+            color: var(--paper);
+            border-color: transparent;
+        }
         .header, .glass, .logo, .nav-item, .resume-pill, .lang-toggle {
             transition: color 0.35s ease, background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
         }
@@ -2396,10 +2404,11 @@
             align-items: center;
             justify-content: center;
             padding: 7px;
-            /* Inline width/height come from each asset's own tile size; these cap them so
-               one large export cannot take over the table. */
+            /* The inline width comes from each asset's tile size; this caps it so one
+               large export cannot take over the table. No max-height: the aspect ratio
+               set from the artwork governs the height, and capping it would letterbox
+               the image inside its own card again. */
             max-width: 30%;
-            max-height: 34%;
             background: var(--paper-3);
             border: 1px solid var(--hair);
             border-radius: 12px;
@@ -2411,12 +2420,25 @@
            otherwise sit marooned in the middle of a white chip. */
         .artefact img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-        /* These exports were cut against the old dark background, so several of them are
-           near-white on transparent and disappear on a pale card. The class is set at
-           runtime from the artwork's own measured luminance. */
+        /* Some of these exports are near-white on transparency and disappear on a pale
+           card, so those get something dark behind them. */
         .artefact.on-dark {
             background: #23211B;
             border-color: rgba(237, 234, 227, 0.14);
+        }
+
+        /* And some of them are already a card: the cart receipt is 93% opaque, the packing
+           item 98%. Giving those a card of their own is a frame around a frame, and since
+           the artwork's aspect never matched the tile, that frame came out uneven. They
+           keep only a shadow, and it follows the artwork's silhouette rather than its box. */
+        .artefact.is-plate {
+            background: none;
+            border: 0;
+            padding: 0;
+            box-shadow: none;
+        }
+        .artefact.is-plate img {
+            filter: drop-shadow(0 12px 18px rgba(22, 21, 15, 0.28));
         }
 
         /* The Kebab pieces are rebuilt in markup and bring their own card, so the outer
@@ -2677,7 +2699,7 @@
 
             /* Three artefacts, kept well inside the edges and well under the phone's
                size, so the screenshot stays the biggest thing on the screen. */
-            .artefact { max-width: 25%; max-height: 26%; padding: 5px; border-radius: 9px; }
+            .artefact { max-width: 25%; padding: 5px; border-radius: 9px; }
             .artefact.a1 { left: 2%;  top: 24%; }
             .artefact.a2 { left: 5%;  bottom: 8%; }
             .artefact.a5 { right: 2%; bottom: 22%; }
@@ -3384,14 +3406,14 @@
                 // Real UI pieces lifted from the app, keyed by slot so DOM order can't shuffle them.
                 // `tile` is the glass tile's own size — the artwork is fitted inside it.
                 frags: {
-                    f1: { src: 'images/frags/mada/cart-card.png',    tile: [170, 170] },
-                    f2: { src: 'images/frags/mada/price-slider.png', tile: [190, 96] },
-                    f3: { src: 'images/frags/mada/save.png',         tile: [76, 76] },
-                    f4: { src: 'images/frags/mada/cart-icon.png',    tile: [72, 72] },
-                    f5: { src: 'images/frags/mada/search.png',       tile: [60, 60] },
-                    f7: { src: 'images/frags/mada/messenger.png',    tile: [52, 52] },
-                    f8: { src: 'images/frags/mada/search.png',       tile: [52, 52] },
-                    f9: { src: 'images/frags/mada/save.png',         tile: [60, 60] }
+                    f1: { src: 'images/frags/mada/cart-card.png', look: 'plate',    tile: [170, 170] },
+                    f2: { src: 'images/frags/mada/price-slider.png', look: 'pale', tile: [190, 96] },
+                    f3: { src: 'images/frags/mada/save.png', look: 'dark',         tile: [76, 76] },
+                    f4: { src: 'images/frags/mada/cart-icon.png', look: 'pale',    tile: [72, 72] },
+                    f5: { src: 'images/frags/mada/search.png', look: 'dark',       tile: [60, 60] },
+                    f7: { src: 'images/frags/mada/messenger.png', look: 'dark',    tile: [52, 52] },
+                    f8: { src: 'images/frags/mada/search.png', look: 'dark',       tile: [52, 52] },
+                    f9: { src: 'images/frags/mada/save.png', look: 'dark',         tile: [60, 60] }
                 },
                 accent: '#2E5BFF', // the "Comprar" button blue, sampled from the screenshot
                 // Their black as the outer, their blue as the core.
@@ -3408,7 +3430,7 @@
                 screenBgBottom: 'linear-gradient(90deg, #DA9AB5 0%, #C88DAB 50%, #B582A1 100%)',
                 hero: {
                     en: {
-                        eyebrow: 'Research and information architecture · mobile app · 2025',
+                        eyebrow: 'Information architecture · mobile app · 2025',
                         title: ['One of the four personas', 'travelled with no signal.'],
                         desc: 'I tried PackPoint, TripIt and Tripsy to see which piece each one kept behind a paywall. Four personas came out of the research, and the sitemap and the flows came out of them. Offline mode is there because of Alex, and the packing list is built from the destination, the dates and the forecast.',
                         facts: [
@@ -3417,7 +3439,7 @@
                         ]
                     },
                     es: {
-                        eyebrow: 'Investigación y arquitectura de la información · app móvil · 2025',
+                        eyebrow: 'Arquitectura de la información · app móvil · 2025',
                         title: ['Uno de los cuatro perfiles', 'viajaba sin cobertura.'],
                         desc: 'Probé PackPoint, TripIt y Tripsy para ver qué pieza dejaba cada una detrás del muro de pago. De la investigación salieron cuatro perfiles, y de ahí el mapa del sitio y los flujos. El modo sin conexión entró por Alex, y la lista de equipaje se genera según el destino, los días y el tiempo que va a hacer.',
                         facts: [
@@ -3429,14 +3451,14 @@
                 logo: 'images/projects/tripmate-logo.png',
                 // Tiles sized so each element is downscaled, never blown up.
                 frags: {
-                    f1: { src: 'images/frags/tripmate/activity-card.png',    tile: [180, 180] },
-                    f2: { src: 'images/frags/tripmate/destination-pill.png', tile: [190, 90] },
-                    f3: { src: 'images/frags/tripmate/trip-card.png',        tile: [120, 120] },
-                    f4: { src: 'images/frags/tripmate/booking-card.png',     tile: [130, 108] },
-                    f5: { src: 'images/frags/tripmate/packing-item.png',     tile: [110, 110] },
-                    f7: { src: 'images/frags/tripmate/bag-icon.png',         tile: [52, 52] },
-                    f8: { src: 'images/frags/tripmate/next-button.png',      tile: [120, 60] },
-                    f9: { src: 'images/frags/tripmate/stats-pill.png',       tile: [110, 56] }
+                    f1: { src: 'images/frags/tripmate/activity-card.png', look: 'plate',    tile: [180, 180] },
+                    f2: { src: 'images/frags/tripmate/destination-pill.png', look: 'plate', tile: [190, 90] },
+                    f3: { src: 'images/frags/tripmate/trip-card.png', look: 'plate',        tile: [120, 120] },
+                    f4: { src: 'images/frags/tripmate/booking-card.png', look: 'plate',     tile: [130, 108] },
+                    f5: { src: 'images/frags/tripmate/packing-item.png', look: 'plate',     tile: [110, 110] },
+                    f7: { src: 'images/frags/tripmate/bag-icon.png', look: 'pale',         tile: [52, 52] },
+                    f8: { src: 'images/frags/tripmate/next-button.png', look: 'plate',      tile: [120, 60] },
+                    f9: { src: 'images/frags/tripmate/stats-pill.png', look: 'plate',       tile: [110, 56] }
                 },
                 accent: '#6AE8A7', // the "Sierra Nevada" card green
                 // Sky blue core (from the prototype's sky) fading through their green.
@@ -3602,38 +3624,9 @@
            The glass tiles that used to orbit the phone are the same artwork, laid flat on
            a surface instead. Fixed slots, so nothing can land on the screenshot the way
            the old randomly thrown fragments did. Ordered most prominent first. */
-        // Which backing an artefact needs, measured once per file and remembered.
-        // These pieces were cut against the old dark hero: MADA's search icon is 18%
-        // opaque and averages rgb(248,248,242), so on a pale card there is nothing to
-        // see. Rather than hand-tag eight files per project, read the artwork.
-        const cardBacking = new Map();
-        function backCard(el, img, key) {
-            if (cardBacking.has(key)) {
-                if (cardBacking.get(key)) el.classList.add('on-dark');
-                return;
-            }
-            let light = false;
-            try {
-                const n = 24;
-                const c = document.createElement('canvas');
-                c.width = n; c.height = n;
-                const ctx = c.getContext('2d', { willReadFrequently: true });
-                ctx.drawImage(img, 0, 0, n, n);
-                const d = ctx.getImageData(0, 0, n, n).data;
-                let sum = 0, count = 0;
-                for (let i = 0; i < d.length; i += 4) {
-                    if (d[i + 3] < 40) continue;   // transparent, not part of the artwork
-                    sum += 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
-                    count++;
-                }
-                light = count > 0 && (sum / count) > 186;
-            } catch (e) {
-                // A tainted canvas just means the default pale card stays.
-            }
-            cardBacking.set(key, light);
-            if (light) el.classList.add('on-dark');
-        }
-
+        // Which card each piece needs is decided in the data, not measured here. The
+        // canvas version raced the image decode and cached whatever it saw first, so the
+        // same artefact could come back light on one load and dark on the next.
         const TABLE_SLOTS = [
             { cls: 'a1', depth: 0.45 },
             { cls: 'a2', depth: 1.00 },
@@ -3667,11 +3660,21 @@
                 el.style.height = asset.tile[1] + 'px';
                 el.dataset.depth = slot.depth;
                 if (asset.src) {
+                    if (asset.look === 'plate') el.classList.add('is-plate');
+                    else if (asset.look === 'dark') el.classList.add('on-dark');
                     const img = document.createElement('img');
                     img.alt = '';
-                    img.onload = () => backCard(el, img, asset.src);
+                    // The card takes the artwork's own proportions, so what is left over as
+                    // padding is the same on all four sides. Forcing a square tile around a
+                    // 378x79 slider is what made the framing look crooked.
+                    const shape = () => {
+                        if (!img.naturalWidth || !img.naturalHeight) return;
+                        el.style.height = 'auto';
+                        el.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight;
+                    };
+                    img.onload = shape;
                     img.src = asset.src;
-                    if (img.complete && img.naturalWidth) backCard(el, img, asset.src);
+                    if (img.complete && img.naturalWidth) shape();
                     el.appendChild(img);
                 } else if (asset.html) {
                     el.classList.add('is-html');
