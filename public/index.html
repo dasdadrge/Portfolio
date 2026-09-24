@@ -8,7 +8,7 @@
     <meta name="description" content="User-centered product designer. I turn complex user pain points into intuitive, high-fidelity digital experiences.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@300;400;500;600&family=Karla:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,SOFT,WONK,wght@0,9..144,0..100,0..1,100..900;1,9..144,0..100,0..1,100..900&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         :root {
@@ -24,8 +24,15 @@
             --glass-bg: rgba(229, 228, 226, 0.05);
             --glass-border: rgba(229, 228, 226, 0.12);
 
-            --font-display: 'Playfair Display', serif;
-            --font-ui: 'Space Grotesk', sans-serif;
+            /* Fraunces is variable on optical size, softness and a 'wonk' axis, so one family
+               covers the wordmark and the italic problem lines and still reads as a choice
+               rather than a default. Instrument Serif is the Playfair of 2026. */
+            --font-display: 'Fraunces', Georgia, serif;
+            /* Space Grotesk is the single most common sans in generated portfolios. Archivo
+               is a news grotesque: it carries labels and buttons without a voice of its own,
+               which is what lets the serif and the mono do the talking. */
+            --font-ui: 'Archivo', system-ui, sans-serif;
+            --font-mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
             --font-body: 'Archivo', sans-serif;
 
             /* Dynamic background — each project's own brand colours.
@@ -332,7 +339,7 @@
 
         .ob-count {
             font-family: var(--font-ui);
-            font-size: 0.6rem;
+            font-size: 0.72rem;
             letter-spacing: 0.18em;
             color: var(--accent);
             display: block;
@@ -420,7 +427,7 @@
 
         .field label {
             font-family: var(--font-ui);
-            font-size: 0.62rem;
+            font-size: 0.72rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--muted-color);
@@ -571,7 +578,7 @@
 
         .eyebrow {
             font-family: var(--font-ui);
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             font-weight: 500;
             letter-spacing: 0.18em;
             text-transform: uppercase;
@@ -637,7 +644,7 @@
         }
 
         .award-text { display: flex; flex-direction: column; font-family: var(--font-ui); }
-        .award-title { font-size: 0.68rem; letter-spacing: 0.14em; color: var(--muted-color); text-transform: uppercase; }
+        .award-title { font-size: 0.72rem; letter-spacing: 0.14em; color: var(--muted-color); text-transform: uppercase; }
         .award-subtitle { font-size: 0.85rem; font-weight: 600; }
 
         /* ---------- Center: phone ---------- */
@@ -1084,7 +1091,7 @@
             right: -6px;
             z-index: 4;
             font-family: var(--font-ui);
-            font-size: 0.56rem;
+            font-size: 0.72rem;
             font-weight: 700;
             letter-spacing: 0.16em;
             text-transform: uppercase;
@@ -1128,7 +1135,7 @@
             align-items: center;
             justify-content: center;
             font-family: var(--font-ui);
-            font-size: 0.65rem;
+            font-size: 0.72rem;
             letter-spacing: 0.08em;
             color: var(--muted-color);
             text-transform: uppercase;
@@ -1150,18 +1157,18 @@
             flex-direction: column;
             gap: 0.15rem;
             font-family: var(--font-ui);
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             width: 100%;
         }
 
         .card-info span:first-child { font-weight: 600; }
-        .card-info span:last-child { color: var(--muted-color); font-size: 0.62rem; letter-spacing: 0.06em; }
+        .card-info span:last-child { color: var(--muted-color); font-size: 0.72rem; letter-spacing: 0.06em; }
 
         .carousel-nav { display: flex; gap: 1rem; align-items: center; }
 
         .carousel-count {
             font-family: var(--font-ui);
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             color: var(--muted-color);
             letter-spacing: 0.08em;
         }
@@ -1195,7 +1202,7 @@
 
         .section-stub {
             font-family: var(--font-ui);
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--blue-slate);
@@ -1270,7 +1277,7 @@
         .lang-choice .flag { font-size: 1.9rem; line-height: 1; margin-bottom: 0.15rem; }
 
         .lang-choice small {
-            font-size: 0.64rem;
+            font-size: 0.72rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--muted-color);
@@ -1320,7 +1327,7 @@
             align-items: center;
             gap: 0.6rem;
             font-family: var(--font-ui);
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             letter-spacing: 0.16em;
             text-transform: uppercase;
             color: var(--muted-color);
@@ -1376,7 +1383,7 @@
 
         .contact-meta span {
             font-family: var(--font-ui);
-            font-size: 0.64rem;
+            font-size: 0.72rem;
             letter-spacing: 0.16em;
             text-transform: uppercase;
             color: var(--blue-slate);
@@ -1413,7 +1420,7 @@
 
         .case-index {
             font-family: var(--font-ui);
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             letter-spacing: 0.18em;
             text-transform: uppercase;
             color: var(--case-accent, var(--blue-slate));
@@ -1441,7 +1448,7 @@
 
         .case-block h3 {
             font-family: var(--font-ui);
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             letter-spacing: 0.16em;
             text-transform: uppercase;
             color: var(--case-accent, var(--blue-slate));
@@ -1491,7 +1498,7 @@
 
         .case-stat span {
             font-family: var(--font-ui);
-            font-size: 0.66rem;
+            font-size: 0.72rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted-color);
@@ -1570,7 +1577,7 @@
 
         .case-embed h3 {
             font-family: var(--font-ui);
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             letter-spacing: 0.16em;
             text-transform: uppercase;
             color: var(--case-accent, var(--blue-slate));
@@ -1763,7 +1770,7 @@
 
         .duo-label {
             font-family: var(--font-ui);
-            font-size: 0.66rem;
+            font-size: 0.72rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--muted-color);
@@ -1842,7 +1849,7 @@
             .resume-pill span { display: none; }
             .resume-pill svg { width: 17px; height: 17px; }
 
-            .lang-toggle { padding: 0; width: 42px; height: 42px; font-size: 0.7rem; }
+            .lang-toggle { padding: 0; width: 42px; height: 42px; font-size: 0.72rem; }
 
             .contact-btn { padding: 0.7rem 1.1rem; font-size: 0.76rem; gap: 0.4rem; white-space: nowrap; }
             .contact-btn .chev { display: none; }
@@ -2138,6 +2145,573 @@
             }
         }
     </style>
+
+    <!-- ============================================================
+         V2 HERO — paper surface, editorial index, work table.
+         Loaded last on purpose: it overrides the hero rules above rather than
+         editing them in place, so the dark system below the hero is untouched.
+         ============================================================ -->
+    <style>
+        :root {
+            --paper:    #EDEAE3;
+            --paper-2:  #E4E0D6;   /* the table surface */
+            --paper-3:  #F6F4EF;   /* artefact cards */
+            --ink:      #16150F;
+            --ink-2:    #55503F;
+            --ink-3:    #666153;   /* 4.69:1 on --paper-2, the darker of the two surfaces it lands on */
+            --hair:     #CFC9B8;
+            --accent-paper: #2E5BFF;   /* recomputed per project, always >= 4.5:1 on paper */
+            /* --blue-slate itself is 3.37:1 on onyx, which fails for the small labels that
+               use it. This is the same hue lifted until it clears 4.5:1. */
+            --slate-text: #67808F;
+        }
+
+        /* ---------- Header repaints itself over paper ---------- */
+        html[data-surface="paper"] .glass {
+            background: rgba(22, 21, 15, 0.035);
+            border-color: rgba(22, 21, 15, 0.14);
+            box-shadow: 0 6px 22px rgba(22, 21, 15, 0.08);
+        }
+        html[data-surface="paper"] .logo,
+        html[data-surface="paper"] .nav-item,
+        html[data-surface="paper"] .resume-pill,
+        html[data-surface="paper"] .lang-toggle { color: var(--ink-2); }
+        html[data-surface="paper"] .logo { color: var(--ink); }
+        html[data-surface="paper"] .nav-item.active { color: var(--ink); }
+        html[data-surface="paper"] .nav-pill { background: rgba(22, 21, 15, 0.09); }
+        html[data-surface="paper"] .resume-pill:hover { background: var(--ink); color: var(--paper); }
+        .header, .glass, .logo, .nav-item, .resume-pill, .lang-toggle {
+            transition: color 0.35s ease, background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        /* While the big name is on screen it IS the wordmark, so the header's copy of it
+           waits its turn rather than printing the same words twice. */
+        .logo { transition: opacity 0.3s ease, transform 0.3s ease; }
+        html[data-wordmark="hide"] .logo {
+            opacity: 0;
+            transform: translateY(-6px);
+            pointer-events: none;
+        }
+
+        /* ---------- Hero shell ---------- */
+        .hero {
+            --gut: clamp(1.25rem, 4vw, 4rem);
+            height: auto;
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            align-items: stretch;
+            /* The rule this overrides is a flexbox one. Left alone, its justify-content
+               shrink-wraps the grid's single column and the whole hero collapses inward. */
+            justify-content: stretch;
+            justify-items: stretch;
+            padding: 0;
+            background: var(--paper);
+            color: var(--ink);
+            overflow: visible;
+        }
+
+        .hero-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
+            align-items: center;
+            gap: clamp(1rem, 3vw, 3rem);
+            padding: clamp(6rem, 9.5vh, 8rem) var(--gut) clamp(0.9rem, 2vh, 1.5rem);
+        }
+        .hero-say, .hero-table { position: relative; z-index: 1; }
+
+        /* ---------- The written column ---------- */
+        /* Status, not a job title. It is the one line a recruiter is scanning for. */
+        .say-role {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            color: var(--ink-3);
+            margin: 0 0 clamp(0.7rem, 1.8vh, 1.2rem);
+        }
+
+        /* The name is the masthead. Fraunces at its display optical size, where the
+           hairlines go thin and the serifs sharpen. */
+        .say-masthead {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-variation-settings: 'SOFT' 0, 'WONK' 0, 'opsz' 144;
+            font-size: clamp(2.6rem, 5.6vw, 4.8rem);
+            line-height: 0.94;
+            letter-spacing: -0.022em;
+            color: var(--ink);
+            margin: 0 0 clamp(0.9rem, 2.2vh, 1.4rem);
+        }
+
+        .say-stand {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: clamp(0.87rem, 1.02vw, 0.95rem);
+            line-height: 1.6;
+            color: var(--ink-2);
+            max-width: 52ch;
+            margin: 0 0 clamp(0.8rem, 1.8vh, 1.2rem);
+        }
+
+        .say-project {
+            border-top: 1px solid var(--hair);
+            padding-top: clamp(0.8rem, 1.8vh, 1.25rem);
+            /* Fixed, not fluid: the band below is aligned to this block's top edge, so
+               the longest of the three descriptions must still fit without growing it. */
+            min-height: 25.5rem;
+        }
+
+        .sp-kicker {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-paper);
+            margin: 0 0 0.75rem;
+        }
+
+        /* The problem, not the product's name. Italic Fraunces with the wonk axis open,
+           which is where its drawing gets its character. */
+        .sp-title {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 400;
+            font-variation-settings: 'SOFT' 40, 'WONK' 1, 'opsz' 60;
+            font-size: clamp(1.4rem, 2.35vw, 2rem);
+            line-height: 1.08;
+            letter-spacing: -0.012em;
+            color: var(--ink);
+            margin: 0 0 0.85rem;
+        }
+
+        .sp-desc {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: clamp(0.87rem, 1.02vw, 0.95rem);
+            line-height: 1.62;
+            color: var(--ink-2);
+            max-width: 58ch;
+            margin: 0 0 1.1rem;
+        }
+
+        /* Evidence, set like a data sheet rather than a badge. */
+        .sp-facts {
+            margin: 0 0 1.2rem;
+            display: grid;
+            gap: 0.4rem;
+            max-width: 58ch;
+        }
+        .sp-facts > div {
+            display: grid;
+            grid-template-columns: 5.4rem minmax(0, 1fr);
+            gap: 0.8rem;
+            padding-top: 0.4rem;
+            border-top: 1px solid var(--hair);
+        }
+        .sp-facts dt {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink-3);
+            padding-top: 0.12rem;
+        }
+        .sp-facts dd {
+            margin: 0;
+            font-family: var(--font-mono);
+            font-size: 0.73rem;
+            line-height: 1.4;
+            color: var(--ink);
+        }
+
+        /* The base rule paints a dark glass pill, which is invisible against paper.
+           --accent-cta is the project colour already darkened until its ink clears 4.5:1. */
+        .hero .primary-btn {
+            background: var(--accent-cta, var(--accent));
+            color: var(--accent-ink, #E5E4E2);
+            border: 0;
+            border-radius: 100px;
+            gap: 1rem;
+            padding: 0.5rem 0.5rem 0.5rem 1.35rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: none;
+        }
+        .hero .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px -8px var(--accent-cta, var(--accent));
+        }
+        .hero .primary-btn .plus-icon {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: transparent;
+            color: inherit;
+        }
+
+        /* ---------- The work table ---------- */
+        .hero-table {
+            position: relative;
+            height: clamp(400px, 58vh, 580px);
+            isolation: isolate;
+        }
+
+        /* The surface is a flat band with one hairline edge. A gradient here would put
+           back exactly the atmospheric glow this redesign exists to remove. */
+        /* Full width, so it reads as a surface the whole hero is standing on rather than
+           a grey rectangle parked behind the phone. One hairline is the table's edge. */
+        .table-edge {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 34%;
+            background: var(--paper-2);
+            border-top: 1px solid var(--hair);
+            z-index: 0;
+        }
+
+        /* Contact shadow. It is what stops the phone reading as floating. */
+        .table-cast {
+            position: absolute;
+            left: 50%;
+            /* Sits on the phone's base, which lands at ~96% of the table's height. */
+            top: 93%;
+            width: 38%;
+            height: 26px;
+            transform: translateX(-50%);
+            background: rgba(22, 21, 15, 0.38);
+            border-radius: 50%;
+            filter: blur(16px);
+            z-index: 1;
+        }
+
+        .table-items { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+
+        .artefact {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px;
+            /* Inline width/height come from each asset's own tile size; these cap them so
+               one large export cannot take over the table. */
+            max-width: 30%;
+            max-height: 34%;
+            background: var(--paper-3);
+            border: 1px solid var(--hair);
+            border-radius: 12px;
+            box-shadow: 0 14px 26px -8px rgba(22, 21, 15, 0.26);
+            transform: rotate(var(--rot, 0deg));
+            will-change: transform;
+        }
+        /* Fill, not contain-at-natural-size: MADA's icons are 30px exports and would
+           otherwise sit marooned in the middle of a white chip. */
+        .artefact img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+        /* These exports were cut against the old dark background, so several of them are
+           near-white on transparent and disappear on a pale card. The class is set at
+           runtime from the artwork's own measured luminance. */
+        .artefact.on-dark {
+            background: #23211B;
+            border-color: rgba(237, 234, 227, 0.14);
+        }
+
+        /* The Kebab pieces are rebuilt in markup and bring their own card, so the outer
+           one would be a second frame around the first. */
+        .artefact.is-html {
+            background: none;
+            border: 0;
+            padding: 0;
+            box-shadow: 0 14px 24px -10px rgba(22, 21, 15, 0.30);
+        }
+
+        /* Fixed slots, left and right of the phone. Nothing is ever thrown at a random
+           offset, so nothing can land on the screenshot the way the old tiles did. */
+        .artefact.a1 { left: 0;    top: 25%;    --rot: -6deg; z-index: 2; }
+        .artefact.a2 { left: 2%;   bottom: 10%; --rot:  4deg; z-index: 4; }
+        .artefact.a3 { left: 13%;  top: 2%;     --rot:  9deg; z-index: 2; }
+        .artefact.a4 { right: 0;   top: 15%;    --rot:  5deg; z-index: 2; }
+        .artefact.a5 { right: 3%;  bottom: 13%; --rot: -5deg; z-index: 4; }
+
+        /* Whole stage scaled as one, so the laptop offsets inside it still hold. */
+        .hero-table .device-stage {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -52%) scale(calc(var(--stage-s, 0.76) * var(--stage-k, 1)));
+            z-index: 3;
+        }
+
+        .hero-table .phone {
+            box-shadow:
+                0 44px 60px -26px rgba(22, 21, 15, 0.55),
+                0 0 0 1px rgba(22, 21, 15, 0.12);
+        }
+        .hero-table .hero-laptop-screen {
+            box-shadow: 0 26px 46px -18px rgba(22, 21, 15, 0.45);
+        }
+
+        /* ---------- The index ---------- */
+        .hero-index {
+            list-style: none;
+            margin: 0;
+            padding: 0 var(--gut) clamp(0.9rem, 2.2vh, 1.5rem);
+            border-top: 1px solid var(--hair);
+        }
+        .ix-skeleton { height: 1px; }
+
+        .ix-btn {
+            display: grid;
+            grid-template-columns: 3rem minmax(0, 13rem) minmax(0, 1fr) 1.6rem;
+            align-items: center;
+            gap: clamp(0.6rem, 2vw, 1.6rem);
+            width: 100%;
+            padding: clamp(0.7rem, 1.6vh, 1rem) 0;
+            background: none;
+            border: 0;
+            border-bottom: 1px solid var(--hair);
+            text-align: left;
+            cursor: pointer;
+            color: var(--ink-2);
+            transition: color 0.3s ease, padding-left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .hero-index li:last-child .ix-btn { border-bottom: 0; }
+
+        .ix-n {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            color: var(--ink-3);
+            transition: color 0.3s ease;
+        }
+        .ix-name {
+            font-family: var(--font-ui);
+            font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: var(--ink-2);
+            transition: color 0.3s ease, font-weight 0.3s ease;
+        }
+        .ix-meta {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--ink-3);
+        }
+        /* The marker, not the colour, is what actually announces the selected row. */
+        .ix-mark {
+            justify-self: end;
+            width: 9px;
+            height: 9px;
+            border: 1px solid var(--ink-3);
+            border-radius: 50%;
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Hover says "you can click this". Selection says "this is the one you are
+           looking at". They must not be confusable, so hover moves half as far, stays in
+           the ink colour and leaves the marker hollow. */
+        .ix-btn:hover { padding-left: 0.45rem; color: var(--ink); }
+        .ix-btn:hover .ix-n,
+        .ix-btn:hover .ix-name { color: var(--ink); }
+        .ix-btn:hover .ix-name { font-weight: 600; }
+        .ix-btn:hover .ix-mark { border-color: var(--ink); transform: scale(1.1); }
+        .ix-btn.is-on:hover { padding-left: 0.9rem; }
+        .ix-btn.is-on:hover .ix-n,
+        .ix-btn.is-on:hover .ix-name { color: var(--accent-paper); }
+        .ix-btn.is-on:hover .ix-name { font-weight: 700; }
+        .ix-btn.is-on:hover .ix-mark { border-color: var(--accent-paper); transform: scale(1.25); }
+
+        .ix-btn.is-on { padding-left: 0.9rem; }
+        .ix-btn.is-on .ix-n,
+        .ix-btn.is-on .ix-name { color: var(--accent-paper); }
+        .ix-btn.is-on .ix-name { font-weight: 700; }
+        .ix-btn.is-on .ix-mark {
+            background: var(--accent-paper);
+            border-color: var(--accent-paper);
+            transform: scale(1.25);
+        }
+        .ix-btn:focus-visible {
+            outline: 2px solid var(--ink);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* ---------- Small labels on the onyx sections ----------
+           Both of these were set in colours that fail against the page. The case accent is
+           recomputed per section in JS, because MADA's #2E5BFF only reaches 3.79:1 here. */
+        .case-index,
+        .case-block h3,
+        .case-embed h3 {
+            color: var(--case-accent-text, var(--case-accent, var(--slate-text)));
+        }
+        .contact-meta span { color: var(--slate-text); }
+
+        /* The dropdown is a floating sheet with light text and dark-styled inputs. Left to
+           inherit the paper glass it becomes a 3.5%-opaque tint over the hero, and its
+           heading drops to 1.01:1, which is to say invisible. It keeps its own card. */
+        html[data-surface="paper"] .contact-panel.glass {
+            background: rgba(13, 13, 11, 0.95);
+            border-color: rgba(229, 228, 226, 0.16);
+            box-shadow: 0 28px 70px rgba(22, 21, 15, 0.38);
+        }
+
+        /* A standalone link is a pointer target, not a word inside a sentence, so it needs
+           a box you can actually hit. 24x24 is the WCAG 2.5.8 minimum. */
+        .contact-alt-links a,
+        .contact-meta a,
+        .case-embed a:not(.launch-btn) {
+            display: inline-block;
+            padding: 0.4rem 0;
+            min-height: 24px;
+        }
+
+        /* ---------- Paper to screen ---------- */
+        .seam {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.5rem clamp(1.25rem, 4vw, 4rem);
+            background: var(--onyx);
+            color: var(--muted-color);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .case:first-of-type { border-top: 0; }
+
+        /* ---------- Tablet ---------- */
+        @media (max-width: 1100px) {
+            .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-say { order: 1; }
+            .hero-table { order: 2; height: clamp(360px, 46vh, 460px); --stage-s: 0.62; }
+            .say-project { min-height: 0; }
+            .artefact.a3, .artefact.a4 { display: none; }
+        }
+
+        /* ---------- The header's own ground on a phone ----------
+           The base mobile rules paint a dark scrim and dark glass, because there the
+           device screenshot scrolls up behind the bar. Over paper both read as a black
+           slab laid across the top of the page. */
+        @media (max-width: 860px) {
+            html[data-surface="paper"] .header::before {
+                background: linear-gradient(180deg,
+                    rgba(237, 234, 227, 0.95) 0%,
+                    rgba(237, 234, 227, 0.72) 58%,
+                    transparent 100%);
+            }
+            html[data-surface="paper"] .glass { background: rgba(22, 21, 15, 0.07); }
+        }
+
+        /* ---------- Touch targets ----------
+           44x44 is the floor once there is no cursor. Left alone the nav pills land at 41,
+           the two icon buttons at 42 and the mail links at 31. */
+        @media (max-width: 860px) {
+            .nav-item,
+            .contact-btn,
+            .send-btn,
+            .mail-btn,
+            .contact-mail,
+            .contact-meta a,
+            .contact-alt-links a,
+            .field input,
+            .field textarea,
+            .ix-btn {
+                min-height: 44px;
+            }
+            .nav-item,
+            .mail-btn,
+            .contact-mail,
+            .contact-meta a,
+            .contact-btn,
+            .send-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .resume-pill,
+            .lang-toggle { width: 44px; height: 44px; }
+        }
+
+        /* ---------- Phone ----------
+           The index is the whole idea, so it has to come before the device rather than
+           after a screenful of scrolling. display:contents lifts the grid's children into
+           the hero's own flex flow, which is what lets them be reordered at all. */
+        @media (max-width: 720px) {
+            .hero { display: flex; flex-direction: column; min-height: 0; }
+            .hero-grid, .hero-say { display: contents; }
+            .table-edge { display: none; }
+
+            /* Every lifted child needs an explicit order. Left at the default a flex item
+               sits at 0, which is how the intro paragraph ended up above the wordmark. */
+            .say-role     { order: 1; padding: 6.5rem var(--gut) 0; margin-bottom: 0.8rem; }
+            .say-masthead {
+                order: 2;
+                padding: 0 var(--gut);
+                margin-bottom: 1rem;
+                font-size: clamp(2rem, 9vw, 2.6rem);
+            }
+            .say-stand    { order: 3; padding: 0 var(--gut); margin-bottom: 1.5rem; }
+            .hero-index   { order: 4; border-top: 1px solid var(--hair); }
+            .hero-table   {
+                order: 5;
+                height: 352px;
+                --stage-s: 0.50;
+                background: var(--paper-2);
+                border-top: 1px solid var(--hair);
+            }
+            .say-project  {
+                order: 6;
+                border-top: 0;
+                min-height: 0;
+                padding: 1.5rem var(--gut) 2.6rem;
+                background: var(--paper-2);
+            }
+
+            /* Three artefacts, kept well inside the edges and well under the phone's
+               size, so the screenshot stays the biggest thing on the screen. */
+            .artefact { max-width: 25%; max-height: 26%; padding: 5px; border-radius: 9px; }
+            .artefact.a1 { left: 2%;  top: 24%; }
+            .artefact.a2 { left: 5%;  bottom: 8%; }
+            .artefact.a5 { right: 2%; bottom: 22%; }
+
+            .ix-btn {
+                grid-template-columns: 2.2rem minmax(0, 1fr) 1.2rem;
+                row-gap: 0.15rem;
+                padding: 0.95rem 0;
+            }
+            .ix-meta { grid-column: 2; font-size: 0.74rem; }
+            .ix-mark { grid-row: 1; grid-column: 3; }
+            .seam { font-size: 0.72rem; letter-spacing: 0.16em; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ix-btn, .ix-n, .ix-name, .ix-mark, .artefact { transition: none; }
+        }
+
+        /* ---------- One focus ring for everything ----------
+           The form inputs had theirs switched off and replaced by a border tint, which is
+           not a focus indicator. The ring follows each element's own radius. */
+        :where(a, button, input, textarea, select, [role="tab"], [tabindex]):focus-visible {
+            outline: 2px solid var(--ring, #E5E4E2);
+            outline-offset: 3px;
+        }
+        html[data-surface="paper"] :focus-visible { --ring: #16150F; }
+        /* The dropdown keeps its dark card whatever is behind it, so it keeps a light ring. */
+        .contact-panel :focus-visible { --ring: #E5E4E2; }
+        .field input:focus-visible,
+        .field textarea:focus-visible {
+            outline: 2px solid #E5E4E2;
+            outline-offset: 2px;
+        }
+    </style>
 </head>
 
 <body>
@@ -2253,58 +2827,38 @@
         </div>
     </div>
 
-    <!-- Mobile only. Replaces the carousel: a compact switcher that stays within reach
-         for as long as the Projects section is on screen. Filled from PROJECTS. -->
-    <div class="proj-dock glass" id="proj-dock" role="tablist" aria-label="Switch project"></div>
 
     <main class="hero" id="hero">
-        <div id="particles-container"></div>
+        <div class="hero-grid">
+            <div class="table-edge" aria-hidden="true"></div>
 
-        <div class="hero-content">
-
-            <div class="hero-left">
-                <span class="eyebrow" id="hero-eyebrow">Case study 01 · C2C circular fashion · Gulf 2026</span>
-                <h1 class="main-title" id="hero-title">
-                    <span class="light">Trust</span><br>
-                    First
-                </h1>
-                <p class="description" id="hero-desc">
-                    A secondhand fashion marketplace that never looks secondhand.
-                    Built for the Gulf, where nobody had made resale feel like a
-                    boutique instead of a bargain bin.
+            <div class="hero-say">
+                <p class="say-role">
+                    <span data-lang="en">Available for work &middot; Seville, Spain</span><span data-lang="es">Disponible para trabajar &middot; Sevilla, Espa&ntilde;a</span>
                 </p>
-                <div class="cta-group">
+
+                <h1 class="say-masthead">David Lopez</h1>
+
+                <p class="say-stand">
+                    <span data-lang="en">UX/UI designer. I studied Immersive Reality at SCAD in Savannah on a tennis scholarship, and then the UX/UI programme at CEI in Seville.</span><span data-lang="es">Dise&ntilde;ador UX/UI. Estudi&eacute; Immersive Reality en SCAD, en Savannah, gracias a una beca deportiva de tenis, y despu&eacute;s el Experto en UX/UI en CEI, en Sevilla.</span>
+                </p>
+
+                <div class="say-project" id="say-project">
+                    <p class="sp-kicker" id="hero-eyebrow"></p>
+                    <p class="sp-title" id="hero-title"></p>
+                    <p class="sp-desc" id="hero-desc"></p>
+                    <dl class="sp-facts" id="hero-facts"></dl>
                     <button class="primary-btn" id="view-case">
-                        <span id="view-case-label">View MADA case study</span>
-                        <span class="plus-icon">→</span>
+                        <span id="view-case-label"></span>
+                        <span class="plus-icon" aria-hidden="true">&rarr;</span>
                     </button>
                 </div>
-                <div class="award-badge">
-                    <div class="award-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                    <div class="award-text">
-                        <span class="award-title" id="badge-title">Usability testing</span>
-                        <span class="award-subtitle" id="badge-sub">100% success · 10 of 10 users</span>
-                    </div>
-                </div>
             </div>
 
-            <div class="frags-container-bg">
-                <div class="frag f7" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
-                </div>
-                <div class="frag f8" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h10M4 17h13" /></svg>
-                </div>
-                <div class="frag f9" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2" /><rect x="14" y="3" width="7" height="7" rx="2" /><rect x="3" y="14" width="7" height="7" rx="2" /><rect x="14" y="14" width="7" height="7" rx="2" /></svg>
-                </div>
-            </div>
+            <div class="hero-table" id="hero-table" role="tabpanel" tabindex="0">
+                <div class="table-items" id="table-items" aria-hidden="true"></div>
+                <div class="table-cast" aria-hidden="true"></div>
 
-            <div class="hero-center">
                 <div class="device-stage" id="device-stage">
                     <div class="phone-stage">
                         <div class="phone" id="phone">
@@ -2328,40 +2882,19 @@
                     </div>
                 </div>
             </div>
-
-            <div class="frags-container">
-                <div class="frag f1" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 8-6 1.6L10 19 5 3z" /></svg>
-                </div>
-                <div class="frag f2" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="4" /><circle cx="16" cy="12" r="2.6" fill="currentColor" stroke="none" /></svg>
-                </div>
-                <div class="frag f3" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="3" /><path d="M3 9h18M8 13h6" /></svg>
-                </div>
-                <div class="frag f4" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z" /><path d="M3 13l9 5 9-5" /></svg>
-                </div>
-                <div class="frag f5" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" /></svg>
-                </div>
-            </div>
-
-            <div class="hero-right">
-                <div class="project-carousel">
-                    <div class="carousel-stage" id="carousel-track" role="tablist" aria-label="Case studies"></div>
-                    <div class="carousel-nav">
-                        <span class="carousel-count" id="carousel-count">01 / 03</span>
-                    </div>
-                </div>
-                <h2 class="side-title" id="hero-side">
-                    <span class="light">Premium</span><br>
-                    Resale
-                </h2>
-            </div>
-
         </div>
+
+        <ol class="hero-index" id="hero-index" role="tablist">
+            <li class="ix-skeleton" aria-hidden="true"></li>
+        </ol>
     </main>
+
+    <!-- The hero is paper, the work is screen. Making the change of surface a labelled
+         band turns what would read as a seam into the cover-to-contents moment. -->
+    <div class="seam" id="seam">
+        <span class="seam-label"><span data-lang="en">The case studies</span><span data-lang="es">Los casos</span></span>
+        <span class="seam-count" id="seam-count"></span>
+    </div>
 
     <section class="case" id="case-mada" style="--case-accent:#2E5BFF">
         <div class="case-head">
@@ -2694,12 +3227,12 @@
                 obSkip: 'Skip', obNext: 'Next', obDone: 'Got it',
                 obSteps: {
                     switch: {
-                        title: 'Three projects, one screen',
-                        body: 'Tap an icon to switch case study. The lit one, ringed in its own colour, is the one you are looking at.'
+                        title: 'The three projects',
+                        body: 'This is the index. Tap a row and everything above it changes to that project.'
                     },
                     switchDesk: {
-                        title: 'Three projects, one screen',
-                        body: 'Click a card to switch case study. Everything around it — the headline, the screen, the colour — changes with it.'
+                        title: 'The three projects',
+                        body: 'This is the index. Click a row and everything above it changes with it, the screen, the copy and the colour.'
                     },
                     nav: {
                         title: 'Jump anywhere',
@@ -2726,12 +3259,12 @@
                 obSkip: 'Saltar', obNext: 'Siguiente', obDone: 'Entendido',
                 obSteps: {
                     switch: {
-                        title: 'Tres proyectos, una pantalla',
-                        body: 'Toca un icono para cambiar de caso. El que está encendido, con un aro de su color, es el que estás viendo.'
+                        title: 'Los tres proyectos',
+                        body: 'Este es el índice. Toca una fila y cambia todo lo de arriba a ese proyecto.'
                     },
                     switchDesk: {
-                        title: 'Tres proyectos, una pantalla',
-                        body: 'Pulsa una tarjeta para cambiar de caso. Todo lo de alrededor — el titular, la pantalla, el color — cambia con ella.'
+                        title: 'Los tres proyectos',
+                        body: 'Este es el índice. Pulsa una fila y cambia todo lo de arriba, la pantalla, el texto y el color.'
                     },
                     nav: {
                         title: 'Ve a donde quieras',
@@ -2794,6 +3327,7 @@
                 if (label) label.textContent = t().caseStudy + ' ' + String(i + 1).padStart(2, '0');
             });
             if (typeof renderHeroCopy === 'function') renderHeroCopy(PROJECTS[activeIndex]);
+            if (typeof renderIndex === 'function') renderIndex();
             if (typeof layoutCarousel === 'function') layoutCarousel();
             if (typeof navItems !== 'undefined' && navItems[navCurrent]) placePill(navItems[navCurrent], false);
             const sb = document.getElementById('cf-send');
@@ -2820,7 +3354,7 @@
             {
                 key: 'mada',
                 name: 'MADA',
-                meta: { en: 'C2C Circular Fashion · 2026', es: 'Moda circular C2C · 2026' },
+                meta: { en: 'End-to-end UX/UI · 2026', es: 'UX/UI de principio a fin · 2026' },
                 screen: 'images/projects/mada-screen.png',
                 screenBg: '#F9F8F3',       // sampled from the screenshot's top edge
                 screenBgBottom: '#231F20', // sampled from its bottom nav bar
@@ -2828,18 +3362,22 @@
                 // runs into the phone, which sits from 40% to 60% of the viewport.
                 hero: {
                     en: {
-                        eyebrow: 'Premium resale marketplace · Gulf 2026',
-                        title: ['Luxury', 'Resale'],
-                        side: ['Zero', 'Stigma'],
-                        desc: 'A secondhand fashion marketplace that never looks secondhand. Built for the Gulf, where nobody had made resale feel like a boutique instead of a bargain bin.',
-                        badge: ['Usability testing', '100% success with 10 of 10 users']
+                        eyebrow: 'End-to-end UX/UI · mobile app · 2026',
+                        title: ['Fear of being scammed came up', 'in nearly every answer.'],
+                        desc: 'I ran netnography across Gulf forums and app stores and put out a survey. Two personas came out of that, and I prioritised with MoSCoW. Escrow payments and a chat that never shows a phone number stayed as must-haves. I took the visual direction premium and minimal, because the other barrier that kept appearing was the secondhand stigma.',
+                        facts: [
+                            ['Method', 'Double Diamond, netnography, survey, MoSCoW'],
+                            ['Testing', '10 of 10 completed both flows without help']
+                        ]
                     },
                     es: {
-                        eyebrow: 'Marketplace de moda premium · Golfo Pérsico 2026',
-                        title: ['Segunda', 'Mano'],
-                        side: ['Cero', 'Estigma'],
-                        desc: 'Una tienda de ropa de segunda mano que no parece de segunda mano. Pensada para el Golfo, donde nadie había conseguido que revender ropa se sintiera como entrar en una boutique y no en un mercadillo.',
-                        badge: ['Test de usabilidad', '100% de éxito con 10 de 10 usuarios']
+                        eyebrow: 'UX/UI de principio a fin · app móvil · 2026',
+                        title: ['El miedo al fraude salía', 'en casi todas las respuestas.'],
+                        desc: 'Hice netnografía en foros y tiendas de apps del Golfo y pasé una encuesta. De ahí salieron dos perfiles, y prioricé con MoSCoW. El pago en depósito y un chat que no enseña el teléfono se quedaron como imprescindibles. La dirección visual la llevé a un minimalismo premium, porque el otro freno que aparecía era el estigma de la ropa usada.',
+                        facts: [
+                            ['Método', 'Doble Diamante, netnografía, encuesta, MoSCoW'],
+                            ['Test', '10 de 10 completaron compra y venta sin ayuda']
+                        ]
                     }
                 },
                 logo: 'images/projects/mada-logo.png',
@@ -2862,7 +3400,7 @@
             {
                 key: 'tripmate',
                 name: 'TripMate',
-                meta: { en: 'Collaborative Travel · 2025', es: 'Viajes en grupo · 2025' },
+                meta: { en: 'Research and architecture · 2025', es: 'Investigación y arquitectura · 2025' },
                 screen: 'images/projects/tripmate-screen.png',
                 // This screenshot's edges are photographic gradients, not flat colour,
                 // so the strips are gradients sampled across the top and bottom rows.
@@ -2870,18 +3408,22 @@
                 screenBgBottom: 'linear-gradient(90deg, #DA9AB5 0%, #C88DAB 50%, #B582A1 100%)',
                 hero: {
                     en: {
-                        eyebrow: 'Collaborative travel · 2025',
-                        title: ['One Trip', 'One App'],
-                        side: ['No More', 'Juggling'],
-                        desc: 'Planning one trip across four apps is three too many. Packing, bookings, budget and activities in one place, and it still works with no signal.',
-                        badge: ['Research depth', '4 personas over 93 pages']
+                        eyebrow: 'Research and information architecture · mobile app · 2025',
+                        title: ['One of the four personas', 'travelled with no signal.'],
+                        desc: 'I tried PackPoint, TripIt and Tripsy to see which piece each one kept behind a paywall. Four personas came out of the research, and the sitemap and the flows came out of them. Offline mode is there because of Alex, and the packing list is built from the destination, the dates and the forecast.',
+                        facts: [
+                            ['Method', 'Four personas, three competitors, sitemap, flows'],
+                            ['Output', '93 pages, from wireframe to prototype']
+                        ]
                     },
                     es: {
-                        eyebrow: 'Planificar viajes en grupo · 2025',
-                        title: ['Un Viaje', 'Una App'],
-                        side: ['Se Acabó', 'El Caos'],
-                        desc: 'Organizar un viaje con cuatro apps distintas son tres de más. Maleta, reservas, presupuesto y planes en un solo sitio, y funcionando aunque te quedes sin cobertura.',
-                        badge: ['Profundidad de research', '4 perfiles en 93 páginas']
+                        eyebrow: 'Investigación y arquitectura de la información · app móvil · 2025',
+                        title: ['Uno de los cuatro perfiles', 'viajaba sin cobertura.'],
+                        desc: 'Probé PackPoint, TripIt y Tripsy para ver qué pieza dejaba cada una detrás del muro de pago. De la investigación salieron cuatro perfiles, y de ahí el mapa del sitio y los flujos. El modo sin conexión entró por Alex, y la lista de equipaje se genera según el destino, los días y el tiempo que va a hacer.',
+                        facts: [
+                            ['Método', 'Cuatro perfiles, tres competidores, mapa y flujos'],
+                            ['Entrega', '93 páginas, del wireframe al prototipo']
+                        ]
                     }
                 },
                 logo: 'images/projects/tripmate-logo.png',
@@ -2903,7 +3445,7 @@
             {
                 key: 'kebab',
                 name: 'Kebab Gourmet',
-                meta: { en: 'Ordering Site, Coded · 2026', es: 'Web de pedidos · 2026' },
+                meta: { en: 'Design, code and deployment · 2026', es: 'Diseño, código y despliegue · 2026' },
                 flag: 'New',   // most recent work — called out on the card
                 screen: 'images/projects/kebab-screen.png',
                 screenBg: '#7F7F7F',       // uniform dimmed overlay behind the cart modal
@@ -2911,18 +3453,22 @@
                 hasDesktop: true,          // shipped on web too — brings the laptop into the hero
                 hero: {
                     en: {
-                        eyebrow: 'Self-initiated build · coded and deployed · 2026',
-                        title: ['Design', 'Shipped'],
-                        side: ['Two Taps', 'To Eat'],
-                        desc: 'Built for a kebab shop in Espartinas and deployed for real. The handover never closed, so orders land on my phone instead of theirs. The product still works end to end.',
-                        badge: ['Status', 'Deployed and working']
+                        eyebrow: 'UX/UI, build and deployment · web · 2026',
+                        title: ['The empty and error states', 'were not in my Figma.'],
+                        desc: 'I did this one on my own, design, front end and deployment. Publishing it turned up things I had not solved. What shows while it loads, what the cart says when it is empty, how you fill in an address one-handed on a phone. I also left a WhatsApp order in, because not everyone wants to fill in a form.',
+                        facts: [
+                            ['Scope', 'Design, front end and deployment'],
+                            ['Status', 'Live and taking orders']
+                        ]
                     },
                     es: {
-                        eyebrow: 'Proyecto propio · diseñado y programado · 2026',
-                        title: ['Diseño', 'Y Código'],
-                        side: ['Pedir', 'Rápido'],
-                        desc: 'Lo hice para un kebab de Espartinas y lo dejé funcionando de verdad. La venta nunca llegó a cerrarse, así que los pedidos me entran a mi móvil y no al suyo. Aun así el producto está entero y funciona.',
-                        badge: ['Estado', 'Desplegado y funcionando']
+                        eyebrow: 'UX/UI, maquetación y despliegue · web · 2026',
+                        title: ['Los estados vacíos y de error', 'no estaban en mi Figma.'],
+                        desc: 'Este lo hice yo entero, diseño, maquetación y despliegue. Al publicarlo aparecieron cosas que no había resuelto. Qué se ve mientras carga, qué pone el carrito cuando está vacío, cómo se rellena una dirección con una mano en el móvil. También dejé el pedido por WhatsApp, porque no todo el mundo quiere rellenar un formulario.',
+                        facts: [
+                            ['Alcance', 'Diseño, maquetación y despliegue'],
+                            ['Estado', 'En línea y recogiendo pedidos']
+                        ]
                     }
                 },
                 logo: 'images/projects/kebab-logo.png',
@@ -2954,12 +3500,11 @@
         // file takes to arrive — seconds on a cold load for the larger screenshots.
         PROJECTS.forEach(p => { if (p.screen) { const pre = new Image(); pre.src = p.screen; } });
 
-        // px between card centres; side cards scale to 0.76. Read from CSS so the mobile
-        // breakpoint can tighten the stack without JS knowing the breakpoint exists.
-        function slotSpacing() {
-            const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--slot-spacing'));
-            return v || 140;
-        }
+        /* ============================================================
+           HERO ENGINE (v2)
+           The index drives everything. Hovering or focusing a row selects a project;
+           the table above it re-dresses itself. No carousel, no counter, no orbit.
+           ============================================================ */
 
         // Phones have no cursor, so the pointer-driven work in the render loop is dead
         // weight there, and the contact panel becomes a sheet that must not autofocus.
@@ -2973,164 +3518,62 @@
         const deviceStage = document.getElementById('device-stage');
         const heroLaptop = document.getElementById('hero-laptop');
         const heroVideo = document.getElementById('hero-video');
-        const fragsFG = document.querySelector('.frags-container');
-        const fragsBG = document.querySelector('.frags-container-bg');
-        const allFrags = document.querySelectorAll('.frag');
-        // Must run before the first renderFrags(): it captures each slot's id and its generic
-        // glass icon, which is the fallback for projects that have no artwork yet.
-        allFrags.forEach(f => { f.dataset.slot = f.className.split(' ')[1]; f.dataset.fallback = f.innerHTML; });
-        const track = document.getElementById('carousel-track');
-        const projDock = document.getElementById('proj-dock');
-        const countEl = document.getElementById('carousel-count');
+        const heroTable = document.getElementById('hero-table');
+        const tableItems = document.getElementById('table-items');
+        const indexEl = document.getElementById('hero-index');
+        const seamCount = document.getElementById('seam-count');
         const viewCaseBtn = document.getElementById('view-case');
         const viewCaseLabel = document.getElementById('view-case-label');
 
-        let isSwitching = false;
-        let switchSpin = 0;
+        // The first-visit tour points at the index now. projDock and countEl are gone;
+        // the tour filters out steps whose element is missing, so null is safe.
+        const track = indexEl;
+        const projDock = null;
+        const countEl = null;
+        // refreshLangStrings() still calls this. Kept as a no-op rather than removed,
+        // so a stale call can never throw.
+        function layoutCarousel() {}
+
         let activeIndex = 0;
+        let isSwitching = false;
 
-        /* ---------- Build the carousel ---------- */
-        PROJECTS.forEach((project, i) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.dataset.index = i;
-            card.innerHTML = `
-                ${project.flag ? `<span class="card-flag">${project.flag}</span>` : ''}
-                <div class="card-thumb">${project.logo
-                    ? `<img src="${project.logo}" alt="${project.name} app icon">`
-                    : project.name}</div>
-                <div class="card-info">
-                    <span>${project.name}</span>
-                    <span>${project.meta[LANG === 'es' ? 'es' : 'en'] || project.meta.en}</span>
-                </div>`;
-            card.setAttribute('role', 'tab');
-            card.tabIndex = 0;
-            const select = () => {
-                if (isSwitching || i === activeIndex) return;
-                activeIndex = i;
-                layoutCarousel();
-                switchProject(PROJECTS[i]);
-            };
-            card.addEventListener('click', select);
-            card.addEventListener('keydown', e => {
-                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }
-            });
-            track.appendChild(card);
-
-            // Mobile dock: the same project, the same select(), so there is one selection
-            // path and no second copy of the state to keep in sync.
-            if (projDock) {
-                const item = document.createElement('button');
-                item.className = 'dock-item';
-                item.type = 'button';
-                item.setAttribute('role', 'tab');
-                item.innerHTML = `
-                    <span class="dock-thumb">${project.logo
-                        ? `<img src="${project.logo}" alt="">`
-                        : ''}</span>
-                    <span class="dock-name">${project.name}</span>`;
-                item.setAttribute('aria-label', project.name);
-                item.addEventListener('click', select);
-                projDock.appendChild(item);
-            }
-        });
-
-        // Lay the cards out around a centre slot. The selected project sits at offset 0,
-        // the others wrap to the nearest side, so with three projects there is always
-        // exactly one card left and one right of the active card.
-        function layoutCarousel() {
-            const cards = [...track.children];
-            const n = cards.length;
-            const half = Math.floor(n / 2);
-            cards.forEach((card, i) => {
-                const offset = ((i - activeIndex + n + half) % n) - half;
-                const isActive = offset === 0;
-                card.style.transform = `translateX(${offset * slotSpacing()}px) scale(${isActive ? 1 : 0.76})`;
-                card.style.setProperty('--card-opacity', isActive ? 1 : 0.4);
-                card.style.zIndex = isActive ? 3 : 2 - Math.abs(offset);
-                card.classList.toggle('is-active', isActive);
-                card.setAttribute('aria-selected', String(isActive));
-            });
-            countEl.textContent = String(activeIndex + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0');
-
-            // The dock shows the same selection: the open project opens up to name itself.
-            if (projDock) {
-                [...projDock.children].forEach((item, i) => {
-                    const on = i === activeIndex;
-                    item.classList.toggle('is-active', on);
-                    item.setAttribute('aria-selected', String(on));
-                });
-            }
-
-            // The hero CTA always points at whichever case study is on screen.
-            viewCaseLabel.textContent = t().viewCase(PROJECTS[activeIndex].name);
-        }
-
-        viewCaseBtn.addEventListener('click', () => {
-            const target = document.getElementById('case-' + PROJECTS[activeIndex].key);
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-
-        layoutCarousel();
-
-        // The dock belongs to the Projects section: it drives the hero and means nothing
-        // once you are reading a case study, so it rides in and out with the hero. The
-        // hero is taller than the viewport, so the ratio tops out well under 1 — 0.14 is
-        // "a meaningful piece of it is still on screen", not "it is nearly gone".
-        if (projDock) {
-            new IntersectionObserver(entries => {
-                entries.forEach(e => projDock.classList.toggle('show', e.intersectionRatio >= 0.14));
-            }, { threshold: [0, 0.14, 0.5] }).observe(hero);
-        }
-
-        // Touch: swipe the stack. The side cards shrink to 0.76 and sit half off the
-        // thumb's natural arc, so tapping them is a poor primary gesture on a phone.
-        (function swipeCarousel() {
-            let x0 = null, y0 = null;
-            track.addEventListener('touchstart', e => {
-                x0 = e.touches[0].clientX;
-                y0 = e.touches[0].clientY;
-            }, { passive: true });
-            track.addEventListener('touchend', e => {
-                if (x0 === null) return;
-                const dx = e.changedTouches[0].clientX - x0;
-                const dy = e.changedTouches[0].clientY - y0;
-                x0 = null;
-                // A mostly-vertical drag is the visitor scrolling the page past the cards.
-                if (Math.abs(dx) < 45 || Math.abs(dx) <= Math.abs(dy) || isSwitching) return;
-                const n = PROJECTS.length;
-                activeIndex = (activeIndex + (dx < 0 ? 1 : -1) + n) % n;
-                layoutCarousel();
-                switchProject(PROJECTS[activeIndex]);
-            }, { passive: true });
-        })();
-
-        /* ---------- Set the initial screen ---------- */
-        // The CTA must stay readable on every brand colour. White fails on the light accents
-        // (mint 1.5:1, orange 2.7:1) and MADA's blue fails BOTH inks — 4.14 white, 3.80 dark —
-        // so pick the better ink and, if that still misses 4.5, darken the fill until it lands.
+        /* ---------- Contrast ---------- */
         const lin = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
         const lum = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
         const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
         const toRgb = hex => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
         const toHex = rgb => '#' + rgb.map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
 
+        // A filled control: darken the brand colour until SOME ink clears 4.5:1 on it.
+        // MADA's #2E5BFF fails with both inks as given (4.14 white, 3.80 black).
         function ctaColours(hex) {
             const INK_LIGHT = [229, 228, 226], INK_DARK = [10, 10, 10];
             let bg = toRgb(hex);
             let ink = contrast(bg, INK_LIGHT) >= contrast(bg, INK_DARK) ? INK_LIGHT : INK_DARK;
-            // Darken toward black in small steps until the pair clears AA.
             for (let i = 0; i < 24 && contrast(bg, ink) < 4.5; i++) {
                 bg = bg.map(v => v * 0.94);
-                ink = INK_LIGHT; // once darkened, light ink is always the winner
+                ink = INK_LIGHT;
             }
             return { bg: toHex(bg), ink: toHex(ink), ratio: +contrast(bg, ink).toFixed(2) };
         }
 
+        // The same brand colour used as TEXT on the paper hero. TripMate's mint #6AE8A7
+        // sits at about 1.4:1 on paper, so it has to be darkened before it can be read.
+        // Measured against --paper-2, not --paper: on a phone the project block sits on
+        // the table surface, and a colour tuned to the lighter tone fails there.
+        const PAPER_RGB = [228, 224, 214];
+        function onPaper(hex) {
+            let c = toRgb(hex);
+            for (let i = 0; i < 40 && contrast(c, PAPER_RGB) < 4.5; i++) c = c.map(v => v * 0.92);
+            return toHex(c);
+        }
+
+        /* ---------- The phone screen ---------- */
         function renderScreen(project) {
             const cta = ctaColours(project.accent);
             document.documentElement.style.setProperty('--accent-cta', cta.bg);
             document.documentElement.style.setProperty('--accent-ink', cta.ink);
+            document.documentElement.style.setProperty('--accent-paper', onPaper(project.accent));
             // Only the project that actually shipped on desktop gets the laptop.
             deviceStage.classList.toggle('has-laptop', !!project.hasDesktop);
             if (project.hasDesktop) heroVideo.play().catch(() => {}); else heroVideo.pause();
@@ -3140,14 +3583,11 @@
             phoneScreen.style.setProperty('--screen-bg', project.screenBg || '#0a0a0a');
             phoneScreen.style.setProperty('--screen-bg-bottom', project.screenBgBottom || project.screenBg || '#0a0a0a');
             if (!project.screen) {
-                screenMedia.innerHTML = `<div class="screen-fallback"><strong>${project.name}</strong><span style="font-size:0.7rem;opacity:0.7">${project.meta}</span></div>`;
+                screenMedia.innerHTML = '<div class="screen-fallback"><strong>' + project.name + '</strong></div>';
                 return;
             }
-            // Only put the image on screen once it has loaded, so the swap is never visible
-            // as a blank frame. Deliberately NOT img.decode(): that promise can stay pending
-            // forever while the document is hidden (background tab), leaving the screen
-            // permanently empty. onload always fires, and the preload above means it is
-            // usually already cached and resolves on the spot.
+            // Deliberately NOT img.decode(): that promise can stay pending forever while the
+            // document is hidden, leaving the screen permanently empty. onload always fires.
             const img = new Image();
             img.alt = project.name + ' interface';
             const show = () => { if (screenMedia.dataset.pending === project.key) screenMedia.replaceChildren(img); };
@@ -3157,190 +3597,97 @@
             img.src = project.screen;
             if (img.complete && img.naturalWidth) show(); // already in cache
         }
-        renderScreen(PROJECTS[0]);
-        renderFrags(PROJECTS[0]);
-        document.documentElement.style.setProperty('--accent', PROJECTS[0].accent);
 
-        /* ============================================================
-           PROJECT SWITCH — same choreography as the soda flavor swap
-           ============================================================ */
-        // The explode step throws fragments to a random ±100px offset, which can land them
-        // on top of the phone. Nudge any such landing spot back out to the nearest side so
-        // the case-study screen stays readable after every switch.
-        function pushClearOfPhone(frag, offsetX, width) {
-            const stage = document.querySelector('.phone-stage');
-            if (!stage) return offsetX;
-            // Half-widths of BOTH boxes, or a wide fragment still clips the screen edge
-            // even while its centre sits outside the band.
-            const fragWidth = width || frag.offsetWidth;
-            const halfBand = stage.offsetWidth / 2 + fragWidth / 2 + 16;
-            const phoneCenter = window.innerWidth / 2;
-            const containerLeft = frag.parentElement.getBoundingClientRect().left;
-            const restCenter = containerLeft + frag.offsetLeft + fragWidth / 2;
-            const landedCenter = restCenter + offsetX;
-            const overlap = halfBand - Math.abs(landedCenter - phoneCenter);
-            if (overlap > 0) {
-                const dir = restCenter < phoneCenter ? -1 : 1;
-                return offsetX + dir * overlap;
+        /* ---------- The table ----------
+           The glass tiles that used to orbit the phone are the same artwork, laid flat on
+           a surface instead. Fixed slots, so nothing can land on the screenshot the way
+           the old randomly thrown fragments did. Ordered most prominent first. */
+        // Which backing an artefact needs, measured once per file and remembered.
+        // These pieces were cut against the old dark hero: MADA's search icon is 18%
+        // opaque and averages rgb(248,248,242), so on a pale card there is nothing to
+        // see. Rather than hand-tag eight files per project, read the artwork.
+        const cardBacking = new Map();
+        function backCard(el, img, key) {
+            if (cardBacking.has(key)) {
+                if (cardBacking.get(key)) el.classList.add('on-dark');
+                return;
             }
-            return offsetX;
-        }
-
-        function switchProject(project) {
-            if (isSwitching) return;
-            isSwitching = true;
-
-            const frags = document.querySelectorAll('.frag');
-            const heroCenter = document.querySelector('.hero-center');
-
-            swapHeroCopy(project);
-
-            // 1. Background halo morph
-            gsap.to(hero, {
-                '--bg-core': project.bg.core,
-                '--bg-inner': project.bg.inner,
-                '--bg-mid': project.bg.mid,
-                '--bg-outer': project.bg.outer,
-                duration: 1.5,
-                ease: 'power2.inOut'
-            });
-            gsap.to(document.documentElement, {
-                '--accent': project.accent,
-                duration: 1.5,
-                ease: 'power2.inOut'
-            });
-
-            // 2. Phone spin + motion blur, screen swaps at the peak
-            const spinObj = { val: 0, blur: 0 };
-            gsap.to(spinObj, {
-                val: 360,
-                blur: 14,
-                duration: 0.6,
-                ease: 'power2.in',
-                onUpdate: () => {
-                    switchSpin = spinObj.val;
-                    phone.style.filter = `blur(${spinObj.blur}px)`;
-                },
-                onComplete: () => {
-                    renderScreen(project);
-                    gsap.to(spinObj, {
-                        val: 720,
-                        blur: 0,
-                        duration: 1.5,
-                        ease: 'back.out(0.7)',
-                        onUpdate: () => {
-                            switchSpin = spinObj.val;
-                            phone.style.filter = `blur(${spinObj.blur}px)`;
-                        },
-                        onComplete: () => {
-                            switchSpin = 0;
-                            phone.style.filter = 'none';
-                        }
-                    });
+            let light = false;
+            try {
+                const n = 24;
+                const c = document.createElement('canvas');
+                c.width = n; c.height = n;
+                const ctx = c.getContext('2d', { willReadFrequently: true });
+                ctx.drawImage(img, 0, 0, n, n);
+                const d = ctx.getImageData(0, 0, n, n).data;
+                let sum = 0, count = 0;
+                for (let i = 0; i < d.length; i += 4) {
+                    if (d[i + 3] < 40) continue;   // transparent, not part of the artwork
+                    sum += 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+                    count++;
                 }
-            });
-
-            // 3. Fragments implode → recolour → explode to new random positions
-            let completedFrags = 0;
-            frags.forEach((frag) => {
-                const bW = frag.offsetWidth / 2;
-                const bH = frag.offsetHeight / 2;
-                const centerX = (window.innerWidth / 2 - frag.offsetLeft - bW);
-                const centerY = (window.innerHeight / 2 - frag.offsetTop - bH);
-
-                const startAngle = parseFloat(frag.dataset.angle) || 0;
-                const currentBaseX = parseFloat(frag.dataset.baseX) || 0;
-                const currentBaseY = parseFloat(frag.dataset.baseY) || 0;
-
-                const rawX = (Math.random() - 0.5) * 200;
-                const nextBaseX = frag.parentElement === fragsFG
-                    ? pushClearOfPhone(frag, rawX, fragWidthFor(project, frag))
-                    : rawX;
-                const nextBaseY = (Math.random() - 0.5) * 200;
-
-                // Real UI artwork has to stay readable, so it only ever tilts a few degrees.
-                // Abstract glass tiles can keep tumbling freely.
-                const willBeMedia = !!fragAsset(project, frag);
-                const midAngle = willBeMedia ? startAngle + 14 : startAngle + 45;
-                const endAngle = willBeMedia ? (Math.random() * 24 - 12) : startAngle + 90;
-
-                gsap.set(frag, { rotation: startAngle, x: currentBaseX, y: currentBaseY });
-
-                gsap.timeline()
-                    .to(frag, {
-                        x: centerX,
-                        y: centerY,
-                        rotation: midAngle,
-                        scale: 0.1,
-                        opacity: 0,
-                        duration: 0.5,
-                        ease: 'power2.in',
-                        onComplete: () => {
-                            // Swap this fragment's artwork at the point where it is fully
-                            // collapsed and invisible — same trick as the phone's texture swap.
-                            renderFrag(project, frag);
-                            heroCenter.style.zIndex = 50;
-                        }
-                    })
-                    .to(frag, { duration: 0.3 })
-                    .to(frag, {
-                        onStart: () => { heroCenter.style.zIndex = 1; },
-                        x: nextBaseX,
-                        y: nextBaseY,
-                        rotation: endAngle,
-                        scale: 1,
-                        opacity: 1,
-                        duration: 0.9,
-                        ease: 'back.out(1.5)',
-                        onComplete: () => {
-                            frag.dataset.angle = endAngle;
-                            frag.dataset.baseX = nextBaseX;
-                            frag.dataset.baseY = nextBaseY;
-                            frag.dataset.rx = 0;
-                            frag.dataset.ry = 0;
-
-                            completedFrags++;
-                            if (completedFrags === frags.length) isSwitching = false;
-                        }
-                    });
-            });
-        }
-
-        /* ============================================================
-           POINTER PHYSICS — tilt, parallax, repulsion, float
-           ============================================================ */
-        function fragAsset(project, frag) {
-            return project.frags && project.frags[frag.dataset.slot];
-        }
-
-        function renderFrag(project, frag) {
-            const asset = fragAsset(project, frag);
-            if (asset) {
-                frag.classList.add('is-media');
-                frag.style.width = asset.tile[0] + 'px';
-                frag.style.height = asset.tile[1] + 'px';
-                // `html` for widgets rebuilt in markup, `src` for exported artwork.
-                frag.innerHTML = asset.html || `<img src="${asset.src}" alt="">`;
-            } else {
-                frag.classList.remove('is-media');
-                frag.style.width = '';
-                frag.style.height = '';
-                frag.innerHTML = frag.dataset.fallback;
+                light = count > 0 && (sum / count) > 186;
+            } catch (e) {
+                // A tainted canvas just means the default pale card stays.
             }
-            frag.style.setProperty('--frag-accent', project.accent);
+            cardBacking.set(key, light);
+            if (light) el.classList.add('on-dark');
         }
 
-        function renderFrags(project) {
-            allFrags.forEach(frag => renderFrag(project, frag));
+        const TABLE_SLOTS = [
+            { cls: 'a1', depth: 0.45 },
+            { cls: 'a2', depth: 1.00 },
+            { cls: 'a5', depth: 0.85 },
+            { cls: 'a4', depth: 0.40 },
+            { cls: 'a3', depth: 0.30 }
+        ];
+
+        function renderTable(project) {
+            // Biggest artwork into the most prominent slots. MADA has two substantial
+            // pieces and six 30px icons, and several slots repeat the same file, so
+            // picking by size after de-duplicating stops the table filling with
+            // near-empty chips.
+            const seen = new Set();
+            const assets = Object.values(project.frags || {})
+                .filter(a => {
+                    const k = a.src || a.html;
+                    if (!k || seen.has(k)) return false;
+                    seen.add(k);
+                    return true;
+                })
+                .sort((a, b) => (b.tile[0] * b.tile[1]) - (a.tile[0] * a.tile[1]))
+                .slice(0, TABLE_SLOTS.length);
+
+            const frag = document.createDocumentFragment();
+            assets.forEach((asset, i) => {
+                const slot = TABLE_SLOTS[i];
+                const el = document.createElement('div');
+                el.className = 'artefact ' + slot.cls;
+                el.style.width = asset.tile[0] + 'px';
+                el.style.height = asset.tile[1] + 'px';
+                el.dataset.depth = slot.depth;
+                if (asset.src) {
+                    const img = document.createElement('img');
+                    img.alt = '';
+                    img.onload = () => backCard(el, img, asset.src);
+                    img.src = asset.src;
+                    if (img.complete && img.naturalWidth) backCard(el, img, asset.src);
+                    el.appendChild(img);
+                } else if (asset.html) {
+                    el.classList.add('is-html');
+                    el.innerHTML = asset.html;
+                }
+                frag.appendChild(el);
+            });
+            tableItems.replaceChildren(frag);
         }
 
+        /* ---------- The written column ---------- */
         const heroEls = {
             eyebrow: document.getElementById('hero-eyebrow'),
             title: document.getElementById('hero-title'),
             desc: document.getElementById('hero-desc'),
-            side: document.getElementById('hero-side'),
-            badgeTitle: document.getElementById('badge-title'),
-            badgeSub: document.getElementById('badge-sub')
+            facts: document.getElementById('hero-facts')
         };
 
         function renderHeroCopy(project) {
@@ -3348,38 +3695,190 @@
             if (!h) return;
             const n = String(PROJECTS.indexOf(project) + 1).padStart(2, '0');
             heroEls.eyebrow.textContent = t().caseStudy + ' ' + n + ' · ' + h.eyebrow;
-            heroEls.title.innerHTML = `<span class="light">${h.title[0]}</span><br>${h.title[1]}`;
-            heroEls.side.innerHTML = `<span class="light">${h.side[0]}</span><br>${h.side[1]}`;
+            // Two lines, because these were written as two. Run together they read
+            // wrong: "Diseño Y Código", "One Trip One App".
+            heroEls.title.replaceChildren(
+                document.createTextNode(h.title[0]),
+                document.createElement('br'),
+                document.createTextNode(h.title[1])
+            );
             heroEls.desc.textContent = h.desc;
-            heroEls.badgeTitle.textContent = h.badge[0];
-            heroEls.badgeSub.textContent = h.badge[1];
+
+            // Label and value, as a description list, because that is what they are.
+            const rows = document.createDocumentFragment();
+            (h.facts || []).forEach(pair => {
+                const row = document.createElement('div');
+                const dt = document.createElement('dt');
+                dt.textContent = pair[0];
+                const dd = document.createElement('dd');
+                dd.textContent = pair[1];
+                row.append(dt, dd);
+                rows.appendChild(row);
+            });
+            heroEls.facts.replaceChildren(rows);
+
+            if (viewCaseLabel) viewCaseLabel.textContent = t().viewCase(project.name);
         }
 
-        // Cross-fade rather than hard-swap, so the copy changes with the same
-        // choreography as the phone and the background rather than snapping.
-        function swapHeroCopy(project) {
-            if (!project.hero) return;
-            const targets = [document.querySelector('.hero-left'), heroEls.side];
-            gsap.to(targets, {
-                opacity: 0,
-                y: 12,
-                duration: 0.3,
-                ease: 'power2.in',
-                onComplete: () => {
-                    renderHeroCopy(project);
-                    gsap.to(targets, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' });
-                }
+        /* ---------- The index ---------- */
+        function renderIndex() {
+            if (!indexEl) return;
+            const frag = document.createDocumentFragment();
+            PROJECTS.forEach((p, i) => {
+                const li = document.createElement('li');
+                li.className = 'ix-row';
+                // A tablist may only contain tabs, so the list item itself steps out of
+                // the accessibility tree rather than announcing itself as a list item.
+                li.setAttribute('role', 'presentation');
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'ix-btn';
+                btn.id = 'ix-tab-' + i;
+                btn.setAttribute('role', 'tab');
+                btn.setAttribute('aria-controls', 'hero-table');
+                btn.setAttribute('aria-selected', String(i === activeIndex));
+                btn.dataset.i = i;
+                // Selected state is carried by weight and by the marker, not by colour
+                // alone, so it survives a colour-blind reading and a greyscale print.
+                btn.innerHTML =
+                    '<span class="ix-n">' + String(i + 1).padStart(2, '0') + '</span>' +
+                    '<span class="ix-name">' + p.name + '</span>' +
+                    '<span class="ix-meta">' + (p.meta[LANG === 'es' ? 'es' : 'en'] || p.meta.en) + '</span>' +
+                    '<span class="ix-mark" aria-hidden="true"></span>';
+                li.appendChild(btn);
+                frag.appendChild(li);
+            });
+            indexEl.replaceChildren(frag);
+            markIndex();
+        }
+
+        function markIndex() {
+            if (!indexEl) return;
+            [...indexEl.querySelectorAll('.ix-btn')].forEach((b, i) => {
+                const on = i === activeIndex;
+                b.classList.toggle('is-on', on);
+                b.setAttribute('aria-selected', String(on));
+                // Roving tabindex: Tab reaches the group once, then the arrow keys move
+                // inside it. That is what role="tab" promises a screen reader user.
+                b.tabIndex = on ? 0 : -1;
+            });
+            const panel = document.getElementById('hero-table');
+            if (panel) panel.setAttribute('aria-labelledby', 'ix-tab-' + activeIndex);
+            if (seamCount) {
+                seamCount.textContent = String(PROJECTS.length).padStart(2, '0');
+            }
+        }
+
+        /* ---------- Switching ----------
+           Content is swapped synchronously and the animation is a pure arrival on top of
+           it. Putting the swap inside an animation callback is what makes a hero go blank
+           when the ticker stalls, which is exactly what happens in a background tab or a
+           pane that has stopped compositing. Nothing here waits on a frame. */
+        let settleTimer = 0;
+
+        function setProject(i, fromUser) {
+            i = (i + PROJECTS.length) % PROJECTS.length;
+            if (i === activeIndex && fromUser) return;
+            activeIndex = i;
+            const project = PROJECTS[i];
+
+            markIndex();
+            renderScreen(project);
+            renderTable(project);
+            renderHeroCopy(project);
+            placeArtefacts();
+            document.documentElement.style.setProperty('--accent', project.accent);
+            // min-height should hold the block still, but re-measuring costs nothing and
+            // means the table's edge can never drift away from it.
+            alignBand();
+
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduce || typeof gsap === 'undefined') return;
+
+            const say = document.getElementById('say-project');
+            isSwitching = true;
+
+            // Everything arrives from the same direction, so the switch reads as one
+            // move rather than as an explosion.
+            gsap.fromTo([tableItems, say],
+                { opacity: 0.3, y: 12 },
+                { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out', stagger: 0.05 });
+            // --stage-k, not scale. The stage's own transform carries its layout
+            // position, and GSAP writing an inline transform would throw that away.
+            gsap.fromTo(deviceStage,
+                { opacity: 0.4, '--stage-k': 0.97 },
+                { opacity: 1, '--stage-k': 1, duration: 0.46, ease: 'power2.out',
+                  onComplete: () => { isSwitching = false; } });
+
+            // Belt and braces: if the ticker never runs, these elements would be left
+            // sitting at their start values. A timer, which always fires, puts them back.
+            clearTimeout(settleTimer);
+            settleTimer = setTimeout(() => {
+                isSwitching = false;
+                gsap.set([tableItems, say], { clearProps: 'opacity,transform' });
+                gsap.set(deviceStage, { clearProps: 'opacity,--stage-k' });
+            }, 900);
+        }
+
+        /* The table's edge lines up with the top of the written project block, so the
+           identity sits on paper and the project sits on the table. Measured rather than
+           guessed at, because the masthead's height moves with the viewport and the font. */
+        function alignBand() {
+            const band = document.querySelector('.table-edge');
+            const block = document.getElementById('say-project');
+            const grid = document.querySelector('.hero-grid');
+            if (!band || !block || !grid) return;
+            const say = document.querySelector('.hero-say');
+            if (!say) return;
+            if (window.matchMedia('(max-width: 1100px)').matches) { band.style.height = ''; return; }
+            // offsetTop, never a rect: the block is translated by the arrival animation,
+            // and a rect would measure it in mid-flight and leave the edge 9px adrift.
+            const top = say.offsetTop + block.offsetTop;
+            band.style.height = Math.max(120, grid.offsetHeight - top) + 'px';
+        }
+
+        // Fixed resting transform per artefact. Re-applied after every render so the
+        // parallax loop always has a baseline to add to.
+        function placeArtefacts() {
+            [...tableItems.children].forEach(el => {
+                el.style.transform = 'rotate(var(--rot, 0deg))';
             });
         }
 
-        // What this fragment will measure AFTER the swap — the explode target has to be
-        // computed against the incoming artwork's width, not the outgoing one.
-        function fragWidthFor(project, frag) {
-            const asset = fragAsset(project, frag);
-            return asset ? asset.tile[0] : (parseFloat(getComputedStyle(frag).width) || frag.offsetWidth);
-        }
+        /* ---------- Boot ---------- */
+        renderScreen(PROJECTS[0]);
+        renderTable(PROJECTS[0]);
+        placeArtefacts();
+        renderIndex();
+        document.documentElement.style.setProperty('--accent', PROJECTS[0].accent);
 
-        // Put the case-study sections in the same order as the carousel, and number them
+        indexEl.addEventListener('click', e => {
+            const btn = e.target.closest('.ix-btn');
+            if (btn) setProject(+btn.dataset.i, true);
+        });
+        // Deliberately no mouseover handler. Selecting a project re-dresses the whole
+        // stage, which is too big a change to trigger by passing over a row on the way
+        // somewhere else. Click, tap, or the arrow keys.
+        indexEl.addEventListener('focusin', e => {
+            const btn = e.target.closest('.ix-btn');
+            if (btn) setProject(+btn.dataset.i, true);
+        });
+        // Left/right arrows move between rows, which is what role="tablist" promises.
+        indexEl.addEventListener('keydown', e => {
+            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            e.preventDefault();
+            const next = (activeIndex + (e.key === 'ArrowRight' ? 1 : -1) + PROJECTS.length) % PROJECTS.length;
+            setProject(next, true);
+            const btn = indexEl.querySelectorAll('.ix-btn')[next];
+            if (btn) btn.focus();
+        });
+
+        viewCaseBtn.addEventListener('click', () => {
+            const section = document.getElementById('case-' + PROJECTS[activeIndex].key);
+            if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Put the case-study sections in the same order as the index, and number them
         // from that order so the two can never disagree.
         (function syncCaseSections() {
             const contact = document.getElementById('contact');
@@ -3392,102 +3891,96 @@
             });
         })();
 
-        // Warm the cache for every project's fragment artwork too.
+        // The per-case accent doubles as small label text on the onyx sections, where
+        // MADA's #2E5BFF manages only 3.79:1. Lift each one until it clears 4.5:1, the
+        // mirror of what onPaper() does for the light hero.
+        const ONYX = [10, 10, 10];
+        function onInk(hex) {
+            let c = toRgb(hex);
+            for (let i = 0; i < 40 && contrast(c, ONYX) < 4.5; i++) {
+                c = c.map(v => Math.min(255, v + (255 - v) * 0.1));
+            }
+            return toHex(c);
+        }
+        document.querySelectorAll('.case').forEach(sec => {
+            const raw = sec.style.getPropertyValue('--case-accent').trim();
+            if (raw) sec.style.setProperty('--case-accent-text', onInk(raw));
+        });
+
+        // Warm the cache for every project's artwork.
         PROJECTS.forEach(p => Object.values(p.frags || {}).forEach(a => {
             if (a.src) { const i = new Image(); i.src = a.src; }
         }));
 
-        allFrags.forEach(f => {
-            f.dataset.rx = 0; f.dataset.ry = 0;
-            // Media tiles start at a slight tilt; abstract ones can start anywhere.
-            f.dataset.angle = f.classList.contains('is-media') ? (Math.random() * 24 - 12) : Math.random() * 360;
-            // Foreground fragments get nudged off the phone from the very first frame too —
-            // the CSS percentages alone don't account for each fragment's own width.
-            f.dataset.baseX = f.parentElement === fragsFG ? pushClearOfPhone(f, 0, f.offsetWidth) : 0;
-            f.dataset.baseY = 0;
-        });
+        /* ---------- Pointer parallax ----------
+           The phone keeps the tilt it always had. The artefacts move a fraction of it,
+           by depth, so the table reads as having layers rather than being a flat print. */
+        let mouse = { x: 0, y: 0 };
+        let smooth = { x: 0, y: 0 };
+        let rafOn = false;
 
-        let mouse = { x: 0, y: 0, px: 0, py: 0 };
-        let currentMouse = { x: 0, y: 0 };
-
-        window.addEventListener('mousemove', (e) => {
+        window.addEventListener('mousemove', e => {
             mouse.x = (e.clientX / window.innerWidth) - 0.5;
             mouse.y = (e.clientY / window.innerHeight) - 0.5;
-            mouse.px = e.clientX;
-            mouse.py = e.clientY;
         });
 
-        function animate() {
-            const time = Date.now() * 0.001;
+        function frame() {
+            smooth.x += (mouse.x - smooth.x) * 0.07;
+            smooth.y += (mouse.y - smooth.y) * 0.07;
 
-            currentMouse.x += (mouse.x - currentMouse.x) * 0.05;
-            currentMouse.y += (mouse.y - currentMouse.y) * 0.05;
-
-            // Phone tilts toward the cursor (+ the 720° switch spin)
-            const rotY = (currentMouse.x * 40) + switchSpin;
-            const rotX = -(currentMouse.y * 20);
-            phone.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(-4deg)`;
-            // Same tilt and same 720° switch spin, dialled back so the two devices read as
-            // sitting at different depths instead of moving as one rigid block.
+            const rotY = smooth.x * 26;
+            const rotX = -(smooth.y * 14);
+            if (phone) phone.style.transform = 'rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) rotateZ(-3deg)';
             if (heroLaptop) {
                 heroLaptop.style.transform =
-                    `rotateX(${rotX * 0.75}deg) rotateY(${(currentMouse.x * 28) + switchSpin}deg) rotateZ(1.5deg)`;
+                    'rotateX(' + (rotX * 0.7) + 'deg) rotateY(' + (smooth.x * 18) + 'deg) rotateZ(1.2deg)';
             }
-
-            // Parallax layers
-            fragsFG.style.transform = `translate(${currentMouse.x * 60}px, ${currentMouse.y * 60}px)`;
-            fragsBG.style.transform = `translate(${currentMouse.x * -30}px, ${currentMouse.y * -30}px)`;
-
-            // The fragments are hidden below 1200px and nothing drives them without a
-            // cursor, so skip the per-frame layout reads entirely on touch devices.
-            if (!isSwitching && !isCoarse) {
-                allFrags.forEach((frag, i) => {
-                    const rect = frag.getBoundingClientRect();
-                    const fragX = rect.left + rect.width / 2;
-                    const fragY = rect.top + rect.height / 2;
-
-                    const diffX = mouse.px - fragX;
-                    const diffY = mouse.py - fragY;
-                    const distance = Math.sqrt(diffX * diffX + diffY * diffY);
-
-                    let targetRx = 0, targetRy = 0, speedMult = 1;
-
-                    if (distance < 400 && distance > 0) {
-                        const force = (400 - distance) / 400;
-                        targetRx = (diffX / distance) * force * -80;
-                        targetRy = (diffY / distance) * force * -80;
-                        speedMult = 1 + force * 5;
-                    }
-
-                    let rx = parseFloat(frag.dataset.rx) || 0;
-                    let ry = parseFloat(frag.dataset.ry) || 0;
-                    let angle = parseFloat(frag.dataset.angle) || 0;
-                    let baseX = parseFloat(frag.dataset.baseX) || 0;
-                    let baseY = parseFloat(frag.dataset.baseY) || 0;
-
-                    rx += (targetRx - rx) * 0.1;
-                    ry += (targetRy - ry) * 0.1;
-                    // Tiles holding real UI keep their tilt — spinning them would turn the
-                    // cart card and the price slider upside down and make them unreadable.
-                    if (!frag.classList.contains('is-media')) angle += 0.06 * speedMult;
-
-                    frag.dataset.rx = rx;
-                    frag.dataset.ry = ry;
-                    frag.dataset.angle = angle;
-
-                    const dur = [5, 7, 6, 8, 5.5, 6.5, 9, 11, 10][i % 9];
-                    const phase = (time + i * 0.7) * (Math.PI * 2 / dur);
-                    const floatY = Math.sin(phase) * 15;
-                    const floatAngle = Math.cos(phase) * 6;
-
-                    frag.style.transform = `translate(${rx + baseX}px, calc(${ry + baseY}px + ${floatY}px)) rotate(${angle + floatAngle}deg)`;
+            if (!isSwitching) {
+                [...tableItems.children].forEach(el => {
+                    const d = parseFloat(el.dataset.depth) || 0.5;
+                    el.style.transform =
+                        'translate3d(' + (smooth.x * 34 * d) + 'px,' + (smooth.y * 22 * d) + 'px,0) rotate(var(--rot, 0deg))';
                 });
             }
-
-            requestAnimationFrame(animate);
+            requestAnimationFrame(frame);
         }
 
-        animate();
+        // No cursor means nothing drives any of this, so the loop never starts on a phone.
+        if (!isCoarse && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            rafOn = true;
+            requestAnimationFrame(frame);
+        }
+
+        /* ---------- Which surface is under the fixed header ----------
+           The hero is paper and everything below it is onyx, so the header has to
+           repaint itself as it crosses the boundary or it becomes unreadable. */
+        function paintHeader() {
+            const seam = document.getElementById('seam');
+            const line = seam ? seam.offsetTop : window.innerHeight;
+            document.documentElement.dataset.surface =
+                (window.scrollY + 56) < line ? 'paper' : 'ink';
+
+            // Two wordmarks on screen at once reads as an oversight, so the header's
+            // only shows up once the masthead has gone.
+            const mast = document.querySelector('.say-masthead');
+            if (mast) {
+                const gone = mast.getBoundingClientRect().bottom < 48;
+                document.documentElement.dataset.wordmark = gone ? 'show' : 'hide';
+            }
+        }
+        paintHeader();
+        alignBand();
+        window.addEventListener('scroll', paintHeader, { passive: true });
+        window.addEventListener('resize', () => { paintHeader(); alignBand(); });
+        // The written column's height moves under the band's feet more than once: the
+        // display face lands after first paint, and then the mono lands again when the
+        // project copy is rendered, which is already past document.fonts.ready. Watching
+        // the column catches every one of those instead of guessing at the timing.
+        if (window.ResizeObserver) {
+            new ResizeObserver(alignBand).observe(document.querySelector('.hero-say'));
+        } else if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(alignBand);
+        }
 
         /* ---------- Get in touch: unfolds in place, never navigates ---------- */
         const contactBtn = document.getElementById('contact-btn');

@@ -8,7 +8,7 @@
     <meta name="description" content="UX/UI and Immersive Reality designer based in Seville. Former professional tennis player, padel coach, and end-to-end product designer.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,SOFT,WONK,wght@0,9..144,0..100,0..1,100..900;1,9..144,0..100,0..1,100..900&display=swap" rel="stylesheet">
     <style>
         :root {
             --alabaster: #E5E4E2;
@@ -20,8 +20,11 @@
             --glass-bg: rgba(229, 228, 226, 0.05);
             --glass-border: rgba(229, 228, 226, 0.12);
 
-            --font-display: 'Playfair Display', serif;
-            --font-ui: 'Space Grotesk', sans-serif;
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-ui: 'Archivo', system-ui, sans-serif;
+            --font-mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+            /* --blue-slate is 3.37:1 on onyx and fails for small labels. Same hue, lifted. */
+            --slate-text: #67808F;
             --font-body: 'Archivo', sans-serif;
         }
 
@@ -149,8 +152,8 @@
         }
 
         .eyebrow {
-            font-family: var(--font-ui);
-            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
             font-weight: 500;
             letter-spacing: 0.18em;
             text-transform: uppercase;
@@ -161,6 +164,7 @@
 
         .intro h1 {
             font-family: var(--font-display);
+            font-variation-settings: 'SOFT' 0, 'WONK' 0, 'opsz' 144;
             font-weight: 900;
             font-size: clamp(3rem, 6.5vw, 6.5rem);
             line-height: 0.92;
@@ -242,11 +246,11 @@
         .section-head { margin-bottom: 3.5rem; }
 
         .section-label {
-            font-family: var(--font-ui);
-            font-size: 0.68rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: var(--blue-slate);
+            color: var(--slate-text);
             display: block;
             margin-bottom: 0.7rem;
         }
@@ -291,11 +295,11 @@
         .tl-item:hover::before { background: var(--alabaster); transform: scale(1.25); }
 
         .tl-when {
-            font-family: var(--font-ui);
-            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--blue-slate);
+            color: var(--slate-text);
             display: block;
             margin-bottom: 0.5rem;
         }
@@ -331,8 +335,8 @@
         .stats { display: flex; gap: 4rem; flex-wrap: wrap; margin-top: 3.5rem; }
         .stat b { font-family: var(--font-display); font-weight: 900; font-size: 3rem; display: block; line-height: 1; }
         .stat span {
-            font-family: var(--font-ui);
-            font-size: 0.66rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--muted-color);
@@ -343,11 +347,11 @@
         /* ---------- Contact ---------- */
         .contact-grid { display: flex; flex-wrap: wrap; gap: 3rem 5rem; margin-top: 2.5rem; }
         .contact-item span {
-            font-family: var(--font-ui);
-            font-size: 0.66rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--blue-slate);
+            color: var(--slate-text);
             display: block;
             margin-bottom: 0.6rem;
         }
@@ -401,7 +405,7 @@
             /* This page IS the resume, so the pill would only link to itself. */
             .resume-pill { display: none; }
 
-            .lang-toggle { padding: 0; width: 42px; height: 42px; font-size: 0.7rem; }
+            .lang-toggle { padding: 0; width: 42px; height: 42px; font-size: 0.72rem; }
 
             .contact-btn { padding: 0.7rem 1.1rem; font-size: 0.76rem; white-space: nowrap; }
 
@@ -445,6 +449,45 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
             .reveal { opacity: 1; transform: none; }
+        }
+
+        /* Standalone links are pointer targets, not words inside a sentence. 24px is the
+           WCAG 2.5.8 floor, 44px once there is no cursor. */
+        .contact-item a,
+        .contact-grid a,
+        a[download],
+        a[href^="mailto"],
+        a[href^="tel"] {
+            display: inline-flex;
+            align-items: center;
+            min-height: 24px;
+            padding: 0.25rem 0;
+        }
+        /* The wordmark doubles as the link back to the site, so it is a target too. */
+        .logo, a.logo { display: inline-flex; align-items: center; min-height: 24px; }
+
+        @media (max-width: 860px) {
+            .contact-item a,
+            .contact-grid a,
+            a[download],
+            a[href^="mailto"],
+            a[href^="tel"],
+            .nav-item,
+            .btn,
+            .contact-btn { min-height: 44px; }
+            .nav-item, .btn, .contact-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .logo, a.logo { min-height: 44px; }
+            .resume-pill, .lang-toggle { width: 44px; height: 44px; }
+        }
+
+        /* ---------- One focus ring for everything ---------- */
+        :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+            outline: 2px solid #E5E4E2;
+            outline-offset: 3px;
         }
     </style>
 </head>
