@@ -4,7 +4,10 @@
     {
       "name": "portfolio-dev",
       "runtimeExecutable": "cmd.exe",
-      "runtimeArgs": ["/c", "set PATH=C:\\Program Files\\nodejs;%PATH% && npm run dev"],
+      "runtimeArgs": [
+        "/c",
+        "set PATH=C:\\Program Files\\nodejs;%PATH% && npm run dev"
+      ],
       "port": 3000,
       "autoPort": true
     },
@@ -13,7 +16,7 @@
       "runtimeExecutable": "cmd.exe",
       "runtimeArgs": [
         "/c",
-        "C:\\Users\\david\\OneDrive\\ESCRIT~1\\Personal\\WEBCAM~1\\dev.cmd"
+        "C:\\Users\\david\\Proyectos\\Web CambioFisico\\dev.cmd"
       ],
       "port": 3100,
       "autoPort": true
@@ -28,15 +31,80 @@
       "runtimeExecutable": "cmd.exe",
       "runtimeArgs": [
         "/c",
-        "C:\\Users\\david\\OneDrive\\ESCRIT~1\\Personal\\APPGYM~1\\dev.cmd"
+        "C:\\Users\\david\\Proyectos\\App Gym\\dev.cmd"
       ],
       "port": 3200,
       "autoPort": true
     },
     {
+      "name": "wallet",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": [
+        "/c",
+        "C:\\Users\\david\\Proyectos\\Wallet App\\dev.cmd"
+      ],
+      "port": 3300,
+      "autoPort": true
+    },
+    {
+      "name": "mapa1906-web",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": [
+        "/c",
+        "C:\\Users\\david\\Proyectos\\mapa-1906\\dev.cmd"
+      ],
+      "port": 8082
+    },
+    {
+      "name": "trompo",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": [
+        "/c",
+        "C:\\Users\\david\\Proyectos\\Trompo\\dev.cmd"
+      ],
+      "port": 3400
+    },
+    {
+      "name": "crack",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": [
+        "/c",
+        "C:\\Users\\david\\Proyectos\\Crack\\juego\\dev.cmd"
+      ],
+      "port": 3700
+    },
+    {
       "name": "portfolio-attach",
       "url": "http://localhost:3000",
       "port": 3000
+    },
+    {
+      "name": "appgym-prod",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": [
+        "/c",
+        "C:\\Users\\david\\Proyectos\\App Gym\\start.cmd"
+      ],
+      "port": 3201,
+      "autoPort": true
+    },
+    {
+      "name": "legado-mushu",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": [
+        "/c",
+        "C:\\Users\\david\\Proyectos\\el-legado-de-mushu\\dev.cmd"
+      ],
+      "port": 3500
+    },
+    {
+      "name": "monederosaurius",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": [
+        "/c",
+        "C:\\Users\\david\\Proyectos\\MonederoSaurius\\dev.cmd"
+      ],
+      "port": 3450
     }
   ]
 }
